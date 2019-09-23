@@ -22,26 +22,24 @@ public class HeroClass : Character
 
     public TextMeshProUGUI gameLog;
 
-    public void BasicAttack(Enemy target, CombatManager combatManager, List<Enemy> characterParty, bool isHealing = false)
+    public void BasicAttack(Enemy target, CombatManager combatManager, List<Enemy> characterParty)
     {
         int damage = 0;
-        switch (isHealing)
+
+        if (SP < 10)
         {
-            case true:
-                target.Health += Attack;
-
-                gameLog.text += ("\n" + this.name + " healed " + target.name + " for " + Attack.ToString() + " health.");
-                break;
-
-            case false:
-                damage = Attack - target.Defense;
-
-                if (damage > 0)
-                    target.Health -= damage;
-                if(gameLog != null)
-                    gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
-                break;
+            damage = Attack - target.Defense;
         }
+        else
+        {
+            UseSpecialAbility(target, combatManager, characterParty);
+        }
+
+        if (damage > 0)
+            target.Health -= damage;
+
+        if (gameLog != null)
+            gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
 
         if (target.Health <= 0)
         {
@@ -54,6 +52,8 @@ public class HeroClass : Character
         {
             gameLog.text += ("\n" + "Their health is now: " + target.Health);
         }
+
+        SP++;
     }
 
     public void BasicHeal(HeroClass target)
@@ -64,8 +64,41 @@ public class HeroClass : Character
 
         gameLog.text += ("\n" + "Their health is now: " + target.Health);
 
+        SP++;
     }
 
+    private void UseSpecialAbility(Enemy target, CombatManager combatManager, List<Enemy> characterParty)
+    {
+        int damage = 0;
+
+        switch (SpecialAbility)
+        {
+            case "Critical Strike":
+                
+                damage = (Attack * 2) - target.Defense;
+                break;
+        }
+
+        if (damage > 0)
+            target.Health -= damage;
+
+        if (gameLog != null)
+            gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
+
+        if (target.Health <= 0)
+        {
+            if (combatManager != null)
+                target.Die(combatManager, characterParty);
+
+            gameLog.text += ("\n" + target.name + " has died.");
+        }
+        else
+        {
+            gameLog.text += ("\n" + "Their health is now: " + target.Health);
+        }
+
+        SP = 0;
+    }
 
     public void Die(CombatManager combatManager, List<HeroClass> characterParty)
     {

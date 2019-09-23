@@ -117,9 +117,6 @@ public class PlayerBehaviour : MonoBehaviour
                         path.Add(n.worldPosition);
 
                     StartCoroutine(playerIcon.GetComponent<PartyBehaviour>().MoveParty(path.ToArray()));
-                   
-                    //nextPos.x -= 0.2f;
-                   // nextPos.y += 0.3f;
 
                     if (tile.GetType() == typeof(VariantTiles))
                     {
@@ -141,6 +138,8 @@ public class PlayerBehaviour : MonoBehaviour
 
     void MoveCamera()
     {
+#if UNITY_EDITOR || UNITY_STANDALONE
+
         float moveX = Input.GetAxisRaw("Horizontal") * cameraMoveSpeed * Time.deltaTime;
         float moveY = Input.GetAxisRaw("Vertical") * cameraMoveSpeed * Time.deltaTime;
 
@@ -148,7 +147,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         cam.transform.position += moveDirection;
 
-        if(cam.transform.position.x < startingPos.x - MAX_X_MOVEMENT)
+        if (cam.transform.position.x < startingPos.x - MAX_X_MOVEMENT)
         {
             cam.transform.position = new Vector3(-(MAX_X_MOVEMENT), cam.transform.position.y);
         }
@@ -165,8 +164,19 @@ public class PlayerBehaviour : MonoBehaviour
         {
             cam.transform.position = new Vector3(cam.transform.position.x, startingPos.y + MAX_Y_MOVEMENT);
         }
-    }
 
+#elif UNITY_ANDROID || UNITY_IOS
+
+        if (!hasTile)
+        {
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
+            {
+                Vector2 touchDeltaPosition = Input.GetTouch(0).deltaPosition;
+                transform.Translate(-touchDeltaPosition.x * cameraMoveSpeed/2 * Time.deltaTime / 3, -touchDeltaPosition.y * cameraMoveSpeed/2 * Time.deltaTime / 3, 0);
+            }
+        }
+#endif
+    }
     public bool CanBePlaced(TileBase tile, Vector3Int position)
     {
         if (position.x > boardManager.gameBoardHeight && position.y > boardManager.gameBoardWidth)

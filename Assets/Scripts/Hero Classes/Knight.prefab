@@ -50,7 +50,7 @@ MonoBehaviour:
   Speed: 3
   role: 0
   XP: 0
-  SP: 0
+  SP: 4
   Special: 1
   SpecialAbility: Critical Strike
   PassiveAbility: 
