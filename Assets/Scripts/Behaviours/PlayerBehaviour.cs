@@ -126,7 +126,7 @@ public class PlayerBehaviour : MonoBehaviour
                         {
                             nextPos.y -= 0.25f;
 
-                            Instantiate(gameManager.enemyReference[Random.Range(0, gameManager.enemyReference.Count)], nextPos, Quaternion.identity);
+                            Instantiate(gameManager.AllEnemies[Random.Range(0, gameManager.AllEnemies.Count)], nextPos, Quaternion.identity);
                         }
                     }
                 }

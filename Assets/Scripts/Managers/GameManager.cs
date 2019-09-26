@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
+
 public class GameManager : MonoBehaviour
 {
     [HideInInspector]
@@ -29,23 +30,28 @@ public class GameManager : MonoBehaviour
 
     [Header("Game Phases")]
     public GamePhase currentGamePhase;
-    public CombatPhase currentCombatPhase;
-    public CharacterActionPhase currentCharacterActionPhase;
-    [Space]
-
+    
     [Header("Game Variables")]
     public int currentLevel;
     public int currentTurn;
-    [Space]
-    [Header("Tile References")]
-    public List<TileBase> allBaseTiles;
-    public List<VariantTiles> allVariantTiles;
-    public List<GameObject> allEnemies;
 
-    public Dictionary<int, TileBase> baseTileReference = new Dictionary<int, TileBase>();
-    public Dictionary<int, VariantTiles> variantTileReference = new Dictionary<int, VariantTiles>();
-    public Dictionary<int, GameObject> enemyReference = new Dictionary<int, GameObject>();
-    [Space]
+
+    [Header("Tile References")]
+    public List<TileBase> AllBaseTiles;
+    public List<VariantTiles> AllVariantTiles;
+
+    [Header("Character References")]
+    public List<HeroClass> AllHeroClasses;
+    public List<GameObject> AllEnemies;
+  
+
+    [Header("Item References")]
+    public List<Armor> AllArmor;
+    public List<Accessory> AllAccessories;
+    public List<Weapon> AllWeapons;
+    public List<Gem> allGems;
+
+  
     [Header("Script References")]
     public GameBoardManager gameBoardManager;
     public DeckManager deckManager;
@@ -53,12 +59,11 @@ public class GameManager : MonoBehaviour
     public PlayerBehaviour playerBehaviour;
     public PartyBehaviour partyBehaviour;
     public CombatManager combatManager;
+    public ShopManager shopManager;
     
     private void Awake()
     {
         SetScriptReferences();
-        WriteToDictionaries();
-       
     }
 
     // Start is called before the first frame update
@@ -134,43 +139,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ProceedToNextCombatPhase(int currentPhase)
-    {
-
-    }
-
-    public void ProceedToNextCharacterActionPhase(int currentPhase)
-    {
-        
-    }
-
     private void SetScriptReferences()
     {
-        gameBoardManager = GameObject.FindObjectOfType(typeof(GameBoardManager)) as GameBoardManager;
-        deckManager = GameObject.FindObjectOfType(typeof(DeckManager)) as DeckManager;
-        canvasManager = GameObject.FindObjectOfType(typeof(CanvasManager)) as CanvasManager;
-        playerBehaviour = GameObject.FindObjectOfType(typeof(PlayerBehaviour)) as PlayerBehaviour;
-        partyBehaviour = GameObject.FindObjectOfType(typeof(PartyBehaviour)) as PartyBehaviour;
-        combatManager = GameObject.FindObjectOfType(typeof(CombatManager)) as CombatManager;
+        gameBoardManager = FindObjectOfType(typeof(GameBoardManager)) as GameBoardManager;
+        deckManager = FindObjectOfType(typeof(DeckManager)) as DeckManager;
+        canvasManager = FindObjectOfType(typeof(CanvasManager)) as CanvasManager;
+        playerBehaviour = FindObjectOfType(typeof(PlayerBehaviour)) as PlayerBehaviour;
+        partyBehaviour = FindObjectOfType(typeof(PartyBehaviour)) as PartyBehaviour;
+        combatManager = FindObjectOfType(typeof(CombatManager)) as CombatManager;
+        shopManager = FindObjectOfType(typeof(ShopManager)) as ShopManager;
     }
 
-    private void WriteToDictionaries()
-    {
-        for (int i = 0; i < allBaseTiles.Count; i++)
-        {
-            baseTileReference.Add(i, allBaseTiles[i]);
-        }
-        for (int i = 0; i < allVariantTiles.Count; i++)
-        {
-            variantTileReference.Add(i, allVariantTiles[i]);
-        }
-        for (int i = 0; i < allEnemies.Count; i++)
-        {
-            enemyReference.Add(i, allEnemies[i]);
-        }
-    }
-
-    #region Enums
     public enum GamePhase
     {
         TilePlacement = 1,
@@ -179,23 +158,4 @@ public class GameManager : MonoBehaviour
         Combat,
         End,
     }
-
-    public enum CombatPhase
-    {
-        Initative = 0,
-        TurnBegin,
-        CharacterAction,
-        TurnEnd,
-    }
-
-    public enum CharacterActionPhase
-    {
-        TurnBegin = 1,
-        FirstAbilities,
-        SelectTarget,
-        Attack,
-        SecondaryAbilities,
-        TurnEnd,
-    }
-    #endregion
 }

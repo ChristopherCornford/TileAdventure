@@ -71,11 +71,11 @@ public class DeckManager : MonoBehaviour
 
             if(randInt > percentVariant)
             {
-                tempDeck.Add(gameManager.baseTileReference[Random.Range(0, gameManager.baseTileReference.Count)]);
+                tempDeck.Add(gameManager.AllBaseTiles[Random.Range(0, gameManager.AllBaseTiles.Count)]);
             }
             else
             {
-                tempDeck.Add(gameManager.variantTileReference[Random.Range(0, gameManager.variantTileReference.Count)]);
+                tempDeck.Add(gameManager.AllVariantTiles[Random.Range(0, gameManager.AllVariantTiles.Count)]);
             }
             
         }

@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 7911084480829657905}
   - component: {fileID: 7911084480829657910}
   - component: {fileID: 7911084480829657911}
+  - component: {fileID: 740787688839167081}
   m_Layer: 0
-  m_Name: Angry Shadow
+  m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,3 +101,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &740787688839167081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7911084480829657908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df5048da1c9338d40a870b064950fd86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprite: {fileID: 0}
+  Health: 3
+  currentHealth: 3
+  Attack: 3
+  Defense: 2
+  Speed: 2
+  gameLog: {fileID: 0}
+  xpReward: 3
+  goldRewardMin: 2
+  goldRewardMax: 4

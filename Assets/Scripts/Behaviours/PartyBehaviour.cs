@@ -59,10 +59,10 @@ public class PartyBehaviour : MonoBehaviour
 
         TileBase newTile = null;
 
-        for (int i = 0; i < gameManager.baseTileReference.Count; i++)
+        for (int i = 0; i < gameManager.AllBaseTiles.Count; i++)
         {
-            if (gameManager.baseTileReference[i].name == currentTile.name)
-                newTile = gameManager.baseTileReference[i];
+            if (gameManager.AllBaseTiles[i].name == currentTile.name)
+                newTile = gameManager.AllBaseTiles[i];
         }
 
         tilemap.SetTile(intPos, newTile);
