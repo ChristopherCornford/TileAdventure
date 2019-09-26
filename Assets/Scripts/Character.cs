@@ -9,7 +9,8 @@ public class Character : MonoBehaviour
     public Sprite sprite;
     [Header("Main Stats")]
     public int Health;
-
+    [Space]
+    public int currentHealth;
     [Header("Combat Stats")]
     public int Attack;
     [Space]

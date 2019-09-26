@@ -17,6 +17,8 @@ public class PartyBehaviour : MonoBehaviour
     public Grid grid;
     public Tilemap tilemap;
 
+    public HeroClass[] classTemplates;
+
     private void Awake()
     {
         gameManager = GameObject.FindObjectOfType(typeof(GameManager)) as GameManager;
@@ -33,7 +35,37 @@ public class PartyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    public void AddCharacterToParty(string name)
+    {
+        GameObject newHero = new GameObject(name);
+
+        foreach (HeroClass hero in classTemplates)
+            if (hero.name == name)
+            {
+                newHero.AddComponent<HeroClass>();
+                newHero.GetComponent<HeroClass>().CopyHero(newHero.GetComponent<HeroClass>(), hero);
+            }
+
+        newHero.transform.SetParent(this.transform);
+        heroParty.Add(newHero.GetComponent<HeroClass>());
+    }
+
+    public void EndCombat()
+    {
+        Vector3Int intPos = grid.WorldToCell(this.transform.position);
+
+        TileBase newTile = null;
+
+        for (int i = 0; i < gameManager.baseTileReference.Count; i++)
+        {
+            if (gameManager.baseTileReference[i].name == currentTile.name)
+                newTile = gameManager.baseTileReference[i];
+        }
+
+        tilemap.SetTile(intPos, newTile);
     }
 
     public IEnumerator MoveParty(Vector3[] path)
@@ -84,5 +116,4 @@ public class PartyBehaviour : MonoBehaviour
             gameManager.ProceedToNextGamePhase();
         }
     }
-    
 }

@@ -546,6 +546,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0be56006314bdcf438da859bd154fc3a, type: 2}
   allEnemies:
   - {fileID: 7911084480829657908, guid: cfeee50e6d1a5e34a8d0619b339d304e, type: 3}
+  - {fileID: 4938449152337250639, guid: b2d05d3e9a0f0674c9693ce6df26a236, type: 3}
   gameBoardManager: {fileID: 0}
   deckManager: {fileID: 0}
   canvasManager: {fileID: 0}
@@ -1154,14 +1155,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9792308d026978499ff2cd8252ea06f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroParty:
-  - {fileID: 7312243259220509362, guid: 4897af0ce944b8142b5acaff010f3f5c, type: 3}
+  heroParty: []
   transitionLength: 1
   boardMovementSpeed: 30
   pauseLength: 0.5
   currentTile: {fileID: 0}
   grid: {fileID: 2006176687}
   tilemap: {fileID: 520326405}
+  classTemplates:
+  - {fileID: 7312243259220509362, guid: 767b6f39703db5841b25810002939c1a, type: 3}
+  - {fileID: 7312243259220509362, guid: eecad45b971747841acbe69d68319421, type: 3}
+  - {fileID: 7312243259220509362, guid: de522a9acc8fd864a930e6c7cb68f91d, type: 3}
+  - {fileID: 7312243259220509362, guid: fb68f39fd5dcfd24f8a065be7f3fd601, type: 3}
+  - {fileID: 7312243259220509362, guid: 4897af0ce944b8142b5acaff010f3f5c, type: 3}
+  - {fileID: 7312243259220509362, guid: 18c44f9688108034d92f282558cc80df, type: 3}
 --- !u!95 &769139576
 Animator:
   serializedVersion: 3

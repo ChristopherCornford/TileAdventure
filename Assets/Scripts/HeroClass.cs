@@ -13,6 +13,8 @@ public class HeroClass : Character
     public int XP;
     [Space]
     public int SP;
+    [Space]
+    public int spChargeRate = 1;
     [Header("Special Stats")]
     public int Special;
     [Space]
@@ -20,13 +22,50 @@ public class HeroClass : Character
     [Space]
     public string PassiveAbility;
 
+    [Header("Inventory")]
+    public Weapon weaponSlot;
+    public Armor armorSlot;
+    public Accessory accessorySlot;
+
     public TextMeshProUGUI gameLog;
+
+
+    public void AddStatsFromItem (Item item)
+    {
+        switch (item.statToBuff)
+        {
+            case "Health":
+                this.Health += item.buffValue;
+                break;
+
+            case "Attack":
+                this.Attack += item.buffValue;
+                break;
+
+            case "Defense":
+                this.Defense += item.buffValue;
+                break;
+
+            case "Speed":
+                this.Speed += item.buffValue;
+                break;
+
+            case "Special":
+                this.Special += item.buffValue;
+                break;
+
+            case "SP Charge Rate":
+                this.spChargeRate += item.buffValue;
+                break;
+        }
+    }
+
 
     public void BasicAttack(Enemy target, CombatManager combatManager, List<Enemy> characterParty)
     {
         int damage = 0;
 
-        if (SP < 10)
+        if (SP < 20)
         {
             damage = Attack - target.Defense;
         }
@@ -36,12 +75,14 @@ public class HeroClass : Character
         }
 
         if (damage > 0)
-            target.Health -= damage;
+            target.currentHealth -= damage;
+        else
+            target.currentHealth -= 1;
 
         if (gameLog != null)
             gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
 
-        if (target.Health <= 0)
+        if (target.currentHealth <= 0)
         {
             if (combatManager != null)
                 target.Die(combatManager, characterParty);
@@ -50,21 +91,21 @@ public class HeroClass : Character
         }
         else
         {
-            gameLog.text += ("\n" + "Their health is now: " + target.Health);
+            gameLog.text += ("\n" + "Their health is now: " + target.currentHealth);
         }
 
-        SP++;
+        SP += spChargeRate;
     }
 
     public void BasicHeal(HeroClass target)
     {
-        target.Health += Attack;
+        target.currentHealth += Attack;
 
         gameLog.text += ("\n" + this.name + " healed " + target.name + " for " + Attack.ToString() + " health.");
 
-        gameLog.text += ("\n" + "Their health is now: " + target.Health);
+        gameLog.text += ("\n" + "Their health is now: " + target.currentHealth);
 
-        SP++;
+        SP += spChargeRate;
     }
 
     private void UseSpecialAbility(Enemy target, CombatManager combatManager, List<Enemy> characterParty)
@@ -75,12 +116,12 @@ public class HeroClass : Character
         {
             case "Critical Strike":
                 
-                damage = (Attack * 2) - target.Defense;
+                damage = (Attack * (1 + SP)) - target.Defense;
                 break;
         }
 
         if (damage > 0)
-            target.Health -= damage;
+            target.currentHealth -= damage;
 
         if (gameLog != null)
             gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
@@ -114,6 +155,7 @@ public class HeroClass : Character
     {
         target.name = template.name;
         target.Health = template.Health;
+        target.currentHealth = template.currentHealth;
         target.Attack = template.Attack;
         target.Defense = template.Defense;
         target.Speed = template.Speed;
@@ -124,6 +166,10 @@ public class HeroClass : Character
 
         target.SpecialAbility = template.SpecialAbility;
         target.PassiveAbility = template.PassiveAbility;
+
+        target.weaponSlot = template.weaponSlot;
+        target.armorSlot = template.armorSlot;
+        target.accessorySlot = template.accessorySlot;
     }
 }
 

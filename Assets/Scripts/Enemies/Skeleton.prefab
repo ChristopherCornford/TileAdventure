@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1824613883959029502
+--- !u!1 &8428681958104306211
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,55 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7079115370096792587}
-  - component: {fileID: 7312243259220509362}
+  - component: {fileID: 8428681958104306213}
+  - component: {fileID: 8428681958104306210}
   m_Layer: 0
-  m_Name: Guardian
+  m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7079115370096792587
+--- !u!4 &8428681958104306213
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824613883959029502}
+  m_GameObject: {fileID: 8428681958104306211}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.15473215, y: 5.6534195, z: 3.5136719}
+  m_LocalPosition: {x: 0.16984795, y: 6.117922, z: -6.5611978}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7312243259220509362
+--- !u!114 &8428681958104306210
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1824613883959029502}
+  m_GameObject: {fileID: 8428681958104306211}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 731f964957f6e8146bc56152e69bc034, type: 3}
+  m_Script: {fileID: 11500000, guid: df5048da1c9338d40a870b064950fd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
-  Health: 6
-  currentHealth: 6
+  Health: 4
+  currentHealth: 4
   Attack: 2
-  Defense: 6
-  Speed: 1
-  role: 3
-  XP: 0
-  SP: 0
-  spChargeRate: 1
-  Special: 1
-  SpecialAbility: Taunt
-  PassiveAbility: 
-  weaponSlot: {fileID: 0}
-  armorSlot: {fileID: 0}
-  accessorySlot: {fileID: 0}
+  Defense: 1
+  Speed: 2
   gameLog: {fileID: 0}
+  xpReward: 0
+  goldRewardMin: 0
+  goldRewardMax: 0

@@ -92,6 +92,7 @@ public class CombatManager : MonoBehaviour
                         combatOrder.Insert(i, heroClass);
         }
 
+        
         StartCoroutine(CharacterActionPhase(combatEnemyCopies, combatHeroCopies));
 
 
@@ -132,7 +133,7 @@ public class CombatManager : MonoBehaviour
                         currentEnemy.BasicAttack(combatHeroCopies[Random.Range(0, heroParty.Count)], this, combatHeroCopies);
                     }
 
-                    if (i == combatOrder.Count - 1 && (combatHeroCopies.Count > 0 || combatEnemyCopies.Count > 0))
+                    if (i == combatOrder.Count - 1 && (combatHeroCopies.Count > 0 && combatEnemyCopies.Count > 0))
                     {
                         i = -1;
                     }
@@ -187,6 +188,13 @@ public class CombatManager : MonoBehaviour
         StopCoroutine("CharacterActionPhase");
         gameLog.text = "";
         gameLog.transform.parent.gameObject.SetActive(false);
+
+        foreach(Enemy enemy in enemyParty)
+        {
+            Destroy(GameObject.Find(enemy.name + "(Clone)"));
+        }
+
+        partyBehaviour.EndCombat();
     }
 
     public void RemoveCharacterFromCombat(Character character, List<Enemy> currentEnemyParty = null, List<HeroClass> currentHeroParty = null)

@@ -124,7 +124,9 @@ public class PlayerBehaviour : MonoBehaviour
                         
                         if(vTile.variantType == VariantTiles.VariantType.Enemy)
                         {
-                            Instantiate(gameManager.enemyReference[0], nextPos, Quaternion.identity);
+                            nextPos.y -= 0.25f;
+
+                            Instantiate(gameManager.enemyReference[Random.Range(0, gameManager.enemyReference.Count)], nextPos, Quaternion.identity);
                         }
                     }
                 }

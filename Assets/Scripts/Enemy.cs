@@ -9,6 +9,12 @@ public class Enemy : Character
 {
     public TextMeshProUGUI gameLog;
 
+    public int xpReward;
+
+    public int goldRewardMin;
+    public int goldRewardMax;
+
+    
     public void BasicAttack(HeroClass target, CombatManager combatManager, List<HeroClass> characterParty, bool isHealing = false)
     {
         int damage = 0;
@@ -24,13 +30,15 @@ public class Enemy : Character
                 damage = Attack - target.Defense;
 
                 if (damage > 0)
-                    target.Health -= damage;
+                    target.currentHealth -= damage;
+                else
+                    target.currentHealth -= 1;
 
                 gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
                 break;
         }
 
-        if (target.Health <= 0)
+        if (target.currentHealth <= 0)
         {
             if (combatManager != null)
                 target.Die(combatManager, characterParty);
@@ -39,17 +47,17 @@ public class Enemy : Character
         }
         else
         {
-            gameLog.text += ("\n" + "Their health is now: " + target.Health);
+            gameLog.text += ("\n" + "Their health is now: " + target.currentHealth);
         }
     }
 
     public void BasicHeal(Enemy target)
     {
-        target.Health += Attack;
+        target.currentHealth += Attack;
 
         gameLog.text += ("\n" + this.name + " healed " + target.name + " for " + Attack.ToString() + " health.");
 
-        gameLog.text += ("\n" + "Their health is now: " + target.Health);
+        gameLog.text += ("\n" + "Their health is now: " + target.currentHealth);
 
     }
 

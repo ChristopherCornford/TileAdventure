@@ -45,6 +45,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   Health: 3
+  currentHealth: 3
   Attack: 3
   Defense: 2
   Speed: 2
+  gameLog: {fileID: 0}
+  xpReward: 0
+  goldRewardMin: 0
+  goldRewardMax: 0
