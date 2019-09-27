@@ -62,13 +62,13 @@ public class ShopManager : MonoBehaviour
     }
 
 
-    public void OpenShop()
+    public void OpenShop(ShopType shopType)
     {
         promptPanel.SetActive(true);
 
         PopulateSalesLists();
 
-        
+        GenerateShop(shopType);
     }
 
     void PopulateSalesLists()
@@ -101,8 +101,8 @@ public class ShopManager : MonoBehaviour
                     newItem.name = item.name;
                     newItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.name;
                     newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = item.statToBuff + " +" + item.buffValue;
-                    newItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = item.goldPrice + " Gold";
-                    newItem.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(delegate { OpenCurrentPartyPanel(); currentlySelectedItem = item; });
+                    newItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = item.goldPrice.ToString() + " Gold";
+                    newItem.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(delegate { OpenCurrentPartyPanel(shopType); currentlySelectedItem = item; });
                 }
 
                 break;
@@ -112,20 +112,63 @@ public class ShopManager : MonoBehaviour
                 foreach (HeroClass mercenary in mercenariesForHire)
                 {
                     GameObject newMercenary = Instantiate(mercenaryTemplate, mercenaryPanel.transform);
-
+                    newMercenary.name = mercenary.name;
+                    newMercenary.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = mercenary.name;
+                    newMercenary.transform.GetChild(1).GetComponent<Image>().sprite = mercenary.sprite;
+                    newMercenary.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = mercenary.PrimaryStat;
+                    newMercenary.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = mercenary.goldCost.ToString() + " Gold";
+                    newMercenary.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(delegate { OpenCurrentPartyPanel(shopType); currentlySelectedMercenary = mercenary; });
                 }
 
                 break;
         }
     }
 
-    private void OpenCurrentPartyPanel()
+    private void OpenCurrentPartyPanel(ShopType shopType)
     {
         currentPartyPanel.SetActive(true);
 
         foreach (HeroClass hero in partyBehaviour.heroParty)
         {
-            GameObject newHero = Instantiate(mercenaryTemplate, currentPartyPanel.transform);
+            if (hero != null)
+            {
+                GameObject newHero = Instantiate(mercenaryTemplate, currentPartyPanel.transform);
+                newHero.name = hero.name;
+                newHero.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = hero.name;
+                newHero.transform.GetChild(1).GetComponent<Image>().sprite = hero.sprite;
+                newHero.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(delegate { EquipCurrentThing(shopType, hero); });
+            }
+            
+        }
+    }
+
+    private void EquipCurrentThing(ShopType shopType, HeroClass hero)
+    {
+        switch (shopType)
+        {
+            case ShopType.Items:
+
+                if(currentlySelectedItem.GetType() == typeof(Armor))
+                {
+                    hero.armorSlot = currentlySelectedItem as Armor;
+                        
+                }
+                else if(currentlySelectedItem.GetType() == typeof(Accessory))
+                {
+                    hero.accessorySlot = currentlySelectedItem as Accessory;
+                }
+                else if(currentlySelectedItem.GetType() == typeof(Weapon))
+                {
+                    hero.weaponSlot = currentlySelectedItem as Weapon;
+                }
+
+                break;
+
+            case ShopType.Mercenaries:
+
+                hero = currentlySelectedMercenary;
+
+                break;
         }
     }
 

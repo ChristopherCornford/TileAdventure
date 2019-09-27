@@ -21,6 +21,10 @@ public class HeroClass : Character
     public string SpecialAbility;
     [Space]
     public string PassiveAbility;
+    [Space]
+    public string PrimaryStat;
+    [Space]
+    public int goldCost;
 
     [Header("Inventory")]
     public Weapon weaponSlot;
