@@ -68,9 +68,42 @@ public class PlayerBehaviour : MonoBehaviour
 
             
             if (Input.GetMouseButtonDown(0))
-                PlaceTilesInWorldSpace(position, currentGrid, currentTileMap);
-            
+            {
+                if (currentTileMap.GetTile(position).name.Contains("NESW"))
+                {
+                    if (playerIcon.GetComponent<PartyBehaviour>().currentTile.name.Contains("NESW"))
+                    {
+                        gameManager.ProceedToNextGamePhase();
+                        StartCoroutine(playerIcon.GetComponent<PartyBehaviour>().MoveParty());
+                    }
+                    else
+                    {
 
+                        Vector3 nextPos = currentGrid.GetCellCenterWorld(position);
+                        nextPos.x += 0.0f;
+                        nextPos.y += 0.5f;
+                        nextPos.z = 0;
+
+                        boardManager.aStarGrid.SetVariables(nextPos);
+                        boardManager.Pathfinding(playerIcon.transform.position, nextPos);
+
+                        List<Vector3> path = new List<Vector3>();
+
+                        foreach (Node n in boardManager.aStarGrid.path)
+                            path.Add(n.worldPosition);
+
+                        gameManager.ProceedToNextGamePhase();
+
+                        StartCoroutine(playerIcon.GetComponent<PartyBehaviour>().MoveParty(path.ToArray()));
+
+                    }
+                }
+                else
+                {
+                    PlaceTilesInWorldSpace(position, currentGrid, currentTileMap);
+                }
+            }
+            
             previewSprite.gameObject.transform.position = cam.ScreenToWorldPoint(Input.mousePosition);
 
             if (tile != null)

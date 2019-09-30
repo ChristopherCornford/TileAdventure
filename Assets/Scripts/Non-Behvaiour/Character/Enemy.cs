@@ -29,10 +29,10 @@ public class Enemy : Character
             case false:
                 damage = Attack - target.Defense;
 
-                if (damage > 0)
-                    target.currentHealth -= damage;
-                else
-                    target.currentHealth -= 1;
+                if (damage < 0)
+                    damage = 1;
+
+                target.currentHealth -= damage;
 
                 gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
                 break;
@@ -74,6 +74,7 @@ public class Enemy : Character
     {
         target.name = template.name;
         target.Health = template.Health;
+        target.currentHealth = template.currentHealth;
         target.Attack = template.Attack;
         target.Defense = template.Defense;
         target.Speed = template.Speed;

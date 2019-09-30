@@ -16,13 +16,14 @@ public class ShopManager : MonoBehaviour
     [Header("Button Templates")]
     public GameObject itemTemplate;
     public GameObject mercenaryTemplate;
+    public GameObject partyHeroTemplate;
 
     [Header("Current Items/Mercenaries Available")]
     public List<Item> itemsForPurchase;
     public List<HeroClass> mercenariesForHire;
 
     [Header("Item Sale Variables")]
-    public int numOfItemsToSell = 9;
+    public int numOfItemsToSell = 6;
 
     [Header("Mercenary Variables")]
     public int numOfMercenariesForHire = 3;
@@ -31,8 +32,13 @@ public class ShopManager : MonoBehaviour
     public GameManager gameManager;
     public PartyBehaviour partyBehaviour;
 
+    [SerializeField]
     private Item currentlySelectedItem;
+    [SerializeField]
     private HeroClass currentlySelectedMercenary;
+
+
+    private List<GameObject> uiObjectsToDelete = new List<GameObject>();
 
     /*
      * TODO:
@@ -59,6 +65,9 @@ public class ShopManager : MonoBehaviour
     {
         gameManager = FindObjectOfType(typeof(GameManager)) as GameManager;
         partyBehaviour = FindObjectOfType(typeof(PartyBehaviour)) as PartyBehaviour;
+
+        promptPanel.transform.GetChild(1).GetComponent<Button>().onClick.AddListener(delegate { OpenShop(ShopType.Items); });
+        promptPanel.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(delegate { OpenShop(ShopType.Mercenaries); });
     }
 
 
@@ -76,7 +85,7 @@ public class ShopManager : MonoBehaviour
         itemsForPurchase.Clear();
         mercenariesForHire.Clear();
 
-        for (int i = 0; i < numOfItemsToSell / 3; i++)
+        for (int i = 0; i < (numOfItemsToSell / 3); i++)
         {
             itemsForPurchase.Add(gameManager.AllArmor[Random.Range(0, gameManager.AllArmor.Count)]);
             itemsForPurchase.Add(gameManager.AllAccessories[Random.Range(0, gameManager.AllAccessories.Count)]);
@@ -91,9 +100,14 @@ public class ShopManager : MonoBehaviour
 
     void GenerateShop(ShopType shopType)
     {
+        promptPanel.SetActive(false);
+        shoppingPanel.SetActive(true);
+
         switch (shopType)
         {
             case ShopType.Items:
+
+                itemPanel.SetActive(true);
 
                 foreach(Item item in itemsForPurchase)
                 {
@@ -102,12 +116,16 @@ public class ShopManager : MonoBehaviour
                     newItem.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = item.name;
                     newItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = item.statToBuff + " +" + item.buffValue;
                     newItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = item.goldPrice.ToString() + " Gold";
-                    newItem.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(delegate { OpenCurrentPartyPanel(shopType); currentlySelectedItem = item; });
+                    newItem.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(delegate { currentlySelectedItem = item; OpenCurrentPartyPanel(shopType);});
+
+                    uiObjectsToDelete.Add(newItem);
                 }
 
                 break;
 
             case ShopType.Mercenaries:
+
+                mercenaryPanel.SetActive(true);
 
                 foreach (HeroClass mercenary in mercenariesForHire)
                 {
@@ -117,7 +135,9 @@ public class ShopManager : MonoBehaviour
                     newMercenary.transform.GetChild(1).GetComponent<Image>().sprite = mercenary.sprite;
                     newMercenary.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = mercenary.PrimaryStat;
                     newMercenary.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = mercenary.goldCost.ToString() + " Gold";
-                    newMercenary.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(delegate { OpenCurrentPartyPanel(shopType); currentlySelectedMercenary = mercenary; });
+                    newMercenary.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(delegate { currentlySelectedMercenary = mercenary; OpenCurrentPartyPanel(shopType); });
+
+                    uiObjectsToDelete.Add(newMercenary);
                 }
 
                 break;
@@ -126,50 +146,95 @@ public class ShopManager : MonoBehaviour
 
     private void OpenCurrentPartyPanel(ShopType shopType)
     {
+        if(shopType == ShopType.Mercenaries)
+        {
+            if(partyBehaviour.heroParty.Count < 5)
+            {
+                partyBehaviour.AddCharacterToParty(currentlySelectedMercenary.name);
+
+                ReturnToPromptScreen();
+
+                return;
+            }
+        }
+
+        itemPanel.SetActive(false);
+        mercenaryPanel.SetActive(false);
+
         currentPartyPanel.SetActive(true);
 
-        foreach (HeroClass hero in partyBehaviour.heroParty)
+        for (int i = 0; i < 5; i ++)
         {
-            if (hero != null)
+            if (i < partyBehaviour.heroParty.Count)
             {
-                GameObject newHero = Instantiate(mercenaryTemplate, currentPartyPanel.transform);
-                newHero.name = hero.name;
-                newHero.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = hero.name;
-                newHero.transform.GetChild(1).GetComponent<Image>().sprite = hero.sprite;
-                newHero.transform.GetChild(2).GetComponent<Button>().onClick.AddListener(delegate { EquipCurrentThing(shopType, hero); });
+                int index = i;
+
+                currentPartyPanel.transform.GetChild(i).name = partyBehaviour.heroParty[i].name;
+                currentPartyPanel.transform.GetChild(i).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = partyBehaviour.heroParty[i].name;
+                currentPartyPanel.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().sprite = partyBehaviour.heroParty[i].sprite;
+                currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().interactable = true;
+                currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().onClick.AddListener(delegate { EquipCurrentThing(shopType, partyBehaviour.heroParty[index], index); });
             }
-            
+            else if(i >= partyBehaviour.heroParty.Count)
+            {
+                currentPartyPanel.transform.GetChild(i).name = "Empty";
+                currentPartyPanel.transform.GetChild(i).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Empty";
+                currentPartyPanel.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().sprite = null;
+                currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().interactable = false;
+            }
         }
     }
 
-    private void EquipCurrentThing(ShopType shopType, HeroClass hero)
+    private void EquipCurrentThing(ShopType shopType, HeroClass hero, int index = 0)
     {
         switch (shopType)
         {
             case ShopType.Items:
 
-                if(currentlySelectedItem.GetType() == typeof(Armor))
+                if (currentlySelectedItem != null)
                 {
-                    hero.armorSlot = currentlySelectedItem as Armor;
-                        
-                }
-                else if(currentlySelectedItem.GetType() == typeof(Accessory))
-                {
-                    hero.accessorySlot = currentlySelectedItem as Accessory;
-                }
-                else if(currentlySelectedItem.GetType() == typeof(Weapon))
-                {
-                    hero.weaponSlot = currentlySelectedItem as Weapon;
+                    if (currentlySelectedItem.GetType() == typeof(Armor))
+                    {
+                        hero.armorSlot = currentlySelectedItem as Armor;
+                    }
+                    else if (currentlySelectedItem.GetType() == typeof(Accessory))
+                    {
+                        hero.accessorySlot = currentlySelectedItem as Accessory;
+                    }
+                    else if (currentlySelectedItem.GetType() == typeof(Weapon))
+                    {
+                        hero.weaponSlot = currentlySelectedItem as Weapon;
+                    }
                 }
 
                 break;
 
             case ShopType.Mercenaries:
-
-                hero = currentlySelectedMercenary;
+                
+                partyBehaviour.AddCharacterToParty(currentlySelectedMercenary.name, index);
 
                 break;
         }
+
+        ReturnToPromptScreen();
+    }
+
+    void ReturnToPromptScreen()
+    {
+        for(int i = 0; i < uiObjectsToDelete.Count; i++)
+        {
+            Destroy(uiObjectsToDelete[i]);
+        }
+
+        currentlySelectedItem = null;
+        currentlySelectedMercenary = null;
+
+        currentPartyPanel.SetActive(false);
+        mercenaryPanel.SetActive(false);
+        itemPanel.SetActive(false);
+        shoppingPanel.SetActive(false);
+
+        promptPanel.SetActive(true);
     }
 
     public enum ShopType { Items, Mercenaries }

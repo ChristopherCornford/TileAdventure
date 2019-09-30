@@ -106,6 +106,9 @@ public class CombatManager : MonoBehaviour
             {
                 if (gameManager.currentGamePhase == GameManager.GamePhase.Combat)
                 {
+
+                    yield return new WaitForSeconds(1.5f);
+
                     bool isHealing = new bool();
 
                     if (combatOrder[i].GetType() == typeof(HeroClass))
@@ -118,11 +121,11 @@ public class CombatManager : MonoBehaviour
                         {
                             case true:
 
-                                currentHero.BasicHeal(combatHeroCopies[Random.Range(0, heroParty.Count)]);
+                                currentHero.BasicHeal(combatHeroCopies[Random.Range(0, combatHeroCopies.Count)]);
                                 break;
 
                             case false:
-                                currentHero.BasicAttack(combatEnemyCopies[Random.Range(0, enemyParty.Count)], this, combatEnemyCopies);
+                                currentHero.BasicAttack(combatEnemyCopies[Random.Range(0, combatEnemyCopies.Count)], this, combatEnemyCopies);
                                 break;
                         }
                     }
@@ -130,7 +133,7 @@ public class CombatManager : MonoBehaviour
                     {
                         Enemy currentEnemy = combatOrder[i] as Enemy;
 
-                        currentEnemy.BasicAttack(combatHeroCopies[Random.Range(0, heroParty.Count)], this, combatHeroCopies);
+                        currentEnemy.BasicAttack(combatHeroCopies[Random.Range(0, combatHeroCopies.Count)], this, combatHeroCopies);
                     }
 
                     if (i == combatOrder.Count - 1 && (combatHeroCopies.Count > 0 && combatEnemyCopies.Count > 0))
@@ -154,7 +157,7 @@ public class CombatManager : MonoBehaviour
                         }
                     }
 
-                    yield return new WaitForSeconds(3f);
+                    yield return new WaitForSeconds(1.5f);
                 }
             }
         }
@@ -177,9 +180,13 @@ public class CombatManager : MonoBehaviour
             for (int i = 0; i < combatHeroParty.Count; i++)
             {
                 partyBehaviour.heroParty[i].CopyHero(partyBehaviour.heroParty[i], combatHeroParty[i]);
-                combatHeroParty[i].Die(this, combatHeroParty);
             }
             
+            foreach(HeroClass hero in combatHeroParty)
+            {
+                Destroy(hero.gameObject);
+            }
+
             gameManager.ProceedToNextGamePhase();
         }
 
@@ -191,7 +198,7 @@ public class CombatManager : MonoBehaviour
 
         foreach(Enemy enemy in enemyParty)
         {
-            Destroy(GameObject.Find(enemy.name + "(Clone)"));
+            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         }
 
         partyBehaviour.EndCombat();
@@ -199,10 +206,11 @@ public class CombatManager : MonoBehaviour
 
     public void RemoveCharacterFromCombat(Character character, List<Enemy> currentEnemyParty = null, List<HeroClass> currentHeroParty = null)
     {
+        combatOrder.Remove(character);
+
         if (character.GetType() == typeof(HeroClass))
         {
             currentHeroParty.Remove(character as HeroClass);
-            
         }
         else if (character.GetType() == typeof(Enemy))
         {

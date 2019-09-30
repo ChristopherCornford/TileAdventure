@@ -78,10 +78,10 @@ public class HeroClass : Character
             UseSpecialAbility(target, combatManager, characterParty);
         }
 
-        if (damage > 0)
-            target.currentHealth -= damage;
-        else
-            target.currentHealth -= 1;
+        if (damage < 0)
+            damage = 1;
+
+        target.currentHealth -= damage;
 
         if (gameLog != null)
             gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
