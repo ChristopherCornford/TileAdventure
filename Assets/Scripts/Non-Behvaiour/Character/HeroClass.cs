@@ -10,6 +10,8 @@ public class HeroClass : Character
     public HeroRole role;
 
     [Header("Hero Stats")]
+    public int heroLevel;
+    [Space]
     public int XP;
     [Space]
     public int SP;

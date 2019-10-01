@@ -537,9 +537,7 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   partyBehaviour: {fileID: 0}
   heroParty: []
-  enemyParty:
-  - {fileID: 740787688839167081, guid: cfeee50e6d1a5e34a8d0619b339d304e, type: 3}
-  - {fileID: 4065430586411765405, guid: b2d05d3e9a0f0674c9693ce6df26a236, type: 3}
+  enemyParty: []
   combatOrder: []
   gameLog: {fileID: 953920036}
 --- !u!4 &107724297
@@ -1163,6 +1161,12 @@ MonoBehaviour:
   AllEnemies:
   - {fileID: 7911084480829657908, guid: cfeee50e6d1a5e34a8d0619b339d304e, type: 3}
   - {fileID: 4938449152337250639, guid: b2d05d3e9a0f0674c9693ce6df26a236, type: 3}
+  AllTier1EnemyParties:
+  - {fileID: 4208205279281831967, guid: 91621bed5cba1b14a9a6b85b4400cbd6, type: 3}
+  - {fileID: 1068306352933769065, guid: 0be0ae0d5cd5eba49965d04737c9a25b, type: 3}
+  AllTier2EnemyParties: []
+  AllTier3EnemyParties: []
+  AllTier4EnemyParties: []
   AllArmor:
   - {fileID: 6094495503476679372, guid: 8fb24af71c46efc489001f09c2a726dc, type: 3}
   AllAccessories:

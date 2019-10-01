@@ -29,6 +29,7 @@ public class CombatManager : MonoBehaviour
     public void StartCombat()
     {
         heroParty = partyBehaviour.heroParty;
+        enemyParty = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyBehaviour>().enemyClasses;
 
         gameLog.transform.parent.gameObject.SetActive(true);
 

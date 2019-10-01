@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
+    public PartyBehaviour partyBehaviour;
 
-    public Enemy[] enemyParty;
+    public Sprite previewSprite;
 
-    // Start is called before the first frame update
-    void Start()
+    public GameObject baseEnemy;
+
+    public List<GameObject> enemyParty = new List<GameObject>();
+    public List<Enemy> enemyClasses = new List<Enemy>();
+
+    private void Awake()
     {
-        
-    }
+        partyBehaviour = FindObjectOfType(typeof(PartyBehaviour)) as PartyBehaviour;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        for (int i = 0; i < partyBehaviour.heroParty.Count; i++)
+        {
+            enemyParty.Add(baseEnemy);
+            enemyClasses.Add(baseEnemy.GetComponent<Enemy>());
+        }
+
+        this.name = baseEnemy.name + " x" + enemyParty.Count.ToString();
+
+        Instantiate(baseEnemy, this.transform);
     }
 }

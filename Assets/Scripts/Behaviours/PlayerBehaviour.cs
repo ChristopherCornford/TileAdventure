@@ -159,7 +159,7 @@ public class PlayerBehaviour : MonoBehaviour
                         {
                             nextPos.y -= 0.25f;
 
-                            Instantiate(gameManager.AllEnemies[Random.Range(0, gameManager.AllEnemies.Count)], nextPos, Quaternion.identity);
+                            Instantiate(gameManager.GenerateEnemyParty(), nextPos, Quaternion.identity);
                         }
                     }
                 }
