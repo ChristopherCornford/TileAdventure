@@ -10,7 +10,6 @@ public class HeroClass : Character
     public HeroRole role;
 
     [Header("Hero Stats")]
-    public int heroLevel;
     [Space]
     public int XP;
     [Space]
@@ -155,7 +154,70 @@ public class HeroClass : Character
         Destroy(this.gameObject);
     }
 
+    public void LevelUp(int newLevel)
+    {
+        int timesToLevel = newLevel - this.Level;
 
+        for (int i = 0; i < timesToLevel; i++)
+        {
+            this.Level++;
+
+            switch (this.Level)
+            {
+                case 2:
+                case 6:
+                case 10:
+                case 14:
+                case 18:
+                    Health++;
+                    Attack++;
+
+                    if(this.PrimaryStat == "Attack")
+                        Attack++;
+                    break;
+
+                case 3:
+                case 7:
+                case 11:
+                case 15:
+                case 19:
+                    Health++;
+                    Defense++;
+
+                    if (this.PrimaryStat == "Defense")
+                        Defense++;
+                    break;
+
+                case 4:
+                case 8:
+                case 12:
+                case 16:
+                case 20:
+                    Health++;
+                    Speed++;
+
+                    if (this.PrimaryStat == "Speed")
+                        Speed++;
+                    break;
+
+                case 5:
+                case 9:
+                case 13:
+                case 17:
+                    Health++;
+                    Special++;
+
+                    if (this.PrimaryStat == "Special")
+                        Special++;
+                    break;
+            }
+        }
+
+        if(this.role == HeroRole.Arcanist)
+        {
+            this.spChargeRate = Special;
+        }
+    }
 
     public void CopyHero(HeroClass target, HeroClass template)
     {
@@ -166,12 +228,14 @@ public class HeroClass : Character
         target.Defense = template.Defense;
         target.Speed = template.Speed;
 
+        target.Level = template.Level;
         target.XP = template.XP;
         target.SP = template.SP;
         target.Special = template.Special;
 
         target.SpecialAbility = template.SpecialAbility;
         target.PassiveAbility = template.PassiveAbility;
+        target.PrimaryStat = template.PrimaryStat;
 
         target.weaponSlot = template.weaponSlot;
         target.armorSlot = template.armorSlot;

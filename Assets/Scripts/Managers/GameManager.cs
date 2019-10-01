@@ -148,8 +148,8 @@ public class GameManager : MonoBehaviour
         int lowestLevelInHeroParty = 1;
 
         foreach (HeroClass hero in partyBehaviour.heroParty)
-            if (hero.heroLevel > lowestLevelInHeroParty)
-                lowestLevelInHeroParty = hero.heroLevel;
+            if (hero.Level > lowestLevelInHeroParty)
+                lowestLevelInHeroParty = hero.Level;
 
         switch (lowestLevelInHeroParty)
         {

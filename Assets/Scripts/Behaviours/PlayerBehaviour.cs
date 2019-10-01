@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Tilemaps;
+using UnityEngine.EventSystems;
 
 public class PlayerBehaviour : MonoBehaviour
 {
@@ -55,6 +56,9 @@ public class PlayerBehaviour : MonoBehaviour
     void Update()
     {
         cam.orthographicSize = zoomSlider.value;
+
+        EventSystem.current.GetComponent<EventSystem>().SetSelectedGameObject(null);
+
         MoveCamera();
 
         if(gameManager.currentGamePhase == GameManager.GamePhase.TilePlacement)
@@ -184,11 +188,11 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (cam.transform.position.x < startingPos.x - MAX_X_MOVEMENT)
         {
-            cam.transform.position = new Vector3(-(MAX_X_MOVEMENT), cam.transform.position.y);
+            cam.transform.position = new Vector3(startingPos.x - MAX_X_MOVEMENT, cam.transform.position.y);
         }
         else if (cam.transform.position.x > startingPos.x + MAX_X_MOVEMENT)
         {
-            cam.transform.position = new Vector3(MAX_X_MOVEMENT, cam.transform.position.y);
+            cam.transform.position = new Vector3(startingPos.x + MAX_X_MOVEMENT, cam.transform.position.y);
         }
 
         if (cam.transform.position.y < startingPos.y - MAX_Y_MOVEMENT)

@@ -1235,7 +1235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingPos: {x: 0.25, y: 5.7, z: 0}
-  cameraMoveSpeed: 1
+  cameraMoveSpeed: 3
   camPosition: {x: 0, y: 0, z: 0}
   currentGrid: {fileID: 2006176687}
   currentTileMap: {fileID: 520326405}

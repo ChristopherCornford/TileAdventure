@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
+  Level: 1
   Health: 3
   currentHealth: 3
   Attack: 6

@@ -8,6 +8,8 @@ public class Character : MonoBehaviour
     
     public Sprite sprite;
     [Header("Main Stats")]
+    public int Level;
+    [Space]
     public int Health;
     [Space]
     public int currentHealth;
