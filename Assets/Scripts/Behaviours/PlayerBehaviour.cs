@@ -149,12 +149,12 @@ public class PlayerBehaviour : MonoBehaviour
                     boardManager.Pathfinding(playerIcon.transform.position, nextPos);
 
                     List<Vector3> path = new List<Vector3>();
-
+                    
                     foreach (Node n in boardManager.aStarGrid.path)
                         path.Add(n.worldPosition);
 
                     StartCoroutine(playerIcon.GetComponent<PartyBehaviour>().MoveParty(path.ToArray()));
-
+                    
                     if (tile.GetType() == typeof(VariantTiles))
                     {
                         VariantTiles vTile = tile as VariantTiles;
@@ -216,7 +216,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
 #endif
     }
-    public bool CanBePlaced(TileBase tile, Vector3Int position)
+    public bool CanBePlaced(TileBase tile, Vector3Int position, bool isPathfinding = false)
     {
         if (position.x > boardManager.gameBoardHeight && position.y > boardManager.gameBoardWidth)
         {
@@ -227,7 +227,10 @@ public class PlayerBehaviour : MonoBehaviour
         {
             if (currentTileMap.GetTile(position).name != "Grass")
             {
-                return false;
+                if (!isPathfinding)
+                {
+                    return false;
+                }
             }
         }
 
@@ -434,7 +437,7 @@ public class PlayerBehaviour : MonoBehaviour
         return false;
     }
 
-    TileBase CheckNeighbor(char letter)
+    public TileBase CheckNeighbor(char letter)
     {
         Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 

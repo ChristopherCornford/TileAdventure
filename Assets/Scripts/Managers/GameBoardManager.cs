@@ -146,8 +146,7 @@ public class GameBoardManager : MonoBehaviour
                     }
                 }
             }
-
-           
+            
         }
     }
 
@@ -226,7 +225,7 @@ public class AStarGrid
 
 
                 bool walkable = (manager.gameBoard.GetTile(cellPoint).name != "Grass") ? true : false;
-                grid[x, y] = new Node(walkable, nextPos, x, y);
+                grid[x, y] = new Node(walkable, nextPos, manager.gameBoard.GetTile(cellPoint), x, y);
             }
         }
     }
@@ -250,15 +249,18 @@ public class AStarGrid
                 {
                     if (checkX < gridSizeX && checkX >= 0 && checkY < gridSizeY && checkY >= 0)
                     {
-                        TileBase tile = manager.gameBoard.GetTile(new Vector3Int(node.gridX, node.gridY, 0));
+                        TileBase tile = grid[checkX,checkY].currentTile;
+                        Vector3Int tilePos = manager.grid.WorldToCell(grid[checkX, checkY].worldPosition);
 
                         PlayerBehaviour player = GameObject.FindObjectOfType(typeof(PlayerBehaviour)) as PlayerBehaviour;
 
-                        if (player.CanBePlaced(tile, new Vector3Int(node.gridX, node.gridY, 0)))
+                        /*
+                        if (player.CanBePlaced(tile, manager.grid.WorldToCell(grid[checkX, checkY].worldPosition), true))
                         {
-
+                            neighbors.Add(grid[checkX, checkY]);
                         }
-
+                        */
+                       
                         neighbors.Add(grid[checkX, checkY]);
                     }
                 }
@@ -284,6 +286,7 @@ public class Node
 {
     public bool isWalkable;
     public Vector3 worldPosition;
+    public TileBase currentTile;
 
     public int gridX;
     public int gridY;
@@ -293,10 +296,12 @@ public class Node
 
     public Node parentNode;
 
-    public Node(bool walkable, Vector3 thisPos, int x, int y)
+    public Node(bool walkable, Vector3 thisPos, TileBase tile, int x, int y)
     {
         isWalkable = walkable;
         worldPosition = thisPos;
+
+        currentTile = tile;
 
         gridX = x;
         gridY = y;
