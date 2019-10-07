@@ -42,6 +42,7 @@ public class VariantTiles : Tile
         Town = 0,
         Enemy,
         Traveler,
+        Treasure,
         Boss,
     }
 }

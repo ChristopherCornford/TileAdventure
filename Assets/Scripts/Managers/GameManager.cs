@@ -36,9 +36,25 @@ public class GameManager : MonoBehaviour
     public int currentTurn;
 
 
-    [Header("Tile References")]
-    public List<TileBase> AllBaseTiles;
-    public List<VariantTiles> AllVariantTiles;
+    [Header("Base Tile References")]
+    public List<TileBase> AllBaseTTiles;
+    public List<TileBase> AllBaseLTiles;
+    public List<TileBase> AllBaseXTiles;
+    
+    [Header("Variant Enemy Tile References")]
+    public List<VariantTiles> AllVariantTTiles_Enemy;
+    public List<VariantTiles> AllVariantLTiles_Enemy;
+    public List<VariantTiles> AllVariantXTiles_Enemy;
+
+    [Header("Variant Adventure Tile References")]
+    public List<VariantTiles> AllVariantTTiles_Adventure;
+    public List<VariantTiles> AllVariantLTiles_Adventure;
+    public List<VariantTiles> AllVariantXTiles_Adventure;
+
+    [Header("Variant Treasure Tile References")]
+    public List<VariantTiles> AllVariantTTiles_Treasure;
+    public List<VariantTiles> AllVariantLTiles_Treasure;
+    public List<VariantTiles> AllVariantXTiles_Treasure;
 
     [Header("Character References")]
     public List<HeroClass> AllHeroClasses;
