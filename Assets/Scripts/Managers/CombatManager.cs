@@ -38,6 +38,8 @@ public class CombatManager : MonoBehaviour
 
     public void SetInitativeList()
     {
+        combatOrder.Clear();
+
         List<HeroClass> combatHeroCopies = new List<HeroClass>();
 
         foreach (HeroClass hero in heroParty)

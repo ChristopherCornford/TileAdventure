@@ -1,25 +1,31 @@
 fileFormatVersion: 2
-guid: 4f7e5532102f41749abe2aca2664c68c
+guid: 10786eaabf4482b44a3a5a7165dcc8ee
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2174658046052669241
-    second: Spookie Skeleies-Sheet_0
+      213: 1010568286264073981
+    second: adult Drake_0
   - first:
-      213: 7986564255063839527
-    second: Spookie Skeleies-Sheet_1
+      213: 2532060237220177175
+    second: adult Drake_1
   - first:
-      213: 5505563607056475837
-    second: Spookie Skeleies-Sheet_2
+      213: 1804980481300516469
+    second: adult Drake_2
   - first:
-      213: -2984610321778502678
-    second: Spookie Skeleies-Sheet_3
+      213: -7416488184688266547
+    second: adult Drake_3
   - first:
-      213: 8683328529142297660
-    second: Spookie Skeleies-Sheet_4
+      213: -2789366302551036805
+    second: adult Drake_4
   - first:
-      213: 526800012272437050
-    second: Spookie Skeleies-Sheet_5
+      213: 3452181684101461593
+    second: adult Drake_5
+  - first:
+      213: -2324179098334686146
+    second: adult Drake_6
+  - first:
+      213: 7565319238821194613
+    second: adult Drake_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -61,9 +67,9 @@ TextureImporter:
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 7
-  spritePivot: {x: 0.5, y: 0}
-  spritePixelsToUnits: 64
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 128
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -113,127 +119,169 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Spookie Skeleies-Sheet_0
+      name: adult Drake_0
       rect:
         serializedVersion: 2
-        x: 16
+        x: 0
         y: 0
-        width: 27
+        width: 81
         height: 41
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5be547d5bae15f042847fe81c72ac2bc
-      internalID: 2174658046052669241
+      spriteID: 1400937dfbe73d742900914fc0c68dc1
+      internalID: 1010568286264073981
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spookie Skeleies-Sheet_1
+      name: adult Drake_1
       rect:
         serializedVersion: 2
-        x: 80
+        x: 82
         y: 0
-        width: 27
+        width: 81
         height: 41
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12d553fb53f5bb5499d280ac74564d26
-      internalID: 7986564255063839527
+      spriteID: 0eebfc969cf120f4ab2faa1ee94aa02f
+      internalID: 2532060237220177175
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spookie Skeleies-Sheet_2
+      name: adult Drake_2
       rect:
         serializedVersion: 2
-        x: 144
+        x: 164
         y: 0
-        width: 27
-        height: 40
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 81
+        height: 41
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 092a2f5b272f0324e8dfc8489df4b3ce
-      internalID: 5505563607056475837
+      spriteID: 7c3b16e6540b2584c87ed5e0c13b5d7e
+      internalID: 1804980481300516469
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spookie Skeleies-Sheet_3
+      name: adult Drake_3
       rect:
         serializedVersion: 2
-        x: 208
+        x: 246
         y: 0
-        width: 27
-        height: 39
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 82
+        height: 45
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0d561889ba72e224f997cb2e9356b391
-      internalID: -2984610321778502678
+      spriteID: e48438cee1ba1d74fb995c8dc5858010
+      internalID: -7416488184688266547
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spookie Skeleies-Sheet_4
+      name: adult Drake_4
       rect:
         serializedVersion: 2
-        x: 272
+        x: 328
         y: 0
-        width: 27
-        height: 40
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 80
+        height: 53
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d85fccf0879fe34458a17dd816137584
-      internalID: 8683328529142297660
+      spriteID: a0bd307373ab25445bbf3356449ce56c
+      internalID: -2789366302551036805
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Spookie Skeleies-Sheet_5
+      name: adult Drake_5
       rect:
         serializedVersion: 2
-        x: 337
+        x: 410
         y: 0
-        width: 27
-        height: 42
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 80
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 30cea4bfce39e1a4284c79a73edd320a
-      internalID: 526800012272437050
+      spriteID: e0cadd950347d304e82fcdef73d1330f
+      internalID: 3452181684101461593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adult Drake_6
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 0
+        width: 80
+        height: 49
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 533ac830f0827854eac84b2fb1cb1f98
+      internalID: -2324179098334686146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: adult Drake_7
+      rect:
+        serializedVersion: 2
+        x: 574
+        y: 0
+        width: 82
+        height: 50
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c68fee9a64e420740baf1d4235636c3c
+      internalID: 7565319238821194613
       vertices: []
       indices: 
       edges: []
@@ -241,7 +289,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: a9747ed0545e50248bc2f8c932599f31
+    spriteID: 2a125d1634294804bb152ddfc45410bc
     internalID: 0
     vertices: []
     indices: 

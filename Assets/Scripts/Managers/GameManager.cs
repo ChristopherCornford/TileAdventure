@@ -90,6 +90,11 @@ public class GameManager : MonoBehaviour
         {
             ProceedToNextGamePhase();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            partyBehaviour.heroParty[0].LevelUp(partyBehaviour.heroParty[0].Level + 1);
+        }
     }
 
     public void ProceedToNextGamePhase(bool isGoingToCombat = false)
