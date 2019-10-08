@@ -102,7 +102,7 @@ public class PartyBehaviour : MonoBehaviour
                     newTile = gameManager.AllBaseLTiles[i];
             }
         }
-        else if (currentTile.name.Contains("X"))
+        else if (currentTile.name.Contains("X") || currentTile.name.Contains("B"))
         {
             for (int i = 0; i < gameManager.AllBaseXTiles.Count; i++)
             {
@@ -208,6 +208,7 @@ public class PartyBehaviour : MonoBehaviour
                                 break;
 
                             case VariantTiles.VariantType.Enemy:
+                            case VariantTiles.VariantType.Boss:
                                 gameManager.ProceedToNextGamePhase(true);
                                 break;
                         }

@@ -1144,6 +1144,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7e2a30a8e09c7f34e94e21df8eacb41a, type: 2}
   - {fileID: 11400000, guid: 4a67852b62bcb0d4c9aac2fee8e1f21b, type: 2}
   - {fileID: 11400000, guid: b5d0ed0d8c8d21247b055638924fe74d, type: 2}
+  - {fileID: 11400000, guid: fe5e8d1469d76a644a6064c00a5a3e50, type: 2}
   AllVariantTTiles_Enemy:
   - {fileID: 11400000, guid: a08b520afb70fea47b5f972e012315c1, type: 2}
   - {fileID: 11400000, guid: 819444bf814fe9a4e868fd92cb3ad906, type: 2}
@@ -1186,6 +1187,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cf4dcd6ce1709fe45a61f1f3188d326c, type: 2}
   - {fileID: 11400000, guid: 659bde196d06ef14b939d9e09f958f1b, type: 2}
   - {fileID: 11400000, guid: ea7d371f48104194b8a66d757d2db1fd, type: 2}
+  AllBossTiles:
+  - {fileID: 11400000, guid: 006d88908b8a94c4fa4e420366cf7f41, type: 2}
   AllHeroClasses:
   - {fileID: 7312243259220509362, guid: 767b6f39703db5841b25810002939c1a, type: 3}
   - {fileID: 7312243259220509362, guid: 18c44f9688108034d92f282558cc80df, type: 3}
@@ -1206,6 +1209,8 @@ MonoBehaviour:
   - {fileID: 3590576125392420872, guid: ee35bbfd8d48b5849a8818f994c7ff1e, type: 3}
   - {fileID: 3799346918904664122, guid: ca34420cb17bbad4993dd8d7f6f586d7, type: 3}
   AllTier4EnemyParties: []
+  AllBosses:
+  - {fileID: 5155944227071132662, guid: c0471cd4982e1204ebc53447b884d764, type: 3}
   AllArmor:
   - {fileID: 6094495503476679372, guid: 8fb24af71c46efc489001f09c2a726dc, type: 3}
   AllAccessories:

@@ -56,6 +56,9 @@ public class GameManager : MonoBehaviour
     public List<VariantTiles> AllVariantLTiles_Treasure;
     public List<VariantTiles> AllVariantXTiles_Treasure;
 
+    [Header("Variant Boss Tiles References")]
+    public List<VariantTiles> AllBossTiles;
+
     [Header("Character References")]
     public List<HeroClass> AllHeroClasses;
     public List<GameObject> AllEnemies;
@@ -63,6 +66,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> AllTier2EnemyParties;
     public List<GameObject> AllTier3EnemyParties;
     public List<GameObject> AllTier4EnemyParties;
+    public List<GameObject> AllBosses;
   
 
     [Header("Item References")]
@@ -171,37 +175,52 @@ public class GameManager : MonoBehaviour
         foreach (HeroClass hero in partyBehaviour.heroParty)
             if (hero.Level > lowestLevelInHeroParty)
                 lowestLevelInHeroParty = hero.Level;
-
-        switch (lowestLevelInHeroParty)
+        
+        if (playerBehaviour.tile.GetType() == typeof(VariantTiles))
         {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-                return AllTier1EnemyParties[Random.Range(0, AllTier1EnemyParties.Count)];
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-                return AllTier2EnemyParties[Random.Range(0, AllTier2EnemyParties.Count)];
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-                return AllTier3EnemyParties[Random.Range(0, AllTier3EnemyParties.Count)];
-            case 16:
-            case 17:
-            case 18:
-            case 19:
-            case 20:
-                return AllTier4EnemyParties[Random.Range(0, AllTier4EnemyParties.Count)];
+            VariantTiles variantTile = (VariantTiles)playerBehaviour.tile;
+
+            if (variantTile.variantType == VariantTiles.VariantType.Boss)
+            {
+                return AllBosses[Random.Range(0, AllBosses.Count)];
+            }
+            else
+            {
+                switch (lowestLevelInHeroParty)
+                {
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    case 5:
+                        return AllTier1EnemyParties[Random.Range(0, AllTier1EnemyParties.Count)];
+                    case 6:
+                    case 7:
+                    case 8:
+                    case 9:
+                    case 10:
+                        return AllTier2EnemyParties[Random.Range(0, AllTier2EnemyParties.Count)];
+                    case 11:
+                    case 12:
+                    case 13:
+                    case 14:
+                    case 15:
+                        return AllTier3EnemyParties[Random.Range(0, AllTier3EnemyParties.Count)];
+                    case 16:
+                    case 17:
+                    case 18:
+                    case 19:
+                    case 20:
+                        return AllTier4EnemyParties[Random.Range(0, AllTier4EnemyParties.Count)];
+                }
+
+                return AllTier1EnemyParties[0];
+            }
         }
 
-        return AllTier1EnemyParties[0];
+        return null;
     }
+
 
     private void SetScriptReferences()
     {

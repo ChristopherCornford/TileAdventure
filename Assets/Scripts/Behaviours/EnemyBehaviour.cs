@@ -17,12 +17,20 @@ public class EnemyBehaviour : MonoBehaviour
     {
         partyBehaviour = FindObjectOfType(typeof(PartyBehaviour)) as PartyBehaviour;
 
-        for (int i = 0; i < partyBehaviour.heroParty.Count; i++)
+        if (!baseEnemy.GetComponent<Enemy>().isBoss)
+        {
+            for (int i = 0; i < partyBehaviour.heroParty.Count; i++)
+            {
+                enemyParty.Add(baseEnemy);
+                enemyClasses.Add(baseEnemy.GetComponent<Enemy>());
+            }
+            
+        }
+        else
         {
             enemyParty.Add(baseEnemy);
             enemyClasses.Add(baseEnemy.GetComponent<Enemy>());
         }
-
         this.name = baseEnemy.name + " x" + enemyParty.Count.ToString();
 
         Instantiate(baseEnemy, this.transform);

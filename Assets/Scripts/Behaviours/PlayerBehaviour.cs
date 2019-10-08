@@ -165,6 +165,12 @@ public class PlayerBehaviour : MonoBehaviour
 
                             Instantiate(gameManager.GenerateEnemyParty(), nextPos, Quaternion.identity);
                         }
+                        else if (vTile.variantType == VariantTiles.VariantType.Boss)
+                        {
+                            nextPos.y -= 0.25f;
+
+                            Instantiate(gameManager.GenerateEnemyParty(), nextPos, Quaternion.identity);
+                        }
                     }
                 }
             }

@@ -54,6 +54,20 @@ public class DeckManager : MonoBehaviour
     {
         if (tileDeck.Count > 0)
         {
+            if (gameManager.currentTurn >= ((deckSize / 2) + 1))
+            {
+                int randInt = Random.Range(0, 100);
+
+                if (randInt >= ((deckSize / 2) * (gameManager.currentTurn - (deckSize / 2))))
+                {
+                    tileHand[index].heldTile = gameManager.AllBossTiles[Random.Range(0, gameManager.AllBossTiles.Count)];
+                    tileHand[index].tile = gameManager.AllBossTiles[Random.Range(0, gameManager.AllBossTiles.Count)];
+
+                    tileHand[index].myIndex = index;
+
+                    return;
+                }
+            }
             tileHand[index].heldTile = tileDeck[0] as Tile;
             tileHand[index].tile = tileDeck[0];
             tileHand[index].myIndex = index;

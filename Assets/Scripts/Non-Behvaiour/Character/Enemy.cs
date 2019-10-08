@@ -14,6 +14,8 @@ public class Enemy : Character
     public int goldRewardMin;
     public int goldRewardMax;
 
+    public bool isBoss;
+
     
     public void BasicAttack(HeroClass target, CombatManager combatManager, List<HeroClass> characterParty, bool isHealing = false)
     {

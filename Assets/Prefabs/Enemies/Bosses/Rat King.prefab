@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6141508178140157649}
   m_Layer: 0
   m_Name: Rat King
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,8 +115,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   Level: 0
-  Health: 0
-  currentHealth: 0
+  Health: 50
+  currentHealth: 50
   Attack: 0
   Defense: 0
   Speed: 0
@@ -124,3 +124,4 @@ MonoBehaviour:
   xpReward: 0
   goldRewardMin: 0
   goldRewardMax: 0
+  isBoss: 1
