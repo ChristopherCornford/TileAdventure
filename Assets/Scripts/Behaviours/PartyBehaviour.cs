@@ -91,7 +91,20 @@ public class PartyBehaviour : MonoBehaviour
             for (int i = 0; i < gameManager.AllBaseTTiles.Count; i++)
             {
                 if (gameManager.AllBaseTTiles[i].name == currentTile.name)
-                    newTile = gameManager.AllBaseTTiles[i];
+                {
+                    Tile tile = gameManager.AllBaseTTiles[i] as Tile;
+                    Tile xtile = currentTile as Tile;
+
+                    if (tile.sprite == xtile.sprite)
+                    {
+                        newTile = gameManager.AllBaseTTiles[i];
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
             }
         }
         else if (currentTile.name.Contains("L"))
@@ -99,22 +112,69 @@ public class PartyBehaviour : MonoBehaviour
             for (int i = 0; i < gameManager.AllBaseLTiles.Count; i++)
             {
                 if (gameManager.AllBaseLTiles[i].name == currentTile.name)
-                    newTile = gameManager.AllBaseLTiles[i];
+                {
+                    Tile tile = gameManager.AllBaseLTiles[i] as Tile;
+                    Tile xtile = currentTile as Tile;
+
+                    if (tile.sprite == xtile.sprite)
+                    {
+                        newTile = gameManager.AllBaseLTiles[i];
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
             }
         }
-        else if (currentTile.name.Contains("X") || currentTile.name.Contains("B"))
+        else if (currentTile.name.Contains("X"))
         {
             for (int i = 0; i < gameManager.AllBaseXTiles.Count; i++)
             {
                 if (gameManager.AllBaseXTiles[i].name == currentTile.name)
-                    newTile = gameManager.AllBaseXTiles[i];
+                {
+                    Tile tile = gameManager.AllBaseXTiles[i] as Tile;
+                    Tile xtile = currentTile as Tile;
+
+                    if (tile.sprite == xtile.sprite)
+                    {
+                        newTile = gameManager.AllBaseXTiles[i];
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+        }
+        else if (currentTile.name.Contains("B"))
+        {
+            for (int i = 0; i < gameManager.AllBaseBossTiles.Count; i++)
+            {
+                if (gameManager.AllBaseBossTiles[i].name == currentTile.name)
+                {
+                    Tile tile = gameManager.AllBaseBossTiles[i] as Tile;
+                    Tile xtile = currentTile as Tile;
+
+                    if (tile.sprite == xtile.sprite)
+                    {
+                        newTile = gameManager.AllBaseBossTiles[i];
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
             }
         }
 
         tilemap.SetTile(intPos, newTile);
     }
 
-    public IEnumerator MoveParty(Vector3[] path = null)
+    public IEnumerator MoveParty(Vector3[] path)
     {
         if(path == null)
         {
@@ -175,9 +235,10 @@ public class PartyBehaviour : MonoBehaviour
 
                 yield return new WaitForSeconds(Time.deltaTime);
             }
-
-
+            
+            
             this.transform.position = path[path.Length - 1];
+            
 
             Vector3Int intPos = grid.WorldToCell(this.transform.position);
             currentTile = tilemap.GetTile(intPos);

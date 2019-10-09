@@ -17,9 +17,6 @@ public class CombatManager : MonoBehaviour
 
     public TextMeshProUGUI gameLog;
 
-    //private List<HeroClass> combatHeroCopies;
-    //private List<Enemy> combatEnemyCopies;
-
     private void Awake()
     {
         gameManager = GameObject.FindObjectOfType(typeof(GameManager)) as GameManager;

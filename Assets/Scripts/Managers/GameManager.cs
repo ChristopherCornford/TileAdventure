@@ -35,11 +35,14 @@ public class GameManager : MonoBehaviour
     public int currentLevel;
     public int currentTurn;
 
+    public Season currentSeason;
 
     [Header("Base Tile References")]
     public List<TileBase> AllBaseTTiles;
     public List<TileBase> AllBaseLTiles;
     public List<TileBase> AllBaseXTiles;
+    public List<TileBase> AllBaseBossTiles;
+
     
     [Header("Variant Enemy Tile References")]
     public List<VariantTiles> AllVariantTTiles_Enemy;
@@ -97,6 +100,8 @@ public class GameManager : MonoBehaviour
         {
             gameBoardManager.StartRound();
             deckManager.StartRound();
+
+            currentSeason = Season.Summer;
         }
         currentTurn = 1;
 
@@ -113,7 +118,8 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            partyBehaviour.heroParty[0].LevelUp(partyBehaviour.heroParty[0].Level + 1);
+            foreach(HeroClass hero in partyBehaviour.heroParty)
+                hero.LevelUp(partyBehaviour.heroParty[0].Level + 1);
         }
     }
 
@@ -240,5 +246,13 @@ public class GameManager : MonoBehaviour
         Event,
         Combat,
         End,
+    }
+
+    public enum Season
+    {
+        Summer,
+        Fall,
+        Winter,
+        Spring
     }
 }

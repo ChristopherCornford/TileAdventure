@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 
 public class GameBoardManager : MonoBehaviour
 {
+    public GameManager gameManager;
+
     public Tilemap gameBoard;
     public Grid grid;
     public AStarGrid aStarGrid;
@@ -15,14 +17,44 @@ public class GameBoardManager : MonoBehaviour
 
     public TileBase startingTile;
     public TileBase fillTile;
+    public TileBase[] fillTiles;
     public TileBase rimTile;
+    public TileBase[] rimTiles;
 
     public Transform seeker;
     public Transform target;
 
+    public void Awake()
+    {
+        gameManager = FindObjectOfType(typeof(GameManager)) as GameManager;
+    }
+
     public void StartRound()
     {
         gameBoard.SetTile(startingPos, startingTile);
+
+        switch (gameManager.currentSeason)
+        {
+            case GameManager.Season.Summer:
+                fillTile = fillTiles[0];
+                rimTile = rimTiles[0];
+                break;
+
+            case GameManager.Season.Fall:
+                fillTile = fillTiles[1];
+                rimTile = rimTiles[1];
+                break;
+
+            case GameManager.Season.Winter:
+                fillTile = fillTiles[2];
+                rimTile = rimTiles[2];
+                break;
+
+            case GameManager.Season.Spring:
+                fillTile = fillTiles[3];
+                rimTile = rimTiles[3];
+                break;
+        }
 
         FillMap();
 
@@ -233,6 +265,8 @@ public class AStarGrid
     public List<Node> FindNeighborNodes(Node node)
     {
         List<Node> neighbors = new List<Node>();
+        
+        TileBase originTile = node.currentTile;
 
         for (int x = -1; x <= 1; x++)
         {
@@ -249,25 +283,93 @@ public class AStarGrid
                 {
                     if (checkX < gridSizeX && checkX >= 0 && checkY < gridSizeY && checkY >= 0)
                     {
-                        TileBase tile = grid[checkX,checkY].currentTile;
-                        Vector3Int tilePos = manager.grid.WorldToCell(grid[checkX, checkY].worldPosition);
+                        TileBase targetTile = grid[checkX, checkY].currentTile;
 
-                        PlayerBehaviour player = GameObject.FindObjectOfType(typeof(PlayerBehaviour)) as PlayerBehaviour;
-
-                        /*
-                        if (player.CanBePlaced(tile, manager.grid.WorldToCell(grid[checkX, checkY].worldPosition), true))
-                        {
+                        if (IsGoodNeighbor(originTile, targetTile, x, y))
                             neighbors.Add(grid[checkX, checkY]);
-                        }
-                        */
-                       
-                        neighbors.Add(grid[checkX, checkY]);
                     }
                 }
             }
         }
 
         return neighbors;
+    }
+    
+    public bool IsGoodNeighbor(TileBase origin, TileBase target, int x, int y)
+    {
+        if (x == 0 && y == 1)
+        {
+            if (origin.name.Contains("N")) 
+            {
+                if (target.name.Contains("S"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if (x == 0 && y == -1)
+        {
+            if (origin.name.Contains("S"))
+            {
+                if (target.name.Contains("N"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if (x == -1 && y == 0)
+        {
+            if (origin.name.Contains("W"))
+            {
+                if (target.name.Contains("E"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if (x == 1 && y == 0)
+        {
+            if (origin.name.Contains("E"))
+            {
+                if (target.name.Contains("W"))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return false;
     }
 
     public Node NodeFromWorldPoint(Vector3 worldPosition)

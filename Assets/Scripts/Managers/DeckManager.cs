@@ -27,6 +27,7 @@ public class DeckManager : MonoBehaviour
     public List<TileBase> tileDeck;
 
     private int handSlotsExhausted;
+    private bool bossInHand;
 
     public bool endTilePlacement;
 
@@ -54,20 +55,26 @@ public class DeckManager : MonoBehaviour
     {
         if (tileDeck.Count > 0)
         {
-            if (gameManager.currentTurn >= ((deckSize / 2) + 1))
+            if (!bossInHand)
             {
-                int randInt = Random.Range(0, 100);
-
-                if (randInt >= ((deckSize / 2) * (gameManager.currentTurn - (deckSize / 2))))
+                if (gameManager.currentTurn >= ((deckSize / 2) + 1))
                 {
-                    tileHand[index].heldTile = gameManager.AllBossTiles[Random.Range(0, gameManager.AllBossTiles.Count)];
-                    tileHand[index].tile = gameManager.AllBossTiles[Random.Range(0, gameManager.AllBossTiles.Count)];
+                    int randInt = Random.Range(0, 100);
 
-                    tileHand[index].myIndex = index;
+                    if (randInt >= ((deckSize / 2) * (gameManager.currentTurn - (deckSize / 2))))
+                    {
+                        tileHand[index].heldTile = gameManager.AllBossTiles[Random.Range(0, gameManager.AllBossTiles.Count)];
+                        tileHand[index].tile = gameManager.AllBossTiles[Random.Range(0, gameManager.AllBossTiles.Count)];
 
-                    return;
+                        tileHand[index].myIndex = index;
+
+                        bossInHand = true;
+
+                        return;
+                    }
                 }
             }
+            
             tileHand[index].heldTile = tileDeck[0] as Tile;
             tileHand[index].tile = tileDeck[0];
             tileHand[index].myIndex = index;
@@ -103,22 +110,82 @@ public class DeckManager : MonoBehaviour
             {
                 if (numOfT > 0)
                 {
-                    tempDeck.Add(gameManager.AllBaseTTiles[Random.Range(0, gameManager.AllBaseTTiles.Count)]);
-                    numOfT--;
+                    switch (gameManager.currentSeason)
+                    {
+                        case GameManager.Season.Summer:
+                            tempDeck.Add(gameManager.AllBaseTTiles[Random.Range(0, 4)]);
+                            numOfT--;
+                            break;
+
+                        case GameManager.Season.Fall:
+                            tempDeck.Add(gameManager.AllBaseTTiles[Random.Range(4, 8)]);
+                            numOfT--;
+                            break;
+
+                        case GameManager.Season.Winter:
+                            tempDeck.Add(gameManager.AllBaseTTiles[Random.Range(8, 12)]);
+                            numOfT--;
+                            break;
+
+                        case GameManager.Season.Spring:
+                            tempDeck.Add(gameManager.AllBaseTTiles[Random.Range(12, 16)]);
+                            numOfT--;
+                            break;
+                    }
                 }
                 else
                 {
                     if (numOfL > 0)
                     {
-                        tempDeck.Add(gameManager.AllBaseLTiles[Random.Range(0, gameManager.AllBaseLTiles.Count)]);
-                        numOfL--;
+                        switch (gameManager.currentSeason)
+                        {
+                            case GameManager.Season.Summer:
+                                tempDeck.Add(gameManager.AllBaseLTiles[Random.Range(0, 4)]);
+                                numOfL--;
+                                break;
+
+                            case GameManager.Season.Fall:
+                                tempDeck.Add(gameManager.AllBaseLTiles[Random.Range(4, 8)]);
+                                numOfL--;
+                                break;
+
+                            case GameManager.Season.Winter:
+                                tempDeck.Add(gameManager.AllBaseLTiles[Random.Range(8, 12)]);
+                                numOfL--;
+                                break;
+
+                            case GameManager.Season.Spring:
+                                tempDeck.Add(gameManager.AllBaseLTiles[Random.Range(12, 16)]);
+                                numOfL--;
+                                break;
+                        }
                     }
                     else
                     {
                         if (numOfX > 0)
                         {
-                            tempDeck.Add(gameManager.AllBaseXTiles[Random.Range(0, gameManager.AllBaseXTiles.Count)]);
-                            numOfX--;
+                            switch (gameManager.currentSeason)
+                            {
+                                case GameManager.Season.Summer:
+                                    tempDeck.Add(gameManager.AllBaseXTiles[Random.Range(0, 3)]);
+                                    numOfX--;
+                                    break;
+
+                                case GameManager.Season.Fall:
+                                    tempDeck.Add(gameManager.AllBaseXTiles[Random.Range(3, 6)]);
+                                    numOfX--;
+                                    break;
+
+                                case GameManager.Season.Winter:
+                                    tempDeck.Add(gameManager.AllBaseXTiles[Random.Range(6, 9)]);
+                                    numOfX--;
+                                    break;
+
+                                case GameManager.Season.Spring:
+                                    tempDeck.Add(gameManager.AllBaseXTiles[Random.Range(9, 12)]);
+                                    numOfX--;
+                                    break;
+                            }
                         }
                         else
                         {
@@ -135,22 +202,83 @@ public class DeckManager : MonoBehaviour
                 {
                     if (numOfT > 0)
                     {
-                        tempDeck.Add(gameManager.AllVariantTTiles_Enemy[Random.Range(0, gameManager.AllVariantTTiles_Enemy.Count)]);
-                        numOfT--;
+                        switch (gameManager.currentSeason)
+                        {
+                            case GameManager.Season.Summer:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Enemy[Random.Range(0, 4)]);
+                                numOfT--;
+                                break;
+
+                            case GameManager.Season.Fall:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Enemy[Random.Range(4, 8)]);
+                                numOfT--;
+                                break;
+
+                            case GameManager.Season.Winter:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Enemy[Random.Range(8, 12)]);
+                                numOfT--;
+                                break;
+
+                            case GameManager.Season.Spring:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Enemy[Random.Range(12, 16)]);
+                                numOfT--;
+                                break;
+                        }
+                        
                     }
                     else
                     {
                         if (numOfL > 0)
                         {
-                            tempDeck.Add(gameManager.AllVariantLTiles_Enemy[Random.Range(0, gameManager.AllVariantLTiles_Enemy.Count)]);
-                            numOfL--;
+                            switch (gameManager.currentSeason)
+                            {
+                                case GameManager.Season.Summer:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Enemy[Random.Range(0, 4)]);
+                                    numOfL--;
+                                    break;
+
+                                case GameManager.Season.Fall:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Enemy[Random.Range(4, 8)]);
+                                    numOfL--;
+                                    break;
+
+                                case GameManager.Season.Winter:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Enemy[Random.Range(8, 12)]);
+                                    numOfL--;
+                                    break;
+
+                                case GameManager.Season.Spring:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Enemy[Random.Range(12, 16)]);
+                                    numOfL--;
+                                    break;
+                            }
                         }
                         else
                         {
                             if (numOfX > 0)
                             {
-                                tempDeck.Add(gameManager.AllVariantXTiles_Enemy[Random.Range(0, gameManager.AllVariantXTiles_Enemy.Count)]);
-                                numOfX--;
+                                switch (gameManager.currentSeason)
+                                {
+                                    case GameManager.Season.Summer:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Enemy[Random.Range(0, 3)]);
+                                        numOfX--;
+                                        break;
+
+                                    case GameManager.Season.Fall:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Enemy[Random.Range(3, 6)]);
+                                        numOfX--;
+                                        break;
+
+                                    case GameManager.Season.Winter:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Enemy[Random.Range(6, 9)]);
+                                        numOfX--;
+                                        break;
+
+                                    case GameManager.Season.Spring:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Enemy[Random.Range(9, 12)]);
+                                        numOfX--;
+                                        break;
+                                }
                             }
                             else
                             {
@@ -163,22 +291,82 @@ public class DeckManager : MonoBehaviour
                 {
                     if (numOfT > 0)
                     {
-                        tempDeck.Add(gameManager.AllVariantTTiles_Adventure[Random.Range(0, gameManager.AllVariantTTiles_Adventure.Count)]);
-                        numOfT--;
+                        switch (gameManager.currentSeason)
+                        {
+                            case GameManager.Season.Summer:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Adventure[Random.Range(0, 4)]);
+                                numOfT--;
+                                break;
+
+                            case GameManager.Season.Fall:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Adventure[Random.Range(4, 8)]);
+                                numOfT--;
+                                break;
+
+                            case GameManager.Season.Winter:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Adventure[Random.Range(8, 12)]);
+                                numOfT--;
+                                break;
+
+                            case GameManager.Season.Spring:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Adventure[Random.Range(12, 16)]);
+                                numOfT--;
+                                break;
+                        }
                     }
                     else
                     {
                         if (numOfL > 0)
                         {
-                            tempDeck.Add(gameManager.AllVariantLTiles_Adventure[Random.Range(0, gameManager.AllVariantLTiles_Adventure.Count)]);
-                            numOfL--;
+                            switch (gameManager.currentSeason)
+                            {
+                                case GameManager.Season.Summer:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Adventure[Random.Range(0, 4)]);
+                                    numOfL--;
+                                    break;
+
+                                case GameManager.Season.Fall:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Adventure[Random.Range(4, 8)]);
+                                    numOfL--;
+                                    break;
+
+                                case GameManager.Season.Winter:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Adventure[Random.Range(8, 12)]);
+                                    numOfL--;
+                                    break;
+
+                                case GameManager.Season.Spring:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Adventure[Random.Range(12, 16)]);
+                                    numOfL--;
+                                    break;
+                            }
                         }
                         else
                         {
                             if (numOfX > 0)
                             {
-                                tempDeck.Add(gameManager.AllVariantXTiles_Adventure[Random.Range(0, gameManager.AllVariantXTiles_Adventure.Count)]);
-                                numOfX--;
+                                switch (gameManager.currentSeason)
+                                {
+                                    case GameManager.Season.Summer:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Adventure[Random.Range(0, 3)]);
+                                        numOfX--;
+                                        break;
+
+                                    case GameManager.Season.Fall:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Adventure[Random.Range(3, 6)]);
+                                        numOfX--;
+                                        break;
+
+                                    case GameManager.Season.Winter:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Adventure[Random.Range(6, 9)]);
+                                        numOfX--;
+                                        break;
+
+                                    case GameManager.Season.Spring:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Adventure[Random.Range(9, 12)]);
+                                        numOfX--;
+                                        break;
+                                }
                             }
                             else
                             {
@@ -191,22 +379,82 @@ public class DeckManager : MonoBehaviour
                 {
                     if (numOfT > 0)
                     {
-                        tempDeck.Add(gameManager.AllVariantTTiles_Treasure[Random.Range(0, gameManager.AllVariantTTiles_Treasure.Count)]);
-                        numOfT--;
+                        switch (gameManager.currentSeason)
+                        {
+                            case GameManager.Season.Summer:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Treasure[Random.Range(0, 4)]);
+                                numOfT--;
+                                break;
+
+                            case GameManager.Season.Fall:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Treasure[Random.Range(4, 8)]);
+                                numOfT--;
+                                break;
+
+                            case GameManager.Season.Winter:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Treasure[Random.Range(8, 12)]);
+                                numOfT--;
+                                break;
+
+                            case GameManager.Season.Spring:
+                                tempDeck.Add(gameManager.AllVariantTTiles_Treasure[Random.Range(12, 16)]);
+                                numOfT--;
+                                break;
+                        }
                     }
                     else
                     {
                         if (numOfL > 0)
                         {
-                            tempDeck.Add(gameManager.AllVariantLTiles_Treasure[Random.Range(0, gameManager.AllVariantLTiles_Treasure.Count)]);
-                            numOfL--;
+                            switch (gameManager.currentSeason)
+                            {
+                                case GameManager.Season.Summer:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Treasure[Random.Range(0, 4)]);
+                                    numOfL--;
+                                    break;
+
+                                case GameManager.Season.Fall:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Treasure[Random.Range(4, 8)]);
+                                    numOfL--;
+                                    break;
+
+                                case GameManager.Season.Winter:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Treasure[Random.Range(8, 12)]);
+                                    numOfL--;
+                                    break;
+
+                                case GameManager.Season.Spring:
+                                    tempDeck.Add(gameManager.AllVariantLTiles_Treasure[Random.Range(12, 16)]);
+                                    numOfL--;
+                                    break;
+                            }
                         }
                         else
                         {
                             if (numOfX > 0)
                             {
-                                tempDeck.Add(gameManager.AllVariantXTiles_Treasure[Random.Range(0, gameManager.AllVariantXTiles_Treasure.Count)]);
-                                numOfX--;
+                                switch (gameManager.currentSeason)
+                                {
+                                    case GameManager.Season.Summer:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Treasure[Random.Range(0, 3)]);
+                                        numOfX--;
+                                        break;
+
+                                    case GameManager.Season.Fall:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Treasure[Random.Range(3, 6)]);
+                                        numOfX--;
+                                        break;
+
+                                    case GameManager.Season.Winter:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Treasure[Random.Range(6, 9)]);
+                                        numOfX--;
+                                        break;
+
+                                    case GameManager.Season.Spring:
+                                        tempDeck.Add(gameManager.AllVariantXTiles_Treasure[Random.Range(9, 12)]);
+                                        numOfX--;
+                                        break;
+                                }
                             }
                             else
                             {

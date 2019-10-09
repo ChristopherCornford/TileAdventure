@@ -73,12 +73,12 @@ public class PlayerBehaviour : MonoBehaviour
             
             if (Input.GetMouseButtonDown(0))
             {
-                if (currentTileMap.GetTile(position).name.Contains("NESW"))
+                if (currentTileMap.GetTile(position).name == "NESW-x")
                 {
-                    if (playerIcon.GetComponent<PartyBehaviour>().currentTile.name.Contains("NESW"))
+                    if (playerIcon.GetComponent<PartyBehaviour>().currentTile.name == "NESW-x")
                     {
                         gameManager.ProceedToNextGamePhase();
-                        StartCoroutine(playerIcon.GetComponent<PartyBehaviour>().MoveParty());
+                        StartCoroutine(playerIcon.GetComponent<PartyBehaviour>().MoveParty(null));
                     }
                     else
                     {
@@ -222,7 +222,7 @@ public class PlayerBehaviour : MonoBehaviour
         }
 #endif
     }
-    public bool CanBePlaced(TileBase tile, Vector3Int position, bool isPathfinding = false)
+    public bool CanBePlaced(TileBase tile, Vector3Int position)
     {
         if (position.x > boardManager.gameBoardHeight && position.y > boardManager.gameBoardWidth)
         {
@@ -233,10 +233,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             if (currentTileMap.GetTile(position).name != "Grass")
             {
-                if (!isPathfinding)
-                {
-                    return false;
-                }
+                return false;
             }
         }
 
