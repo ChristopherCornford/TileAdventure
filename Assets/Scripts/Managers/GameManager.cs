@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
         {
             foreach(HeroClass hero in partyBehaviour.heroParty)
                 hero.LevelUp(partyBehaviour.heroParty[0].Level + 1);
-        }
+        }                                     
     }
 
     public void ProceedToNextGamePhase(bool isGoingToCombat = false)

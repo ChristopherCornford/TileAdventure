@@ -1130,7 +1130,7 @@ MonoBehaviour:
   currentGamePhase: 1
   currentLevel: 0
   currentTurn: 0
-  currentSeason: 0
+  currentSeason: 1
   AllBaseTTiles:
   - {fileID: 11400000, guid: 73d04bdfc0d572e4988f21acb6a51e27, type: 2}
   - {fileID: 11400000, guid: 319dc2507bfd46744a09b083f98ec7db, type: 2}
@@ -1234,7 +1234,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 42b611d4dc1d9954982e6b87708ffd7c, type: 2}
   - {fileID: 11400000, guid: 87ecb22d67cb8a44d91c1a94b5e81f86, type: 2}
   AllBossTiles:
-  - {fileID: 11400000, guid: 006d88908b8a94c4fa4e420366cf7f41, type: 2}
+  - {fileID: 11400000, guid: f44cf2145ae5c634ca6418bde2197f02, type: 2}
   AllHeroClasses:
   - {fileID: 7312243259220509362, guid: 767b6f39703db5841b25810002939c1a, type: 3}
   - {fileID: 7312243259220509362, guid: 18c44f9688108034d92f282558cc80df, type: 3}
@@ -4878,7 +4878,7 @@ MonoBehaviour:
   gameBoardWidth: 7
   gameBoardHeight: 7
   startingPos: {x: 3, y: 3, z: 0}
-  startingTile: {fileID: 11400000, guid: 13712d125fc7896459615ac114bbc7eb, type: 2}
+  startingTile: {fileID: 11400000, guid: 790f9ae9e2036af4eaae10c8ef17b312, type: 2}
   fillTile: {fileID: 11400000, guid: 0d5a2fd32a22f944f9f710c0e0858c65, type: 2}
   fillTiles:
   - {fileID: 11400000, guid: 0d5a2fd32a22f944f9f710c0e0858c65, type: 2}
