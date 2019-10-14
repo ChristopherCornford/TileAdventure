@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 271a5616ebb62bd4898a0a0712b51664, type: 3}
   m_Name: NS-X
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: e7bd431f6abb9054e9e689b758f92af9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca6ac00fb02aff24cbc988b8436f445b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

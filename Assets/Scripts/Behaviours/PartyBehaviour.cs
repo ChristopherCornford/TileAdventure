@@ -15,6 +15,7 @@ public class PartyBehaviour : MonoBehaviour
     public float pauseLength;
 
     public TileBase startingTile;
+    public Vector3 startingPos;
     public TileBase currentTile;
     public Grid grid;
     public Tilemap tilemap;
@@ -32,13 +33,19 @@ public class PartyBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentTile = startingTile;
+        StartRound();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public void StartRound()
+    {
+        currentTile = startingTile;
+        this.transform.position = startingPos;
     }
 
     public void AddCharacterToParty(string name, int index = -1)
@@ -80,8 +87,9 @@ public class PartyBehaviour : MonoBehaviour
 
     }
 
-    public void EndCombat()
+    public void EndCombat(bool endRound = false)
     {
+
         Vector3Int intPos = grid.WorldToCell(this.transform.position);
 
         TileBase newTile = null;
@@ -172,6 +180,12 @@ public class PartyBehaviour : MonoBehaviour
         }
 
         tilemap.SetTile(intPos, newTile);
+
+
+        if (endRound)
+        {
+            gameManager.StartCoroutine("ProceedToNextRound");
+        }
     }
 
     public IEnumerator MoveParty(Vector3[] path)
@@ -217,20 +231,14 @@ public class PartyBehaviour : MonoBehaviour
         {
             for (int i = 0; i < path.Length; i++)
             {
-                Vector3 startingPosition = this.transform.position;
-                Vector3 distance = path[i] - this.transform.position;
-                float currentLerpTime = 0f;
-
                 while (this.transform.position != path[i])
                 {
-                    currentLerpTime += Time.deltaTime;
 
-                    if (currentLerpTime >= transitionLength)
-                        currentLerpTime = transitionLength;
+                    float step = boardMovementSpeed * Time.deltaTime;
 
-                    float percTraveled = currentLerpTime / transitionLength;
-                    this.transform.position = Vector3.Lerp(startingPosition, path[i], percTraveled);
-                    yield return new WaitForSeconds(percTraveled / boardMovementSpeed);
+                    this.transform.position = Vector3.MoveTowards(this.transform.position, path[i], step);
+                    
+                    yield return new WaitForSeconds(step / 2);
                 }
 
                 yield return new WaitForSeconds(Time.deltaTime);

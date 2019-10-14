@@ -52,6 +52,11 @@ public class PlayerBehaviour : MonoBehaviour
         
     }
 
+    public void StartRound()
+    {
+        this.transform.position = startingPos;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -73,7 +78,7 @@ public class PlayerBehaviour : MonoBehaviour
             
             if (Input.GetMouseButtonDown(0))
             {
-                if (currentTileMap.GetTile(position).name == "NESW-x")
+                if (currentTileMap.GetTile(position) != null && currentTileMap.GetTile(position).name == "NESW-x")
                 {
                     if (playerIcon.GetComponent<PartyBehaviour>().currentTile.name == "NESW-x")
                     {

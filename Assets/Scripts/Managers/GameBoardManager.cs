@@ -10,12 +10,12 @@ public class GameBoardManager : MonoBehaviour
     public Tilemap gameBoard;
     public Grid grid;
     public AStarGrid aStarGrid;
-
     public int gameBoardWidth;
     public int gameBoardHeight;
     public Vector3Int startingPos;
 
     public TileBase startingTile;
+    public TileBase[] startingTiles;
     public TileBase fillTile;
     public TileBase[] fillTiles;
     public TileBase rimTile;
@@ -29,33 +29,42 @@ public class GameBoardManager : MonoBehaviour
         gameManager = FindObjectOfType(typeof(GameManager)) as GameManager;
     }
 
-    public void StartRound()
+    public void StartRound(bool isFirstRound = true)
     {
-        gameBoard.SetTile(startingPos, startingTile);
-
         switch (gameManager.currentSeason)
         {
             case GameManager.Season.Summer:
+                startingTile = startingTiles[0];
                 fillTile = fillTiles[0];
                 rimTile = rimTiles[0];
                 break;
 
             case GameManager.Season.Fall:
+                startingTile = startingTiles[1];
                 fillTile = fillTiles[1];
                 rimTile = rimTiles[1];
                 break;
 
             case GameManager.Season.Winter:
+                startingTile = startingTiles[2];
                 fillTile = fillTiles[2];
                 rimTile = rimTiles[2];
                 break;
 
             case GameManager.Season.Spring:
+                startingTile = startingTiles[3];
                 fillTile = fillTiles[3];
                 rimTile = rimTiles[3];
                 break;
         }
 
+        if (!isFirstRound)
+        {
+            DestroyBoard();
+        }
+
+        gameBoard.SetTile(startingPos, startingTile);
+        
         FillMap();
 
         aStarGrid.SetVariables(GameObject.FindGameObjectWithTag("Player").transform.position);
@@ -92,6 +101,20 @@ public class GameBoardManager : MonoBehaviour
                     gameBoard.SetTile(newPos, rimTile);
 
                 }
+            }
+        }
+    }
+
+    private void DestroyBoard()
+    {
+        for (int i = -5; i < gameBoardHeight + 5; i++)
+        {
+            for (int j = -5; j < gameBoardWidth + 5; j++)
+            {
+                Vector3Int newPos = new Vector3Int(j, i, 0);
+
+                gameBoard.SetTile(newPos, null);
+
             }
         }
     }

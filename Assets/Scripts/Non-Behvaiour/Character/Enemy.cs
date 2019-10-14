@@ -16,6 +16,7 @@ public class Enemy : Character
 
     public bool isBoss;
 
+    public GameObject hitSprite;
     
     public void BasicAttack(HeroClass target, CombatManager combatManager, List<HeroClass> characterParty, bool isHealing = false)
     {
@@ -37,6 +38,10 @@ public class Enemy : Character
                 target.currentHealth -= damage;
 
                 gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
+
+                Transform animationTransform = GameObject.FindGameObjectWithTag("Player").transform;
+                SpawnAnimation(animationTransform);
+
                 break;
         }
 
@@ -63,6 +68,12 @@ public class Enemy : Character
 
     }
 
+    void SpawnAnimation(Transform target)
+    {
+        GameObject newAttack = Instantiate(hitSprite, target);
+        Destroy(newAttack, 1.5f);
+    }
+
     public void Die(CombatManager combatManager, List<Enemy> characterParty)
     {
         if (combatManager != null)
@@ -80,5 +91,9 @@ public class Enemy : Character
         target.Attack = template.Attack;
         target.Defense = template.Defense;
         target.Speed = template.Speed;
+
+        target.hitSprite = template.hitSprite;
+
+        target.isBoss = template.isBoss;
     }
 }

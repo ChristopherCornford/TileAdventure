@@ -75,6 +75,7 @@ public class ShopManager : MonoBehaviour
     {
         promptPanel.SetActive(true);
 
+        uiObjectsToDelete.Clear();
         PopulateSalesLists();
 
         GenerateShop(shopType);
@@ -195,23 +196,27 @@ public class ShopManager : MonoBehaviour
                 {
                     if (currentlySelectedItem.GetType() == typeof(Armor))
                     {
-                        hero.armorSlot = currentlySelectedItem as Armor;
+                        hero.ModifyStatsFromItems(currentlySelectedItem);
+                        //hero.armorSlot = currentlySelectedItem as Armor;
                     }
                     else if (currentlySelectedItem.GetType() == typeof(Accessory))
                     {
-                        hero.accessorySlot = currentlySelectedItem as Accessory;
+                        hero.ModifyStatsFromItems(currentlySelectedItem);
+                        //hero.accessorySlot = currentlySelectedItem as Accessory;
                     }
                     else if (currentlySelectedItem.GetType() == typeof(Weapon))
                     {
-                        hero.weaponSlot = currentlySelectedItem as Weapon;
+                        hero.ModifyStatsFromItems(currentlySelectedItem);
+                        //hero.weaponSlot = currentlySelectedItem as Weapon;
                     }
                 }
 
                 break;
 
             case ShopType.Mercenaries:
-                
-                partyBehaviour.AddCharacterToParty(currentlySelectedMercenary.name, index);
+
+                if (currentlySelectedMercenary != null)
+                    partyBehaviour.AddCharacterToParty(currentlySelectedMercenary.name, index);
 
                 break;
         }
@@ -225,6 +230,8 @@ public class ShopManager : MonoBehaviour
         {
             Destroy(uiObjectsToDelete[i]);
         }
+
+        uiObjectsToDelete.Clear();
 
         currentlySelectedItem = null;
         currentlySelectedMercenary = null;

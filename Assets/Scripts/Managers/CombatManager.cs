@@ -5,7 +5,6 @@ using TMPro;
 
 public class CombatManager : MonoBehaviour
 {
-
     public GameManager gameManager;
     public PartyBehaviour partyBehaviour;
 
@@ -136,7 +135,7 @@ public class CombatManager : MonoBehaviour
                         currentEnemy.BasicAttack(combatHeroCopies[Random.Range(0, combatHeroCopies.Count)], this, combatHeroCopies);
                     }
 
-                    if (i == combatOrder.Count - 1 && (combatHeroCopies.Count > 0 && combatEnemyCopies.Count > 0))
+                    if ((i == combatOrder.Count || i == combatOrder.Count - 1) && (combatHeroCopies.Count > 0 && combatEnemyCopies.Count > 0))
                     {
                         i = -1;
                     }
@@ -171,6 +170,8 @@ public class CombatManager : MonoBehaviour
 
     public void EndCombat(List<HeroClass> combatHeroParty, bool victory = false)
     {
+        bool killedBoss = false;
+
         if (!victory)
         {
             gameManager.ProceedToNextGamePhase();
@@ -199,10 +200,12 @@ public class CombatManager : MonoBehaviour
 
         foreach(Enemy enemy in enemyParty)
         {
+            killedBoss = (enemy.isBoss) ? true : false;
+
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         }
 
-        partyBehaviour.EndCombat();
+        partyBehaviour.EndCombat(killedBoss);
     }
 
     public void RemoveCharacterFromCombat(Character character, List<Enemy> currentEnemyParty = null, List<HeroClass> currentHeroParty = null)

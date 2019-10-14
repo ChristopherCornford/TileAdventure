@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 271a5616ebb62bd4898a0a0712b51664, type: 3}
   m_Name: NESW-x
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 762ba2b6e85294a499ea8ad7e587df65, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cb0e19f7eb1500049b3a887d60f2e999, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public GamePhase currentGamePhase;
     
     [Header("Game Variables")]
-    public int currentLevel;
+    public int currentRound;
     public int currentTurn;
 
     public Season currentSeason;
@@ -96,14 +96,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(currentTurn == 0)
+        if(currentRound == 1 && currentTurn == 1)
         {
             gameBoardManager.StartRound();
             deckManager.StartRound();
-
-            currentSeason = Season.Summer;
+            canvasManager.StartCoroutine("Transition", false);
         }
-        currentTurn = 1;
 
         partyBehaviour.AddCharacterToParty("Knight");
     }
@@ -120,7 +118,11 @@ public class GameManager : MonoBehaviour
         {
             foreach(HeroClass hero in partyBehaviour.heroParty)
                 hero.LevelUp(partyBehaviour.heroParty[0].Level + 1);
-        }                                     
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            StartCoroutine("ProceedToNextRound");
+        }
     }
 
     public void ProceedToNextGamePhase(bool isGoingToCombat = false)
@@ -172,6 +174,37 @@ public class GameManager : MonoBehaviour
 
                 break;
         }
+    }
+
+    public IEnumerator ProceedToNextRound()
+    {
+        currentGamePhase = GamePhase.SwitchingRounds;
+
+        canvasManager.StartCoroutine("Transition", true);
+
+        yield return new WaitForSeconds(canvasManager.transitionTime);
+
+        int nextSeasonInt = (int)currentSeason + 1;
+
+        nextSeasonInt = (nextSeasonInt == 4) ?  0 : nextSeasonInt; 
+
+        currentSeason = (Season)nextSeasonInt;
+
+        gameBoardManager.StartRound(false);
+        deckManager.StartRound();
+        partyBehaviour.StartRound();
+        playerBehaviour.StartRound();
+
+        currentRound++;
+        currentTurn = 1;
+        
+        canvasManager.StartCoroutine("Transition", false);
+
+        yield return new WaitForSeconds(canvasManager.transitionTime);
+
+        currentGamePhase = GamePhase.TilePlacement;
+
+        yield return null;
     }
 
     public GameObject GenerateEnemyParty()
@@ -226,8 +259,7 @@ public class GameManager : MonoBehaviour
 
         return null;
     }
-
-
+    
     private void SetScriptReferences()
     {
         gameBoardManager = FindObjectOfType(typeof(GameBoardManager)) as GameBoardManager;
@@ -246,6 +278,7 @@ public class GameManager : MonoBehaviour
         Event,
         Combat,
         End,
+        SwitchingRounds,
     }
 
     public enum Season

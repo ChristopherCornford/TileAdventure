@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 271a5616ebb62bd4898a0a0712b51664, type: 3}
   m_Name: ESW-T
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 3b5eeeec5f2545d429294ebc7482dd35, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f3447cbe607f02d4ebdc9f936e4680bc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

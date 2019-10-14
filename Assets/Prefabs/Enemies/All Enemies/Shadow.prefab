@@ -124,3 +124,6 @@ MonoBehaviour:
   xpReward: 3
   goldRewardMin: 2
   goldRewardMax: 4
+  isBoss: 0
+  hitSprite: {fileID: 2758307243314484196, guid: c505ad9650a952b4eb8fc314d8af761c,
+    type: 3}

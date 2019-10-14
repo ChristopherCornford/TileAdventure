@@ -19,6 +19,13 @@ public class CanvasManager : MonoBehaviour
     [SerializeField]
     private bool canSelectNewTile;
 
+    public CanvasGroup canvasGroup;
+
+    public Image transitionPanel;
+    public float transitionTime;
+    public bool transitionComplete;
+
+
     private void Start()
     {
         gameManager = GameObject.FindObjectOfType(typeof(GameManager)) as GameManager;
@@ -61,5 +68,51 @@ public class CanvasManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public IEnumerator Transition (bool toWhite = true)
+    {
+        transitionComplete = false;
+        
+        if (toWhite)
+        {
+            canvasGroup.alpha = 0;
+
+            while (canvasGroup.alpha < 0.95)
+            {
+                float perc = canvasGroup.alpha;
+
+                Color newColor = new Color(perc, perc, perc);
+
+                transitionPanel.color = newColor;
+
+                canvasGroup.alpha += Time.fixedDeltaTime / transitionTime;
+
+                yield return null;
+            }
+
+            canvasGroup.alpha = 1;
+        }
+        else
+        {
+            canvasGroup.alpha = 1;
+
+            while (canvasGroup.alpha > 0.05)
+            {
+                float perc = canvasGroup.alpha;
+
+                Color newColor = new Color(perc, perc, perc);
+
+                transitionPanel.color = newColor;
+                
+                canvasGroup.alpha -= Time.fixedDeltaTime / transitionTime;
+
+                yield return null;
+            }
+
+            canvasGroup.alpha = 0;
+        }
+
+        transitionComplete = true;
     }
 }

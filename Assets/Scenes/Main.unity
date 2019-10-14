@@ -651,6 +651,7 @@ RectTransform:
   - {fileID: 849211653}
   - {fileID: 1502057520}
   - {fileID: 2098853247}
+  - {fileID: 1135205952}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -674,6 +675,10 @@ MonoBehaviour:
   gameManager: {fileID: 504850129}
   playerBehaviour: {fileID: 519420030}
   canSelectNewTile: 0
+  canvasGroup: {fileID: 1135205953}
+  transitionPanel: {fileID: 1135205950}
+  transitionTime: 1.5
+  transitionComplete: 1
 --- !u!1001 &129061922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1128,9 +1133,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentGamePhase: 1
-  currentLevel: 0
-  currentTurn: 0
-  currentSeason: 1
+  currentRound: 1
+  currentTurn: 1
+  currentSeason: 2
   AllBaseTTiles:
   - {fileID: 11400000, guid: 73d04bdfc0d572e4988f21acb6a51e27, type: 2}
   - {fileID: 11400000, guid: 319dc2507bfd46744a09b083f98ec7db, type: 2}
@@ -1140,6 +1145,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 58be90f6f00a9ba49a4c919e64e40230, type: 2}
   - {fileID: 11400000, guid: f522af59f444674488734d0187442534, type: 2}
   - {fileID: 11400000, guid: fd34360473f5c7d4c973b70ccdb5eb67, type: 2}
+  - {fileID: 11400000, guid: 4edc0e145a6b68946807f20f1b859dd1, type: 2}
+  - {fileID: 11400000, guid: a99f51f196df88340ae64f9557f687c2, type: 2}
+  - {fileID: 11400000, guid: 9087b5cd9daa8d94b9bb977f1cd93615, type: 2}
+  - {fileID: 11400000, guid: 57d85dcac79497949b3f4bcde6bcebce, type: 2}
+  - {fileID: 11400000, guid: 52c51c95d078c6049aff460ae768751c, type: 2}
+  - {fileID: 11400000, guid: d51609677742b1743a1647a90cd4706f, type: 2}
+  - {fileID: 11400000, guid: b7e135e04ea48eb4ba444ff55b58ce7b, type: 2}
+  - {fileID: 11400000, guid: 17cf339e959060d4b95c5d64d6a4c0fc, type: 2}
   AllBaseLTiles:
   - {fileID: 11400000, guid: c54b44281da69954f839c03ad180fa03, type: 2}
   - {fileID: 11400000, guid: 5d69cef9a152ab64b80c10503e12b8aa, type: 2}
@@ -1149,6 +1162,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a07853da674ba4d449e71908dd2716d0, type: 2}
   - {fileID: 11400000, guid: 73c5b99afd299e64d9ab193e1f5343ca, type: 2}
   - {fileID: 11400000, guid: 655b00ed60d17584788d02143b268e2e, type: 2}
+  - {fileID: 11400000, guid: a8d478f829a0f7b429abbe836acf06f0, type: 2}
+  - {fileID: 11400000, guid: cacfb7d2c8b651348bd32dd3573f08d1, type: 2}
+  - {fileID: 11400000, guid: 5571d32ca7c9d3b40b95da8caa8c3787, type: 2}
+  - {fileID: 11400000, guid: a1929593598ac3846b76b80bdc50ac82, type: 2}
+  - {fileID: 11400000, guid: ac388ca05c3695d4f932816f69d77261, type: 2}
+  - {fileID: 11400000, guid: c85439bd77671f5478718c6f572beba7, type: 2}
+  - {fileID: 11400000, guid: a88bd8d6e6280ea4d817249ff002fe99, type: 2}
+  - {fileID: 11400000, guid: 2b5b178d330b3154795cd5d15c9c137e, type: 2}
   AllBaseXTiles:
   - {fileID: 11400000, guid: 7e2a30a8e09c7f34e94e21df8eacb41a, type: 2}
   - {fileID: 11400000, guid: 4a67852b62bcb0d4c9aac2fee8e1f21b, type: 2}
@@ -1156,6 +1177,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 359a572d8ba4b714caa8fa96f5e89f31, type: 2}
   - {fileID: 11400000, guid: a1cb508be3aa37b4eaadb1f79bc3890b, type: 2}
   - {fileID: 11400000, guid: 34784ca064d525240b9181de7c24d402, type: 2}
+  - {fileID: 11400000, guid: 0d7edf0716a949d409e5a2f7a24b3db7, type: 2}
+  - {fileID: 11400000, guid: ff3344b07d2737649bc987512ffe522f, type: 2}
+  - {fileID: 11400000, guid: deffc2789372af74998f9bc88bea84e1, type: 2}
+  - {fileID: 11400000, guid: be4d07b15b3a18740bf6c26a08fca66d, type: 2}
+  - {fileID: 11400000, guid: cc1c608e4de9ff64fb2ce13643390c60, type: 2}
+  - {fileID: 11400000, guid: 34237cd32acc11e4dbae65ab4c562776, type: 2}
   AllBaseBossTiles:
   - {fileID: 11400000, guid: accb90edd1e7b474684873a61b935229, type: 2}
   AllVariantTTiles_Enemy:
@@ -1167,6 +1194,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7875385ee116f3847bee1eecc22ed32b, type: 2}
   - {fileID: 11400000, guid: ea782841c8178464a864556d845e7a89, type: 2}
   - {fileID: 11400000, guid: afbe2db2be49dfd4a9447f863f341f66, type: 2}
+  - {fileID: 11400000, guid: d62fb2d040c604141bb83778c725fb21, type: 2}
+  - {fileID: 11400000, guid: de75a196ec1e9924d8249b48550e2d04, type: 2}
+  - {fileID: 11400000, guid: cac87ae1cd6ada14e8d15fb4f66d8c3f, type: 2}
+  - {fileID: 11400000, guid: 5651d68104446da4ab49f95ceb8975cf, type: 2}
+  - {fileID: 11400000, guid: eb7f18b1b31a1c94a9fb4571db201338, type: 2}
+  - {fileID: 11400000, guid: b19018c9858939c4a86b8c36332e04b4, type: 2}
+  - {fileID: 11400000, guid: be7a5d4e363758f4092223725230824c, type: 2}
+  - {fileID: 11400000, guid: 447a82e55efe53f4a951a2dcc97305a6, type: 2}
   AllVariantLTiles_Enemy:
   - {fileID: 11400000, guid: a518e0d9fbcbf514bb422d9fcb6d7197, type: 2}
   - {fileID: 11400000, guid: 8b87ee63668b4eb45935ce5ee2d0b118, type: 2}
@@ -1176,6 +1211,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c25dc1bad9f3d8d4db2cb81b3026069f, type: 2}
   - {fileID: 11400000, guid: b98c19cbec0ca474a88d88bb8d215389, type: 2}
   - {fileID: 11400000, guid: 5e2a855b89e08784db47c1feb098a0f9, type: 2}
+  - {fileID: 11400000, guid: 3b608d5e27cb59e449db65b0ef08643f, type: 2}
+  - {fileID: 11400000, guid: e517b4d67cfe0714c8ebc57d35014c4b, type: 2}
+  - {fileID: 11400000, guid: 421d796c15df9704bacf591a7b906993, type: 2}
+  - {fileID: 11400000, guid: 8788267ec027cab4bb2f201da3de55f2, type: 2}
+  - {fileID: 11400000, guid: 9dcdbe80ce897d34a95effd782b64dc1, type: 2}
+  - {fileID: 11400000, guid: 8c2208b01b61f7a4c8765448281d65f3, type: 2}
+  - {fileID: 11400000, guid: 9977546aab942c447aee54f12a0cec81, type: 2}
+  - {fileID: 11400000, guid: f0ae4237c47653240b1d0aeaf6fc89ca, type: 2}
   AllVariantXTiles_Enemy:
   - {fileID: 11400000, guid: 852e3dd4d5dbaf145b3833d240c8da88, type: 2}
   - {fileID: 11400000, guid: b4267db8f6303534190b86c7a3bd8619, type: 2}
@@ -1183,6 +1226,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e58d5bd084474ba45bf87fb274b522f2, type: 2}
   - {fileID: 11400000, guid: 2601489d3c33bc640b2e400227ab8a8c, type: 2}
   - {fileID: 11400000, guid: 65e1eb743f875ca4a80bb7437fd08e92, type: 2}
+  - {fileID: 11400000, guid: 72c9021d623347f4daf03bfe3af1c6e3, type: 2}
+  - {fileID: 11400000, guid: 3b256c8034e490749b6c29f020d37876, type: 2}
+  - {fileID: 11400000, guid: 47b903a86ea6a2144b8c5c3774d28c8e, type: 2}
+  - {fileID: 11400000, guid: 61409fc5c862a5341ab2336dd6689182, type: 2}
+  - {fileID: 11400000, guid: b209667198f96294aa0b710da66a56a0, type: 2}
+  - {fileID: 11400000, guid: 57e79f3699ba81f4c952ae025437306d, type: 2}
   AllVariantTTiles_Adventure:
   - {fileID: 11400000, guid: 81fc976b853d0784d8db53acc947ed7e, type: 2}
   - {fileID: 11400000, guid: f30e6da5d2129ff4db1efe20a5ae95f3, type: 2}
@@ -1192,6 +1241,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8324294222817084b885da4e6ecc673c, type: 2}
   - {fileID: 11400000, guid: d23d2949d7c508642994f4967737a140, type: 2}
   - {fileID: 11400000, guid: 79cc40c1d1748bb41ab9392edf68b72b, type: 2}
+  - {fileID: 11400000, guid: 66037597bc78c6d419bf1358295d68d3, type: 2}
+  - {fileID: 11400000, guid: 279031e25012918449f05f49ea2d4067, type: 2}
+  - {fileID: 11400000, guid: 68ece12dc7636134a9a05d2d145fcbbd, type: 2}
+  - {fileID: 11400000, guid: 59acabf646f0ab54f9fc138acd3501c3, type: 2}
+  - {fileID: 11400000, guid: 8c957c9c06826cc408d202f53fdcbf36, type: 2}
+  - {fileID: 11400000, guid: 6dd5ebd5a883d5e49950810c1cb23276, type: 2}
+  - {fileID: 11400000, guid: 0b00a18ce9fb78247b526ca5c39af07a, type: 2}
+  - {fileID: 11400000, guid: 744246855b412fb4abac46c440e2ac2d, type: 2}
   AllVariantLTiles_Adventure:
   - {fileID: 11400000, guid: e3bd7cc815d144b43824241171444932, type: 2}
   - {fileID: 11400000, guid: 59a6c690045d0d342992ec33caa3e1cb, type: 2}
@@ -1201,6 +1258,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c3de5787f8c38ba4aa7dddbe0d954633, type: 2}
   - {fileID: 11400000, guid: 6f8e6f048c36f584b8dee867839bad81, type: 2}
   - {fileID: 11400000, guid: 161efe4ee2b68d34a904677c07f0187e, type: 2}
+  - {fileID: 11400000, guid: a3f773630d0849e4695e7f5a87c1bf09, type: 2}
+  - {fileID: 11400000, guid: e167d93fde8e9c24b82902baf568f12c, type: 2}
+  - {fileID: 11400000, guid: 7e7587903c33e264d9d378d09e87f17f, type: 2}
+  - {fileID: 11400000, guid: d5601b5699f705a45a9bd11b7cc4b97e, type: 2}
+  - {fileID: 11400000, guid: 6b2768285ae33644d850f264e11b3d64, type: 2}
+  - {fileID: 11400000, guid: 982ec06208fc53546a6ab6927d49c8a1, type: 2}
+  - {fileID: 11400000, guid: 02bda9ca754ef37429b50c7ef2ea2251, type: 2}
+  - {fileID: 11400000, guid: 2d9a3a1cd33a91745a16a47ff186902a, type: 2}
   AllVariantXTiles_Adventure:
   - {fileID: 11400000, guid: 48600ad2776eb304588bd26abb5c496e, type: 2}
   - {fileID: 11400000, guid: 476d6b87b4ab37e4d9b73934ae7ec2e7, type: 2}
@@ -1208,6 +1273,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e5e67f5b267abfe428c0f3283e7c6d5a, type: 2}
   - {fileID: 11400000, guid: e9c410327cf52ef40ab2b17c8c1964d1, type: 2}
   - {fileID: 11400000, guid: 4780370833c95cc49b586ba6137dcd52, type: 2}
+  - {fileID: 11400000, guid: 6fe776a8f76fc3b4f978ba7b2a0469e6, type: 2}
+  - {fileID: 11400000, guid: 9a75722ecb483ab4584340baf2ed8697, type: 2}
+  - {fileID: 11400000, guid: cd4e6c9352c541f4aa435cd877abd726, type: 2}
+  - {fileID: 11400000, guid: 97a96e565f260c742b07824f9f62c871, type: 2}
+  - {fileID: 11400000, guid: 755d182e9e2b77b44a0a209e720ac1e9, type: 2}
+  - {fileID: 11400000, guid: 97ef1ab644307a940bfb0c7bf5379b34, type: 2}
   AllVariantTTiles_Treasure:
   - {fileID: 11400000, guid: 3342fd569241598489d01f18636eb41f, type: 2}
   - {fileID: 11400000, guid: 8112c5e693f8c0048ad286495f47683a, type: 2}
@@ -1217,6 +1288,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eff542d3dac016c42a6cc190d7cb6c25, type: 2}
   - {fileID: 11400000, guid: d790eeb68b367b8428010b2e76bc98d8, type: 2}
   - {fileID: 11400000, guid: ec294f93a305180448a82b44c7871f7a, type: 2}
+  - {fileID: 11400000, guid: 284b8549b43f99e4fbfc043669dfcf78, type: 2}
+  - {fileID: 11400000, guid: c97f7d664cac8ee4790838642801bcc5, type: 2}
+  - {fileID: 11400000, guid: 3e4e3804252b7fe42bf2965b0692046f, type: 2}
+  - {fileID: 11400000, guid: e7035591e2a38cc4d8d07a45d47ba1ce, type: 2}
+  - {fileID: 11400000, guid: d1091011795073341a1b10525b0809b5, type: 2}
+  - {fileID: 11400000, guid: 2d53bad58d0a8d54f90c260f7ade7992, type: 2}
+  - {fileID: 11400000, guid: 5a882fafc103f7648a317281d9a1770c, type: 2}
+  - {fileID: 11400000, guid: 3dc7a9afbc9258e42bfb98d5f35b87c5, type: 2}
   AllVariantLTiles_Treasure:
   - {fileID: 11400000, guid: 19e1de8eab3c5c344bf77d55ed10821f, type: 2}
   - {fileID: 11400000, guid: 12cab229b9e19654b85264ed2f4b3174, type: 2}
@@ -1226,6 +1305,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 628cf2f6e247abe40820a6689266b4a7, type: 2}
   - {fileID: 11400000, guid: 200a68bacb6121a40a64c2615cf4edf9, type: 2}
   - {fileID: 11400000, guid: ed021e3f950307f4fae52c1545ca0f79, type: 2}
+  - {fileID: 11400000, guid: 3024d3bea0bd2a74fa0ce9bcdabd45bd, type: 2}
+  - {fileID: 11400000, guid: 88745ff951c1f5348b0e97890019cf69, type: 2}
+  - {fileID: 11400000, guid: 95afcf5ad5aa2454bb58ed088db4d106, type: 2}
+  - {fileID: 11400000, guid: ee75521a2cf1f7e43a823a8b4d7246e7, type: 2}
+  - {fileID: 11400000, guid: 3be9f2a24c687bf49b877e77622d8c51, type: 2}
+  - {fileID: 11400000, guid: 58b696a277501a644add2927ecee5021, type: 2}
+  - {fileID: 11400000, guid: d00784a87a210c74a8685c33eac3e6d9, type: 2}
+  - {fileID: 11400000, guid: 1938eb07553531e42ac1620e18753141, type: 2}
   AllVariantXTiles_Treasure:
   - {fileID: 11400000, guid: f3071b743f1994e41900aa97e83c0c43, type: 2}
   - {fileID: 11400000, guid: 84d1f227c835d0a47bcaa8d9599c0c36, type: 2}
@@ -1233,6 +1320,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4f00a4dde4a01ec41812c3736995a055, type: 2}
   - {fileID: 11400000, guid: 42b611d4dc1d9954982e6b87708ffd7c, type: 2}
   - {fileID: 11400000, guid: 87ecb22d67cb8a44d91c1a94b5e81f86, type: 2}
+  - {fileID: 11400000, guid: a46b266f121d7e541a4aa390681b87e1, type: 2}
+  - {fileID: 11400000, guid: 84de75addabddbe42ae21eae2a36779a, type: 2}
+  - {fileID: 11400000, guid: e42ee403ae7de7c4fb25887981282f40, type: 2}
+  - {fileID: 11400000, guid: 3c187f325b9df214cb4825711d3e938b, type: 2}
+  - {fileID: 11400000, guid: 35d8db279a03c34439e581fd92bc241a, type: 2}
+  - {fileID: 11400000, guid: de3a1b9a88037364d835e4d13a002029, type: 2}
   AllBossTiles:
   - {fileID: 11400000, guid: f44cf2145ae5c634ca6418bde2197f02, type: 2}
   AllHeroClasses:
@@ -2099,8 +2192,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 50
-  m_Sprite: {fileID: -4179094331435813162, guid: 022d8afbd54131144b9526def576a371,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: 947e702a0026b414598370b91dec3f52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2139,9 +2231,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heroParty: []
   transitionLength: 1
-  boardMovementSpeed: 30
+  boardMovementSpeed: 2
   pauseLength: 0.5
   startingTile: {fileID: 11400000, guid: 790f9ae9e2036af4eaae10c8ef17b312, type: 2}
+  startingPos: {x: 0.161, y: 5.5, z: 0}
   currentTile: {fileID: 0}
   grid: {fileID: 2006176687}
   tilemap: {fileID: 520326405}
@@ -2160,7 +2253,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769139572}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 31441a3d26df6ce458b7f49e6115b173, type: 2}
   m_CullingMode: 0
@@ -2703,7 +2796,7 @@ MonoBehaviour:
   m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2728,8 +2821,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 24
+  m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3166,6 +3259,93 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1126427050}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1135205949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1135205952}
+  - component: {fileID: 1135205951}
+  - component: {fileID: 1135205950}
+  - component: {fileID: 1135205953}
+  m_Layer: 5
+  m_Name: TransitionImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1135205950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135205949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+--- !u!222 &1135205951
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135205949}
+  m_CullTransparentMesh: 0
+--- !u!224 &1135205952
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135205949}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 110184364}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1135205953
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135205949}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1169183101
 GameObject:
   m_ObjectHideFlags: 0
@@ -3226,7 +3406,7 @@ MonoBehaviour:
   m_text: Please Enjoy Our Selection
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: e73a58f6e2794ae7b1b7e50b7fb811b0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4564,8 +4744,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 960, y: 540}
+  m_AnchoredPosition: {x: -337.55, y: -238.65}
+  m_SizeDelta: {x: 624.9, y: 270.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1796497126
 MonoBehaviour:
@@ -4879,14 +5059,23 @@ MonoBehaviour:
   gameBoardHeight: 7
   startingPos: {x: 3, y: 3, z: 0}
   startingTile: {fileID: 11400000, guid: 790f9ae9e2036af4eaae10c8ef17b312, type: 2}
+  startingTiles:
+  - {fileID: 11400000, guid: 790f9ae9e2036af4eaae10c8ef17b312, type: 2}
+  - {fileID: 11400000, guid: ef80699f6be059e42894f3012eed2fec, type: 2}
+  - {fileID: 11400000, guid: a5ecabcf0ab0d2b4386fda614c8bd3a2, type: 2}
+  - {fileID: 11400000, guid: 4b4fc97b1218fea4cb4c92e800977039, type: 2}
   fillTile: {fileID: 11400000, guid: 0d5a2fd32a22f944f9f710c0e0858c65, type: 2}
   fillTiles:
   - {fileID: 11400000, guid: 0d5a2fd32a22f944f9f710c0e0858c65, type: 2}
-  - {fileID: 11400000, guid: 0d5a2fd32a22f944f9f710c0e0858c65, type: 2}
+  - {fileID: 11400000, guid: db3678700938b764aaf713cd4f241724, type: 2}
+  - {fileID: 11400000, guid: f005613c26f922b498fb64bcb97fe3d7, type: 2}
+  - {fileID: 11400000, guid: 1776974e75a6303418b34fc2c995fde7, type: 2}
   rimTile: {fileID: 11400000, guid: add94817c784f8d4abad839665fa5972, type: 2}
   rimTiles:
   - {fileID: 11400000, guid: add94817c784f8d4abad839665fa5972, type: 2}
   - {fileID: 11400000, guid: 7b7d6a4c2462f7d48b4ef65faaef91bc, type: 2}
+  - {fileID: 11400000, guid: f09aa1e3f9709674e913beb5a2814346, type: 2}
+  - {fileID: 11400000, guid: bcc5304a591112842a81d310f09240fa, type: 2}
   seeker: {fileID: 0}
   target: {fileID: 0}
 --- !u!1 &2098853244
