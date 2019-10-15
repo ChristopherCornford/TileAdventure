@@ -29,6 +29,9 @@ TextureImporter:
   - first:
       213: 2624060950924023654
     second: Guardian Attack-Sheet_8
+  - first:
+      213: -602335461869417233
+    second: Guardian Attack-Sheet_9
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -306,6 +309,27 @@ TextureImporter:
       bones: []
       spriteID: 98e0d7446d953a142b6bebe68a2c96fe
       internalID: 2624060950924023654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Guardian Attack-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 0
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01204d14ede74fa4593de76f39cb44f3
+      internalID: -602335461869417233
       vertices: []
       indices: 
       edges: []

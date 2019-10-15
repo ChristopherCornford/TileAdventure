@@ -677,7 +677,7 @@ MonoBehaviour:
   canSelectNewTile: 0
   canvasGroup: {fileID: 1135205953}
   transitionPanel: {fileID: 1135205950}
-  transitionTime: 1.5
+  transitionTime: 0.5
   transitionComplete: 1
 --- !u!1001 &129061922
 PrefabInstance:

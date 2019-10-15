@@ -10,6 +10,7 @@ public class HeroClass : Character
     public HeroRole role;
 
     public GameObject[] attackAnimations;
+    public GameObject healingAnimation;
 
     [Header("Hero Stats")]
     [Space]
@@ -44,7 +45,7 @@ public class HeroClass : Character
     {
         int damage = 0;
 
-        if (SP < 20)
+        if (SP < 99)
         {
             damage = Attack - target.Defense;
         }
@@ -62,7 +63,7 @@ public class HeroClass : Character
         SpawnAnimation(animationTransform);
 
         if (gameLog != null)
-            gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
+            gameLog.text = (this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
 
         if (target.currentHealth <= 0)
         {
@@ -83,7 +84,10 @@ public class HeroClass : Character
     {
         target.currentHealth += Attack;
 
-        gameLog.text += ("\n" + this.name + " healed " + target.name + " for " + Attack.ToString() + " health.");
+        Transform animationTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        SpawnAnimation(animationTransform, true);
+
+        gameLog.text = (this.name + " healed " + target.name + " for " + Attack.ToString() + " health.");
 
         gameLog.text += ("\n" + "Their health is now: " + target.currentHealth);
 
@@ -106,7 +110,7 @@ public class HeroClass : Character
             target.currentHealth -= damage;
 
         if (gameLog != null)
-            gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
+            gameLog.text = (this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
 
         if (target.Health <= 0)
         {
@@ -159,6 +163,8 @@ public class HeroClass : Character
                     }
                     armorSlot = null;
                     arSlotFull = false;
+
+                    Destroy(armorSlot.gameObject);
                 }
 
                 if (!arSlotFull)
@@ -192,6 +198,8 @@ public class HeroClass : Character
 
                     armorSlot = item as Armor;
                     arSlotFull = true;
+
+                    Instantiate(armorSlot.gameObject, this.transform);
                 }
             }
             else if (item.GetType() == typeof(Accessory))
@@ -227,6 +235,8 @@ public class HeroClass : Character
 
                     accessorySlot = null;
                     acSlotFull = false;
+
+                    Destroy(accessorySlot.gameObject);
                 }
 
                 if (!acSlotFull)
@@ -260,6 +270,8 @@ public class HeroClass : Character
 
                     accessorySlot = item as Accessory;
                     acSlotFull = true;
+
+                    Instantiate(accessorySlot.gameObject, this.transform);
                 }
             }
             else if (item.GetType() == typeof(Weapon))
@@ -295,6 +307,8 @@ public class HeroClass : Character
 
                     weaponSlot = null;
                     wSlotFull = false;
+
+                    Destroy(weaponSlot.gameObject);
                 }
 
                 if (!wSlotFull)
@@ -328,6 +342,8 @@ public class HeroClass : Character
                     
                     weaponSlot = item as Weapon;
                     wSlotFull = true;
+
+                    Instantiate(weaponSlot.gameObject, this.transform);
                 }
             }
         }
@@ -337,36 +353,44 @@ public class HeroClass : Character
         }
     }
 
-    void SpawnAnimation(Transform target)
+    void SpawnAnimation(Transform target, bool isHealing = false)
     {
         GameObject newAttack = null;
 
-        switch (this.role)
+        if (!isHealing)
         {
-            case HeroRole.Arcanist:
-                newAttack = Instantiate(attackAnimations[0], target) as GameObject;
-                Destroy(newAttack, 1.5f);
-                break;
+            switch (this.role)
+            {
+                case HeroRole.Arcanist:
+                    newAttack = Instantiate(attackAnimations[0], target) as GameObject;
+                    Destroy(newAttack, 1.5f);
+                    break;
 
-            case HeroRole.Fencer:
-                newAttack = Instantiate(attackAnimations[1], target) as GameObject;
-                Destroy(newAttack, 1.5f);
-                break;
+                case HeroRole.Fencer:
+                    newAttack = Instantiate(attackAnimations[1], target) as GameObject;
+                    Destroy(newAttack, 1.5f);
+                    break;
 
-            case HeroRole.Guardian:
-                newAttack = Instantiate(attackAnimations[2], target) as GameObject;
-                Destroy(newAttack, 1.5f);
-                break;
+                case HeroRole.Guardian:
+                    newAttack = Instantiate(attackAnimations[2], target) as GameObject;
+                    Destroy(newAttack, 1.5f);
+                    break;
 
-            case HeroRole.Mender:
-                newAttack = Instantiate(attackAnimations[3], target) as GameObject;
-                Destroy(newAttack, 1.5f);
-                break;
+                case HeroRole.Mender:
+                    newAttack = Instantiate(attackAnimations[3], target) as GameObject;
+                    Destroy(newAttack, 1.5f);
+                    break;
 
-            case HeroRole.Knight:
-                newAttack = Instantiate(attackAnimations[4], target) as GameObject;
-                Destroy(newAttack, 1.5f);
-                break;
+                case HeroRole.Knight:
+                    newAttack = Instantiate(attackAnimations[4], target) as GameObject;
+                    Destroy(newAttack, 1.5f);
+                    break;
+            }
+        }
+        else
+        {
+            newAttack = Instantiate(healingAnimation, target) as GameObject;
+            Destroy(newAttack, 1.5f);
         }
     }
 
@@ -467,6 +491,7 @@ public class HeroClass : Character
         target.accessorySlot = template.accessorySlot;
 
         target.attackAnimations = template.attackAnimations;
+        target.healingAnimation = template.healingAnimation;
     }
 }
 

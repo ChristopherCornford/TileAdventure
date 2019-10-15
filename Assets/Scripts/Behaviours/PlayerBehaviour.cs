@@ -274,7 +274,7 @@ public class PlayerBehaviour : MonoBehaviour
                     switch (tile.name[i])
                     {
                         case 'N':
-                            if (t.name.Contains("T") || t.name.Contains("X"))
+                            if (t.name.Contains("T") || t.name.Contains("X") || t.name.Contains("x") || t.name.Contains("B"))
                             {
                                 if (t.name.Contains("S"))
                                 {
@@ -283,7 +283,7 @@ public class PlayerBehaviour : MonoBehaviour
                             }
                             break;
                         case 'S':
-                            if (t.name.Contains("T") || t.name.Contains("X"))
+                            if (t.name.Contains("T") || t.name.Contains("X") || t.name.Contains("x") || t.name.Contains("B"))
                             {
                                 if (t.name.Contains("N"))
                                 {
@@ -292,7 +292,7 @@ public class PlayerBehaviour : MonoBehaviour
                             }
                             break;
                         case 'E':
-                            if (t.name.Contains("T") || t.name.Contains("X"))
+                            if (t.name.Contains("T") || t.name.Contains("X") || t.name.Contains("x") || t.name.Contains("B"))
                             {
                                 if (t.name.Contains("W"))
                                 {
@@ -301,7 +301,7 @@ public class PlayerBehaviour : MonoBehaviour
                             }
                             break;
                         case 'W':
-                            if (t.name.Contains("T") || t.name.Contains("X"))
+                            if (t.name.Contains("T") || t.name.Contains("X") || t.name.Contains("x") || t.name.Contains("B"))
                             {
                                 if (t.name.Contains("E"))
                                 {
@@ -353,7 +353,7 @@ public class PlayerBehaviour : MonoBehaviour
                             }
                             else
                             {
-                                if (tile.name.Contains("T") || tile.name.Contains("X"))
+                                if (tile.name.Contains("T") || tile.name.Contains("X") || tile.name.Contains("x") || tile.name.Contains("B"))
                                 {
                                     if (neighborTiles[i].name.Contains("S"))
                                     {
@@ -378,7 +378,7 @@ public class PlayerBehaviour : MonoBehaviour
                             }
                             else
                             {
-                                if (tile.name.Contains("T") || tile.name.Contains("X"))
+                                if (tile.name.Contains("T") || tile.name.Contains("X") || tile.name.Contains("x") || tile.name.Contains("B"))
                                 {
                                     if (neighborTiles[i].name.Contains("N"))
                                     {
@@ -402,7 +402,7 @@ public class PlayerBehaviour : MonoBehaviour
                             }
                             else
                             {
-                                if (tile.name.Contains("T") || tile.name.Contains("X"))
+                                if (tile.name.Contains("T") || tile.name.Contains("X") || tile.name.Contains("x") || tile.name.Contains("B"))
                                 {
                                     if (neighborTiles[i].name.Contains("W"))
                                     {
@@ -426,7 +426,7 @@ public class PlayerBehaviour : MonoBehaviour
                             }
                             else
                             {
-                                if (tile.name.Contains("T") || tile.name.Contains("X"))
+                                if (tile.name.Contains("T") || tile.name.Contains("X") || tile.name.Contains("x") || tile.name.Contains("B"))
                                 {
                                     if (neighborTiles[i].name.Contains("E"))
                                     {

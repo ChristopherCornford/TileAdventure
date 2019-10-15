@@ -29,6 +29,9 @@ TextureImporter:
   - first:
       213: -6713181299240928366
     second: Fencer Attack-Sheet_8
+  - first:
+      213: 4154727489258049502
+    second: Fencer Attack-Sheet_9
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -306,6 +309,27 @@ TextureImporter:
       bones: []
       spriteID: b70b3e703ed9eb94aa4c4e186b6019c4
       internalID: -6713181299240928366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fencer Attack-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 243
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4818196fc5ac514d88aa026a919e78e
+      internalID: 4154727489258049502
       vertices: []
       indices: 
       edges: []

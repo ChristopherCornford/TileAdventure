@@ -26,7 +26,7 @@ public class Enemy : Character
             case true:
                 target.Health += Attack;
 
-                gameLog.text += ("\n" + this.name + " healed " + target.name + " for " + Attack.ToString() + " health.");
+                gameLog.text = (this.name + " healed " + target.name + " for " + Attack.ToString() + " health.");
                 break;
 
             case false:
@@ -37,7 +37,7 @@ public class Enemy : Character
 
                 target.currentHealth -= damage;
 
-                gameLog.text += ("\n" + this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
+                gameLog.text = (this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
 
                 Transform animationTransform = GameObject.FindGameObjectWithTag("Player").transform;
                 SpawnAnimation(animationTransform);

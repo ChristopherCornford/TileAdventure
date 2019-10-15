@@ -29,6 +29,9 @@ TextureImporter:
   - first:
       213: 584099563478475797
     second: Character Damage Partical-Sheet_8
+  - first:
+      213: 603645420822813543
+    second: Character Damage Partical-Sheet_9
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -306,6 +309,27 @@ TextureImporter:
       bones: []
       spriteID: a2f837ed1b2052b4983f5519503be097
       internalID: 584099563478475797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Character Damage Partical-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 0
+        width: 17
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b93200e524e9ec549a2791f34c10dcb7
+      internalID: 603645420822813543
       vertices: []
       indices: 
       edges: []

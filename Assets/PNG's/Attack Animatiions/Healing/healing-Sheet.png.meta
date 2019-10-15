@@ -41,6 +41,9 @@ TextureImporter:
   - first:
       213: 1568780152778697381
     second: healing-Sheet_12
+  - first:
+      213: -4861421212854553484
+    second: healing-Sheet_13
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -402,6 +405,27 @@ TextureImporter:
       bones: []
       spriteID: e118cd359a383e34886daf537d0db2b5
       internalID: 1568780152778697381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: healing-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 0
+        width: 29
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 968357f391b46c94494c1a9499c6d434
+      internalID: -4861421212854553484
       vertices: []
       indices: 
       edges: []

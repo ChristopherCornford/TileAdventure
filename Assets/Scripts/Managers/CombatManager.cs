@@ -108,13 +108,27 @@ public class CombatManager : MonoBehaviour
 
                     yield return new WaitForSeconds(1.5f);
 
-                    bool isHealing = new bool();
+                    bool isHealer = new bool();
 
                     if (combatOrder[i].GetType() == typeof(HeroClass))
                     {
                         HeroClass currentHero = combatOrder[i] as HeroClass;
 
-                        isHealing = (currentHero.name == "Mender") ? true : false;
+                        isHealer = (currentHero.name == "Mender") ? true : false;
+
+                        bool isHealing = new bool();
+
+                        if(isHealer)
+                        {
+                            if (combatHeroCopies.Count == 1 && combatHeroCopies[0] == currentHero)
+                            {
+                                isHealing = false;
+                            }
+                            else
+                            {
+                                isHealing = true;
+                            }
+                        }
 
                         switch (isHealing)
                         {

@@ -23,6 +23,9 @@ TextureImporter:
   - first:
       213: 5360075534528128521
     second: Healers Attack-Sheet_6
+  - first:
+      213: -4313904021441030815
+    second: Healers Attack-Sheet_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -258,6 +261,27 @@ TextureImporter:
       bones: []
       spriteID: 0c7beda75c4feb24488285a0f1ae274b
       internalID: 5360075534528128521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Healers Attack-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 0
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 650e1b12800cde248834f8f6dafd59da
+      internalID: -4313904021441030815
       vertices: []
       indices: 
       edges: []

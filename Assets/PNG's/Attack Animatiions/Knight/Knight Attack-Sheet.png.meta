@@ -20,6 +20,9 @@ TextureImporter:
   - first:
       213: -8539418101568741354
     second: Knight Attack-Sheet_5
+  - first:
+      213: -8818243425866323939
+    second: Knight Attack-Sheet_6
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -234,6 +237,27 @@ TextureImporter:
       bones: []
       spriteID: f22691e599c59fe40bcc3554850174a0
       internalID: -8539418101568741354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight Attack-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 0
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfeb9e75d40e57c4191b38aea8873b33
+      internalID: -8818243425866323939
       vertices: []
       indices: 
       edges: []

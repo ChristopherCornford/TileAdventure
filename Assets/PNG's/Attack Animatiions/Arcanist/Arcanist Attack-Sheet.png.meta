@@ -35,6 +35,9 @@ TextureImporter:
   - first:
       213: 7520943096049753214
     second: Arcanist Attack-Sheet_10
+  - first:
+      213: 3195034459126336710
+    second: Arcanist Attack-Sheet_11
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -136,13 +139,13 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db1a92b8039388143a6bb7fa3456ef5c
+      spriteID: ef2a871b817a0994da429549ca998348
       internalID: 4096499899625784175
       vertices: []
       indices: 
@@ -157,13 +160,13 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 27a40c2b917363e4cb037deda9ab29fb
+      spriteID: f1e3807dcfbe3744dafe05feb9dc804b
       internalID: 3212224170712577487
       vertices: []
       indices: 
@@ -178,13 +181,13 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a833aa26bbaf4774fb6f4ef16864254a
+      spriteID: 621869eb3f7d1764fac365bfc900ee8a
       internalID: -484795624579540270
       vertices: []
       indices: 
@@ -199,13 +202,13 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3876e503fd123b4ab1a864a36436714
+      spriteID: 0145187fa8c0f60479584ec0d5396605
       internalID: -7988704002787186929
       vertices: []
       indices: 
@@ -220,13 +223,13 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1730eb7c802c0b841838ad61f420aa02
+      spriteID: cd64e75e78feaf243a87fad3683d04a1
       internalID: 969058100432476280
       vertices: []
       indices: 
@@ -241,13 +244,13 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9f74ccff1ac21e9498e1fd54e72233e2
+      spriteID: d7d98f565a916bb44b993228f49c10c3
       internalID: -8138816497732981497
       vertices: []
       indices: 
@@ -262,13 +265,13 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6afaa1898eed6704eaca61af7b83f72a
+      spriteID: c46d88a9acfe779439c48fe563dd986a
       internalID: -6391179396358367755
       vertices: []
       indices: 
@@ -283,13 +286,13 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d6b16e280fa3ab34a96c41674edd86cc
+      spriteID: eca64ce9627aba54a88e0ff3fd13bd2a
       internalID: 3551709879953841456
       vertices: []
       indices: 
@@ -304,13 +307,13 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f400e3a0f0f230246bbd8eae5afc6b00
+      spriteID: 21794ddca8bd5b340b8ba743dd313d40
       internalID: -899416163426549081
       vertices: []
       indices: 
@@ -325,13 +328,13 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6708e2214cd57da4b9f3b8ed1609bcea
+      spriteID: f92300a62c1e9674798f612b4de021f8
       internalID: 4519866939884046594
       vertices: []
       indices: 
@@ -346,14 +349,35 @@ TextureImporter:
         width: 18
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26823f4988bafaa4286eed939d297bc9
+      spriteID: dcf7d24681046a042a405c07b49849ff
       internalID: 7520943096049753214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Arcanist Attack-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 0
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1999f9e6f278ef34e8c30ff4c98a6592
+      internalID: 3195034459126336710
       vertices: []
       indices: 
       edges: []

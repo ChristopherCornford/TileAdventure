@@ -60,8 +60,10 @@ public class DeckManager : MonoBehaviour
                 if (gameManager.currentTurn >= ((deckSize / 2) + 1))
                 {
                     int randInt = Random.Range(0, 100);
+                    int chanceMod = gameManager.currentTurn - (deckSize / 2);
+                    double chancePerc = (chanceMod + (chanceMod * 0.5)) * 10;
 
-                    if (randInt >= ((deckSize / 2) * (gameManager.currentTurn - (deckSize / 2))))
+                    if (randInt <= chancePerc)
                     {
                         tileHand[index].heldTile = gameManager.AllBossTiles[Random.Range(0, gameManager.AllBossTiles.Count)];
                         tileHand[index].tile = gameManager.AllBossTiles[Random.Range(0, gameManager.AllBossTiles.Count)];
