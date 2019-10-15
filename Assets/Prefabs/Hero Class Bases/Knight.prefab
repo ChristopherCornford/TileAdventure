@@ -47,7 +47,7 @@ MonoBehaviour:
   Level: 1
   Health: 3
   currentHealth: 3
-  Attack: 10
+  Attack: 15
   Defense: 3
   Speed: 3
   role: 0
