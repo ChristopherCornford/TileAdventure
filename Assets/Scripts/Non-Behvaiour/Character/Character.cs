@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    public int uniqueID;
+
     [Header("Game Variables")]
     
     public Sprite sprite;

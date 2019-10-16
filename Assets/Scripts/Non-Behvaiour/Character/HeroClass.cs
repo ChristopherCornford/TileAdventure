@@ -30,6 +30,8 @@ public class HeroClass : Character
     [Space]
     public int goldCost;
 
+    public bool isDead = false;
+
     [Header("Inventory")]
     public Weapon weaponSlot;
     bool wSlotFull;
@@ -37,6 +39,11 @@ public class HeroClass : Character
     bool arSlotFull;
     public Accessory accessorySlot;
     bool acSlotFull;
+
+    public void SetID()
+    {
+        this.uniqueID = Mathf.RoundToInt(Time.time);
+    }
 
     public TextMeshProUGUI gameLog;
 
@@ -469,7 +476,11 @@ public class HeroClass : Character
 
     public void CopyHero(HeroClass target, HeroClass template)
     {
+        target.uniqueID = template.uniqueID;
+
         target.name = template.name;
+        target.sprite = template.sprite;
+
         target.Health = template.Health;
         target.currentHealth = template.currentHealth;
         target.Attack = template.Attack;
@@ -492,6 +503,8 @@ public class HeroClass : Character
 
         target.attackAnimations = template.attackAnimations;
         target.healingAnimation = template.healingAnimation;
+
+        target.isDead = template.isDead;
     }
 }
 

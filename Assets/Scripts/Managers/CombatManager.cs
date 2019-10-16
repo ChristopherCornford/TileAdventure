@@ -195,7 +195,9 @@ public class CombatManager : MonoBehaviour
             for (int i = 0; i < combatHeroParty.Count; i++)
             {
                 combatHeroParty[i].LevelUp(combatHeroParty[i].Level + 1);
-                partyBehaviour.heroParty[i].CopyHero(partyBehaviour.heroParty[i], combatHeroParty[i]);
+                heroParty[i].CopyHero(heroParty[i], combatHeroParty[i]);
+
+                partyBehaviour.heroParty[i].CopyHero(partyBehaviour.heroParty[i], heroParty[i]);
             }
             
             foreach(HeroClass hero in combatHeroParty)
@@ -228,6 +230,13 @@ public class CombatManager : MonoBehaviour
 
         if (character.GetType() == typeof(HeroClass))
         {
+            for (int i = 0; i < heroParty.Count; i++)
+            {
+                if (heroParty[i].uniqueID == character.uniqueID)
+                {
+                    heroParty[i].isDead = true;
+                }
+            }
             currentHeroParty.Remove(character as HeroClass);
         }
         else if (character.GetType() == typeof(Enemy))

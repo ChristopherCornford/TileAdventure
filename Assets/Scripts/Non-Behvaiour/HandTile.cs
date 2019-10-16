@@ -17,22 +17,27 @@ public class HandTile : MonoBehaviour
     public int myIndex;
 
     DeckManager deckManager;
+    GameManager gameManager;
 
     private void Awake()
     {
         grid = GameObject.FindObjectOfType(typeof(Grid)) as Grid;
         tileMap = GameObject.FindObjectOfType(typeof(Tilemap)) as Tilemap;
         deckManager = GameObject.FindObjectOfType(typeof(DeckManager)) as DeckManager;
+        gameManager = GameObject.FindObjectOfType(typeof(GameManager)) as GameManager;
     }
 
     private void LateUpdate()
     {
-        if (tile == null)
+        if (gameManager.isRoundProgressing)
         {
-            deckManager.RefreshHand(myIndex);
-        }
+            if (tile == null)
+            {
+                deckManager.RefreshHand(myIndex);
+            }
 
-        this.GetComponent<Image>().sprite = heldTile.sprite;
-        heldSprite = heldTile.sprite;
+            this.GetComponent<Image>().sprite = heldTile.sprite;
+            heldSprite = heldTile.sprite;
+        }
     }
 }

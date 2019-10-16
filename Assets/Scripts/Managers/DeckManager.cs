@@ -49,6 +49,8 @@ public class DeckManager : MonoBehaviour
         {
             RefreshHand(i);
         }
+        
+        bossInHand = false;
     }
 
     public void RefreshHand(int index)

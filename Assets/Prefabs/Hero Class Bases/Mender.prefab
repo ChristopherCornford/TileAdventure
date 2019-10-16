@@ -43,11 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 731f964957f6e8146bc56152e69bc034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 75a35aa628c4cc348a0a9c91b527e40d, type: 3}
+  sprite: {fileID: 21300000, guid: 22c0b11987bc9fb41abbcbcd2f42c00b, type: 3}
   Level: 1
   Health: 4
   currentHealth: 4
-  Attack: 15
+  Attack: 0
   Defense: 2
   Speed: 2
   role: 4
@@ -67,6 +67,7 @@ MonoBehaviour:
   PassiveAbility: 
   PrimaryStat: Attack
   goldCost: 0
+  isDead: 0
   weaponSlot: {fileID: 0}
   armorSlot: {fileID: 0}
   accessorySlot: {fileID: 0}

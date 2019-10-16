@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     
     [Header("Game Variables")]
     public int currentRound;
+    public bool isRoundProgressing;
+
     public int currentTurn;
 
     public Season currentSeason;
@@ -93,17 +95,17 @@ public class GameManager : MonoBehaviour
         SetScriptReferences();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void BeginGame(HeroClass startingHero)
     {
-        if(currentRound == 1 && currentTurn == 1)
+        if (currentRound == 1 && currentTurn == 1)
         {
             gameBoardManager.StartRound();
             deckManager.StartRound();
             canvasManager.StartCoroutine("Transition", false);
+            isRoundProgressing = true;
         }
 
-        partyBehaviour.AddCharacterToParty("Knight");
+        partyBehaviour.AddCharacterToParty(startingHero.name, 0);
     }
 
     // Update is called once per frame
@@ -178,6 +180,8 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator ProceedToNextRound()
     {
+        isRoundProgressing = false;
+
         currentGamePhase = GamePhase.SwitchingRounds;
 
         canvasManager.StartCoroutine("Transition", true);
@@ -197,7 +201,9 @@ public class GameManager : MonoBehaviour
 
         currentRound++;
         currentTurn = 1;
-        
+
+        isRoundProgressing = true;
+
         canvasManager.StartCoroutine("Transition", false);
 
         yield return new WaitForSeconds(canvasManager.transitionTime);

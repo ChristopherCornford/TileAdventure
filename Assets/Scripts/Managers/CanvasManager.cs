@@ -25,6 +25,14 @@ public class CanvasManager : MonoBehaviour
     public float transitionTime;
     public bool transitionComplete;
 
+    [Header("Title Screen")]
+    public Image startingHero;
+    public GameObject heroOptions;
+    public HeroClass startingHeroClass;
+
+    public Button startButton;
+
+
 
     private void Start()
     {
@@ -33,36 +41,41 @@ public class CanvasManager : MonoBehaviour
         graphicRaycaster = this.GetComponent<GraphicRaycaster>();
 
         eventSystem = GetComponent<EventSystem>();
+
+        startButton.onClick.AddListener(delegate { gameManager.BeginGame(startingHeroClass); });
     }
 
     private void LateUpdate()
     {
-        canSelectNewTile = (gameManager.currentGamePhase == GameManager.GamePhase.TilePlacement) ? true : false;
-
-        if (canSelectNewTile)
+        if (gameManager.isRoundProgressing)
         {
-            if (Input.GetMouseButtonDown(0))
+            canSelectNewTile = (gameManager.currentGamePhase == GameManager.GamePhase.TilePlacement) ? true : false;
+
+            if (canSelectNewTile)
             {
-                eventData = new PointerEventData(eventSystem);
-
-                eventData.position = Input.mousePosition;
-
-                List<RaycastResult> results = new List<RaycastResult>();
-
-                graphicRaycaster.Raycast(eventData, results);
-
-                if (results.Count != 1)
+                if (Input.GetMouseButtonDown(0))
                 {
-                    foreach (RaycastResult result in results)
+                    eventData = new PointerEventData(eventSystem);
+
+                    eventData.position = Input.mousePosition;
+
+                    List<RaycastResult> results = new List<RaycastResult>();
+
+                    graphicRaycaster.Raycast(eventData, results);
+
+                    if (results.Count == 1)
                     {
-                        if (result.gameObject.GetComponent<HandTile>())
+                        foreach (RaycastResult result in results)
                         {
-                            playerBehaviour.hasTile = true;
-                            playerBehaviour.currentGrid = result.gameObject.GetComponent<HandTile>().grid;
-                            playerBehaviour.currentTileMap = result.gameObject.GetComponent<HandTile>().tileMap;
-                            playerBehaviour.tile = result.gameObject.GetComponent<HandTile>().heldTile;
-                            playerBehaviour.previewSprite.sprite = result.gameObject.GetComponent<HandTile>().heldSprite;
-                            playerBehaviour.currentHandChoice = result.gameObject;
+                            if (result.gameObject.GetComponent<HandTile>())
+                            {
+                                playerBehaviour.hasTile = true;
+                                playerBehaviour.currentGrid = result.gameObject.GetComponent<HandTile>().grid;
+                                playerBehaviour.currentTileMap = result.gameObject.GetComponent<HandTile>().tileMap;
+                                playerBehaviour.tile = result.gameObject.GetComponent<HandTile>().heldTile;
+                                playerBehaviour.previewSprite.sprite = result.gameObject.GetComponent<HandTile>().heldSprite;
+                                playerBehaviour.currentHandChoice = result.gameObject;
+                            }
                         }
                     }
                 }
@@ -115,4 +128,14 @@ public class CanvasManager : MonoBehaviour
 
         transitionComplete = true;
     }
+    
+    public void SelectStartingHero(HeroClass hero)
+    {
+        startingHero.sprite = hero.sprite;
+        startingHeroClass = hero;
+
+        startButton.onClick.RemoveAllListeners();
+        startButton.onClick.AddListener(delegate { gameManager.BeginGame(hero); });
+    }
+
 }

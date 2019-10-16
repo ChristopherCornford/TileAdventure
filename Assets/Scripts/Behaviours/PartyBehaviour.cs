@@ -8,6 +8,8 @@ public class PartyBehaviour : MonoBehaviour
     private GameManager gameManager;
     private ShopManager shopManager;
 
+    private SpriteRenderer spriteRenderer;
+
     public List<HeroClass> heroParty;
 
     public float transitionLength;
@@ -28,6 +30,8 @@ public class PartyBehaviour : MonoBehaviour
         shopManager = FindObjectOfType(typeof(ShopManager)) as ShopManager;
         grid = GameObject.FindObjectOfType(typeof(Grid)) as Grid;
         tilemap = GameObject.FindObjectOfType(typeof(Tilemap)) as Tilemap;
+
+        spriteRenderer = this.GetComponent<SpriteRenderer>();
     }
 
     // Start is called before the first frame update
@@ -62,6 +66,8 @@ public class PartyBehaviour : MonoBehaviour
                 }
             newHero.transform.SetParent(this.transform);
 
+            newHero.GetComponent<HeroClass>().SetID();
+
             heroParty.Add(newHero.GetComponent<HeroClass>());
         }
         else
@@ -81,14 +87,26 @@ public class PartyBehaviour : MonoBehaviour
                     }
                 newHero.transform.SetParent(this.transform);
 
+                newHero.GetComponent<HeroClass>().SetID();
+
                 heroParty.Add(newHero.GetComponent<HeroClass>());
             }
         }
 
+
+        spriteRenderer.sprite = heroParty[0].sprite;
     }
 
     public void EndCombat(bool endRound = false)
     {
+        for (int i = 0; i < heroParty.Count; i++)
+        {
+            if (heroParty[i].isDead)
+            {
+                heroParty.RemoveAt(i);
+                Destroy(this.transform.GetChild(i).gameObject);
+            }
+        }
 
         Vector3Int intPos = grid.WorldToCell(this.transform.position);
 

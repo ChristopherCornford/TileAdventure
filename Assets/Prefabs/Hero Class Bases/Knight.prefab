@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 731f964957f6e8146bc56152e69bc034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 947e702a0026b414598370b91dec3f52, type: 3}
+  sprite: {fileID: 21300000, guid: b8e5c45a5643aee479e1672b0d7587d2, type: 3}
   Level: 1
   Health: 3
   currentHealth: 3
