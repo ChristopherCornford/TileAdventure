@@ -209,7 +209,7 @@ public class CombatManager : MonoBehaviour
 
             for (int i = 0; i < combatHeroParty.Count; i++)
             {
-                combatHeroParty[i].LevelUp(combatHeroParty[i].Level + 1);
+                combatHeroParty[i].XP += 3;
                 heroParty[i].CopyHero(heroParty[i], combatHeroParty[i]);
 
                 partyBehaviour.heroParty[i].CopyHero(partyBehaviour.heroParty[i], heroParty[i]);

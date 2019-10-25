@@ -1546,7 +1546,7 @@ MonoBehaviour:
   currentRound: 1
   isRoundProgressing: 0
   currentTurn: 1
-  currentSeason: 1
+  currentSeason: 0
   AllBaseTTiles:
   - {fileID: 11400000, guid: 73d04bdfc0d572e4988f21acb6a51e27, type: 2}
   - {fileID: 11400000, guid: 319dc2507bfd46744a09b083f98ec7db, type: 2}
@@ -1793,7 +1793,7 @@ MonoBehaviour:
   - {fileID: 3799346918904664122, guid: ca34420cb17bbad4993dd8d7f6f586d7, type: 3}
   AllTier4EnemyParties: []
   AllBosses:
-  - {fileID: 5155944227071132662, guid: c0471cd4982e1204ebc53447b884d764, type: 3}
+  - {fileID: 6141508178140157650, guid: 07332eb8b55f0ec4fa13afef96b41638, type: 3}
   AllArmor:
   - {fileID: 6094495503476679372, guid: 8fb24af71c46efc489001f09c2a726dc, type: 3}
   AllAccessories:

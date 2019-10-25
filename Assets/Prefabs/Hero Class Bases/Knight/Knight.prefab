@@ -117,7 +117,7 @@ MonoBehaviour:
   SpecialAbility: Critical Strike
   PassiveAbility: 
   PrimaryStat: 
-  goldCost: 0
+  goldCost: 10
   isDead: 0
   weaponSlot: {fileID: 0}
   armorSlot: {fileID: 0}
