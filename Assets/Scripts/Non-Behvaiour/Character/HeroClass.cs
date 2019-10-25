@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEditor;
 using TMPro;
 
+
+[RequireComponent(typeof(SpriteRenderer))]
 [System.Serializable]
 public class HeroClass : Character
 {
@@ -16,11 +18,11 @@ public class HeroClass : Character
     [Space]
     public int XP;
     [Space]
-    public int SP;
+    public int maxSP;
     [Space]
-    public int spChargeRate = 1;
+    public int currentSP;
     [Header("Special Stats")]
-    public int Special;
+    public int Skill;
     [Space]
     public string SpecialAbility;
     [Space]
@@ -31,6 +33,7 @@ public class HeroClass : Character
     public int goldCost;
 
     public bool isDead = false;
+    private int xpNeededToLevelUp;
 
     [Header("Inventory")]
     public Weapon weaponSlot;
@@ -52,7 +55,7 @@ public class HeroClass : Character
     {
         int damage = 0;
 
-        if (SP < 99)
+        if (currentSP < maxSP)
         {
             damage = Attack - target.Defense;
         }
@@ -61,7 +64,7 @@ public class HeroClass : Character
             UseSpecialAbility(target, combatManager, characterParty);
         }
 
-        if (damage < 0)
+        if (damage <= 0)
             damage = 1;
 
         target.currentHealth -= damage;
@@ -84,12 +87,14 @@ public class HeroClass : Character
             gameLog.text += ("\n" + "Their health is now: " + target.currentHealth);
         }
 
-        SP += spChargeRate;
+        currentSP += 1;
     }
 
     public void BasicHeal(HeroClass target)
     {
         target.currentHealth += Attack;
+
+        target.currentHealth = Mathf.Clamp(target.currentHealth, 0, target.Health);
 
         Transform animationTransform = GameObject.FindGameObjectWithTag("Player").transform;
         SpawnAnimation(animationTransform, true);
@@ -98,7 +103,7 @@ public class HeroClass : Character
 
         gameLog.text += ("\n" + "Their health is now: " + target.currentHealth);
 
-        SP += spChargeRate;
+        currentSP += 1;
     }
 
     private void UseSpecialAbility(Enemy target, CombatManager combatManager, List<Enemy> characterParty)
@@ -108,8 +113,8 @@ public class HeroClass : Character
         switch (SpecialAbility)
         {
             case "Critical Strike":
-                
-                damage = (Attack * (1 + SP)) - target.Defense;
+
+                damage = (Attack * (1 + Skill)) - target.Defense;
                 break;
         }
 
@@ -131,7 +136,7 @@ public class HeroClass : Character
             gameLog.text += ("\n" + "Their health is now: " + target.Health);
         }
 
-        SP = 0;
+        currentSP = 0;
     }
 
     public void ModifyStatsFromItems(Item item = null)
@@ -161,11 +166,7 @@ public class HeroClass : Character
                             break;
 
                         case "Special":
-                            this.Special -= armorSlot.buffValue;
-                            break;
-
-                        case "SP Charge Rate":
-                            this.spChargeRate -= armorSlot.buffValue;
+                            this.Skill -= armorSlot.buffValue;
                             break;
                     }
                     armorSlot = null;
@@ -195,11 +196,7 @@ public class HeroClass : Character
                             break;
 
                         case "Special":
-                            this.Special += item.buffValue;
-                            break;
-
-                        case "SP Charge Rate":
-                            this.spChargeRate += item.buffValue;
+                            this.Skill += item.buffValue;
                             break;
                     }
 
@@ -232,11 +229,7 @@ public class HeroClass : Character
                             break;
 
                         case "Special":
-                            this.Special -= accessorySlot.buffValue;
-                            break;
-
-                        case "SP Charge Rate":
-                            this.spChargeRate -= accessorySlot.buffValue;
+                            this.Skill -= accessorySlot.buffValue;
                             break;
                     }
 
@@ -267,11 +260,7 @@ public class HeroClass : Character
                             break;
 
                         case "Special":
-                            this.Special += item.buffValue;
-                            break;
-
-                        case "SP Charge Rate":
-                            this.spChargeRate += item.buffValue;
+                            this.Skill += item.buffValue;
                             break;
                     }
 
@@ -304,11 +293,7 @@ public class HeroClass : Character
                             break;
 
                         case "Special":
-                            this.Special -= weaponSlot.buffValue;
-                            break;
-
-                        case "SP Charge Rate":
-                            this.spChargeRate -= weaponSlot.buffValue;
+                            this.Skill -= weaponSlot.buffValue;
                             break;
                     }
 
@@ -339,11 +324,7 @@ public class HeroClass : Character
                             break;
 
                         case "Special":
-                            this.Special += item.buffValue;
-                            break;
-
-                        case "SP Charge Rate":
-                            this.spChargeRate += item.buffValue;
+                            this.Skill += item.buffValue;
                             break;
                     }
                     
@@ -417,61 +398,73 @@ public class HeroClass : Character
         {
             this.Level++;
 
-            switch (this.Level)
+            Health += 3;
+            currentHealth += 3;
+
+            Attack += 2;
+            Defense += 2;
+            Speed += 2;
+            Skill += 1;
+
+            if (this.role == HeroRole.Arcanist)
             {
-                case 2:
-                case 6:
-                case 10:
-                case 14:
-                case 18:
-                    Health++;
-                    Attack++;
+                switch (this.Level)
+                {
+                    case 1:
+                    case 2:
+                        maxSP = 7;
+                        break;
+                    case 3:
+                    case 4:
+                        maxSP = 6;
+                        break;
+                    case 5:
+                    case 6:
+                        maxSP = 5;
+                        break;
+                    case 7:
+                    case 8:
+                        maxSP = 4;
+                        break;
+                    case 9:
+                    case 10:
+                        maxSP = 3;
+                        break;
+                }
+            }
 
-                    if(this.PrimaryStat == "Attack")
-                        Attack++;
+            switch (this.PrimaryStat)
+            {
+                case "Health":
+                    Health += 1;
+                    currentHealth += 1;
                     break;
 
-                case 3:
-                case 7:
-                case 11:
-                case 15:
-                case 19:
-                    Health++;
-                    Defense++;
-
-                    if (this.PrimaryStat == "Defense")
-                        Defense++;
+                case "Attack":
+                    Attack += 1;
                     break;
 
-                case 4:
-                case 8:
-                case 12:
-                case 16:
-                case 20:
-                    Health++;
-                    Speed++;
-
-                    if (this.PrimaryStat == "Speed")
-                        Speed++;
+                case "Defence":
+                    Defense += 1;
                     break;
 
-                case 5:
-                case 9:
-                case 13:
-                case 17:
-                    Health++;
-                    Special++;
+                case "Speed":
+                    Speed += 1;
+                    break;
 
-                    if (this.PrimaryStat == "Special")
-                        Special++;
+                case "Skill":
+                    Skill += 1;
+                    break;
+
+                default:
                     break;
             }
+
+            Skill = Mathf.Clamp(Skill, 1, 10);
         }
 
-        if(this.role == HeroRole.Arcanist)
-        {
-            this.spChargeRate = Special;
-        }
+        XP = 0;
+        xpNeededToLevelUp = 7 * Level;
     }
 
     public void CopyHero(HeroClass target, HeroClass template)
@@ -489,8 +482,9 @@ public class HeroClass : Character
 
         target.Level = template.Level;
         target.XP = template.XP;
-        target.SP = template.SP;
-        target.Special = template.Special;
+        target.maxSP = template.maxSP;
+        target.currentSP = template.currentSP;
+        target.Skill = template.Skill;
         target.role = template.role;
 
         target.SpecialAbility = template.SpecialAbility;

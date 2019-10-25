@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -138,4 +139,9 @@ public class CanvasManager : MonoBehaviour
         startButton.onClick.AddListener(delegate { gameManager.BeginGame(hero); });
     }
 
+
+    public void LoadLevel(int index)
+    {
+        SceneManager.LoadScene(index);
+    }
 }

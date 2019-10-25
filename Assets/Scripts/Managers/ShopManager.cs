@@ -119,6 +119,9 @@ public class ShopManager : MonoBehaviour
                     newItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = item.goldPrice.ToString() + " Gold";
                     newItem.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(delegate { currentlySelectedItem = item; OpenCurrentPartyPanel(shopType);});
 
+                    if (item.goldPrice > partyBehaviour.Gold)
+                        newItem.transform.GetChild(3).GetComponent<Button>().interactable = false;
+
                     uiObjectsToDelete.Add(newItem);
                 }
 
@@ -173,8 +176,16 @@ public class ShopManager : MonoBehaviour
                 currentPartyPanel.transform.GetChild(i).name = partyBehaviour.heroParty[i].name;
                 currentPartyPanel.transform.GetChild(i).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = partyBehaviour.heroParty[i].name;
                 currentPartyPanel.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().sprite = partyBehaviour.heroParty[i].sprite;
-                currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().interactable = true;
-                currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().onClick.AddListener(delegate { EquipCurrentThing(shopType, partyBehaviour.heroParty[index], index); });
+
+                if (partyBehaviour.heroParty[i].goldCost <= partyBehaviour.Gold)
+                {
+                    currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().interactable = true;
+                    currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().onClick.AddListener(delegate { partyBehaviour.Gold -= currentlySelectedItem.goldPrice; EquipCurrentThing(shopType, partyBehaviour.heroParty[index], index); });
+                }
+                else
+                {
+                    currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().interactable = false;
+                }
             }
             else if(i >= partyBehaviour.heroParty.Count)
             {
@@ -224,7 +235,7 @@ public class ShopManager : MonoBehaviour
         ReturnToPromptScreen();
     }
 
-    void ReturnToPromptScreen()
+    public void ReturnToPromptScreen()
     {
         for(int i = 0; i < uiObjectsToDelete.Count; i++)
         {

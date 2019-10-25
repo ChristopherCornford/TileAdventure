@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+
 public class PartyBehaviour : MonoBehaviour
 {
     private GameManager gameManager;
     private ShopManager shopManager;
 
     private SpriteRenderer spriteRenderer;
+
+    public int Gold;
 
     public List<HeroClass> heroParty;
 
@@ -22,7 +25,7 @@ public class PartyBehaviour : MonoBehaviour
     public Grid grid;
     public Tilemap tilemap;
 
-    public HeroClass[] classTemplates;
+    public GameObject[] classTemplates;
 
     private void Awake()
     {
@@ -43,7 +46,8 @@ public class PartyBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (gameManager.isRoundProgressing)
+            this.spriteRenderer.sprite = heroParty[0].GetComponent<SpriteRenderer>().sprite;
     }
 
     public void StartRound()
@@ -56,19 +60,18 @@ public class PartyBehaviour : MonoBehaviour
     {
         if (heroParty.Count < 5)
         {
-            GameObject newHero = new GameObject(name);
-
-            foreach (HeroClass hero in classTemplates)
-                if (hero.name == name)
+            for (int i = 0; i < classTemplates.Length; i++)
+            {
+                if (classTemplates[i].name == name)
                 {
-                    newHero.AddComponent<HeroClass>();
-                    newHero.GetComponent<HeroClass>().CopyHero(newHero.GetComponent<HeroClass>(), hero);
+                    GameObject newHero = Instantiate(classTemplates[i], this.transform);
+                    newHero.GetComponent<HeroClass>().CopyHero(newHero.GetComponent<HeroClass>(), classTemplates[i].GetComponent<HeroClass>());
+
+                    newHero.GetComponent<HeroClass>().SetID();
+
+                    heroParty.Add(newHero.GetComponent<HeroClass>());
                 }
-            newHero.transform.SetParent(this.transform);
-
-            newHero.GetComponent<HeroClass>().SetID();
-
-            heroParty.Add(newHero.GetComponent<HeroClass>());
+            }
         }
         else
         {
@@ -77,19 +80,18 @@ public class PartyBehaviour : MonoBehaviour
                 heroParty.Remove(transform.GetChild(index).GetComponent<HeroClass>());
                 Destroy(gameObject.transform.GetChild(index).gameObject);
 
-                GameObject newHero = new GameObject(name);
-
-                foreach (HeroClass hero in classTemplates)
-                    if (hero.name == name)
+                for (int i = 0; i < classTemplates.Length; i++)
+                {
+                    if (classTemplates[i].name == name)
                     {
-                        newHero.AddComponent<HeroClass>();
-                        newHero.GetComponent<HeroClass>().CopyHero(newHero.GetComponent<HeroClass>(), hero);
+                        GameObject newHero = Instantiate(classTemplates[i], this.transform);
+                        newHero.GetComponent<HeroClass>().CopyHero(newHero.GetComponent<HeroClass>(), classTemplates[i].GetComponent<HeroClass>());
+
+                        newHero.GetComponent<HeroClass>().SetID();
+
+                        heroParty.Add(newHero.GetComponent<HeroClass>());
                     }
-                newHero.transform.SetParent(this.transform);
-
-                newHero.GetComponent<HeroClass>().SetID();
-
-                heroParty.Add(newHero.GetComponent<HeroClass>());
+                }
             }
         }
 

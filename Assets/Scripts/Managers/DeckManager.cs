@@ -67,8 +67,29 @@ public class DeckManager : MonoBehaviour
 
                     if (randInt <= chancePerc)
                     {
-                        tileHand[index].heldTile = gameManager.AllBossTiles[Random.Range(0, gameManager.AllBossTiles.Count)];
-                        tileHand[index].tile = gameManager.AllBossTiles[Random.Range(0, gameManager.AllBossTiles.Count)];
+                        TileBase bossTile = null;
+
+                        switch (gameManager.currentSeason)
+                        {
+                            case GameManager.Season.Summer:
+                                bossTile = gameManager.AllBossTiles[Random.Range(0, 4)];
+                                break;
+
+                            case GameManager.Season.Fall:
+                                bossTile = gameManager.AllBossTiles[Random.Range(4, 8)];
+                                break;
+
+                            case GameManager.Season.Winter:
+                                bossTile = gameManager.AllBossTiles[Random.Range(8, 12)];
+                                break;
+
+                            case GameManager.Season.Spring:
+                                bossTile = gameManager.AllBossTiles[Random.Range(12, 16)];
+                                break;
+                        }
+
+                        tileHand[index].heldTile = bossTile as Tile;
+                        tileHand[index].tile = bossTile;
 
                         tileHand[index].myIndex = index;
 

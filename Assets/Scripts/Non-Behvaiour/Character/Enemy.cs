@@ -14,6 +14,8 @@ public class Enemy : Character
     public int goldRewardMin;
     public int goldRewardMax;
 
+    public int goldToReward;
+
     public bool isBoss;
 
     public GameObject hitSprite;
@@ -32,7 +34,7 @@ public class Enemy : Character
             case false:
                 damage = Attack - target.Defense;
 
-                if (damage < 0)
+                if (damage <= 0)
                     damage = 1;
 
                 target.currentHealth -= damage;
@@ -77,11 +79,34 @@ public class Enemy : Character
     public void Die(CombatManager combatManager, List<Enemy> characterParty)
     {
         if (combatManager != null)
+        {
+            this.goldToReward = Random.Range(goldRewardMin, goldRewardMax + 1);
+            
             combatManager.RemoveCharacterFromCombat(this, characterParty);
+
+            this.goldToReward = 0;
+        }
 
         Destroy(this.gameObject);
     }
 
+    public void LevelUp(int newLevel)
+    {
+        int timesToLevel = newLevel - this.Level;
+
+        for (int i = 0; i < timesToLevel; i++)
+        {
+            Health += 2;
+            currentHealth += 2;
+
+            Attack += 1;
+            Defense += 1;
+            Speed += 1;
+
+            xpReward += 1;
+            goldRewardMax += 2;
+        }
+    }
 
     public void CopyEnemy(Enemy target, Enemy template)
     {
@@ -95,5 +120,10 @@ public class Enemy : Character
         target.hitSprite = template.hitSprite;
 
         target.isBoss = template.isBoss;
+
+        target.xpReward = template.xpReward;
+
+        target.goldRewardMax = template.goldRewardMax;
+        target.goldRewardMin = template.goldRewardMin;
     }
 }

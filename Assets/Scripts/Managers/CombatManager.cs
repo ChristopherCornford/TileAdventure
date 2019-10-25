@@ -13,6 +13,7 @@ public class CombatManager : MonoBehaviour
     
     public List<Character> combatOrder;
 
+    public int goldReward;
 
     public TextMeshProUGUI gameLog;
 
@@ -122,7 +123,17 @@ public class CombatManager : MonoBehaviour
                         {
                             if (combatHeroCopies.Count == 1 && combatHeroCopies[0] == currentHero)
                             {
-                                isHealing = false;
+                                foreach (HeroClass hero in combatHeroCopies)
+                                {
+                                    if(hero.currentHealth <= hero.Health)
+                                    {
+                                        isHealing = true;
+                                    }
+                                    else
+                                    {
+                                        isHealing = false;
+                                    }
+                                }
                             }
                             else
                             {
@@ -192,6 +203,10 @@ public class CombatManager : MonoBehaviour
         }
         else if (victory)
         {
+            partyBehaviour.Gold += goldReward;
+
+            goldReward = 0;
+
             for (int i = 0; i < combatHeroParty.Count; i++)
             {
                 combatHeroParty[i].LevelUp(combatHeroParty[i].Level + 1);
@@ -241,6 +256,10 @@ public class CombatManager : MonoBehaviour
         }
         else if (character.GetType() == typeof(Enemy))
         {
+            Enemy enemy = character as Enemy;
+
+            partyBehaviour.Gold += enemy.goldToReward;
+
             currentEnemyParty.Remove(character as Enemy);
         }
     }

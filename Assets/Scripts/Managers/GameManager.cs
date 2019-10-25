@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -111,11 +112,18 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if(currentGamePhase == GamePhase.End)
         {
             ProceedToNextGamePhase();
         }
 
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
+
+        /*
         if (Input.GetKeyDown(KeyCode.Space))
         {
             foreach(HeroClass hero in partyBehaviour.heroParty)
@@ -125,6 +133,8 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine("ProceedToNextRound");
         }
+
+    */
     }
 
     public void ProceedToNextGamePhase(bool isGoingToCombat = false)
@@ -215,7 +225,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject GenerateEnemyParty()
     {
-        int lowestLevelInHeroParty = 1;
+        int lowestLevelInHeroParty = 0;
 
         foreach (HeroClass hero in partyBehaviour.heroParty)
             if (hero.Level > lowestLevelInHeroParty)
