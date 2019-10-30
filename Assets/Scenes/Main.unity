@@ -616,6 +616,7 @@ MonoBehaviour:
   enemyParty: []
   combatOrder: []
   goldReward: 0
+  xpReward: 0
   gameLog: {fileID: 953920036}
 --- !u!4 &107724297
 Transform:
@@ -1793,7 +1794,7 @@ MonoBehaviour:
   - {fileID: 3799346918904664122, guid: ca34420cb17bbad4993dd8d7f6f586d7, type: 3}
   AllTier4EnemyParties: []
   AllBosses:
-  - {fileID: 6141508178140157650, guid: 07332eb8b55f0ec4fa13afef96b41638, type: 3}
+  - {fileID: 104894152697888987, guid: 158d22f5bf5f0c144995317e53bf61aa, type: 3}
   AllArmor:
   - {fileID: 6094495503476679372, guid: 8fb24af71c46efc489001f09c2a726dc, type: 3}
   AllAccessories:

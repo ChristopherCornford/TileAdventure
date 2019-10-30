@@ -139,7 +139,16 @@ public class ShopManager : MonoBehaviour
                     newMercenary.transform.GetChild(1).GetComponent<Image>().sprite = mercenary.sprite;
                     newMercenary.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = mercenary.PrimaryStat;
                     newMercenary.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = mercenary.goldCost.ToString() + " Gold";
-                    newMercenary.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(delegate { currentlySelectedMercenary = mercenary; OpenCurrentPartyPanel(shopType); });
+
+                    if (mercenary.goldCost <= partyBehaviour.Gold)
+                    {
+                        newMercenary.transform.GetChild(4).GetComponent<Button>().interactable = true;
+                        newMercenary.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(delegate {currentlySelectedMercenary = mercenary; partyBehaviour.Gold -= currentlySelectedMercenary.goldCost; OpenCurrentPartyPanel(shopType); });
+                    }
+                    else
+                    {
+                        newMercenary.transform.GetChild(4).GetComponent<Button>().interactable = false;
+                    }
 
                     uiObjectsToDelete.Add(newMercenary);
                 }
@@ -177,15 +186,9 @@ public class ShopManager : MonoBehaviour
                 currentPartyPanel.transform.GetChild(i).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = partyBehaviour.heroParty[i].name;
                 currentPartyPanel.transform.GetChild(i).transform.GetChild(1).GetComponent<Image>().sprite = partyBehaviour.heroParty[i].sprite;
 
-                if (partyBehaviour.heroParty[i].goldCost <= partyBehaviour.Gold)
-                {
-                    currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().interactable = true;
-                    currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().onClick.AddListener(delegate { partyBehaviour.Gold -= currentlySelectedItem.goldPrice; EquipCurrentThing(shopType, partyBehaviour.heroParty[index], index); });
-                }
-                else
-                {
-                    currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().interactable = false;
-                }
+                currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().interactable = true;
+                currentPartyPanel.transform.GetChild(i).transform.GetChild(2).GetComponent<Button>().onClick.AddListener(delegate { EquipCurrentThing(shopType, partyBehaviour.heroParty[index], index); });
+                
             }
             else if(i >= partyBehaviour.heroParty.Count)
             {

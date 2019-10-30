@@ -169,10 +169,9 @@ public class HeroClass : Character
                             this.Skill -= armorSlot.buffValue;
                             break;
                     }
+
                     armorSlot = null;
                     arSlotFull = false;
-
-                    Destroy(armorSlot.gameObject);
                 }
 
                 if (!arSlotFull)
@@ -202,8 +201,6 @@ public class HeroClass : Character
 
                     armorSlot = item as Armor;
                     arSlotFull = true;
-
-                    Instantiate(armorSlot.gameObject, this.transform);
                 }
             }
             else if (item.GetType() == typeof(Accessory))
@@ -232,11 +229,9 @@ public class HeroClass : Character
                             this.Skill -= accessorySlot.buffValue;
                             break;
                     }
-
+                    
                     accessorySlot = null;
                     acSlotFull = false;
-
-                    Destroy(accessorySlot.gameObject);
                 }
 
                 if (!acSlotFull)
@@ -266,8 +261,6 @@ public class HeroClass : Character
 
                     accessorySlot = item as Accessory;
                     acSlotFull = true;
-
-                    Instantiate(accessorySlot.gameObject, this.transform);
                 }
             }
             else if (item.GetType() == typeof(Weapon))
@@ -299,8 +292,6 @@ public class HeroClass : Character
 
                     weaponSlot = null;
                     wSlotFull = false;
-
-                    Destroy(weaponSlot.gameObject);
                 }
 
                 if (!wSlotFull)
@@ -330,8 +321,6 @@ public class HeroClass : Character
                     
                     weaponSlot = item as Weapon;
                     wSlotFull = true;
-
-                    Instantiate(weaponSlot.gameObject, this.transform);
                 }
             }
         }
@@ -388,6 +377,13 @@ public class HeroClass : Character
             combatManager.RemoveCharacterFromCombat(this, null, characterParty);
 
         Destroy(this.gameObject);
+    }
+
+    public bool CanLevelUp()
+    {
+        xpNeededToLevelUp = Level * 7;
+
+        return (XP >= xpNeededToLevelUp) ? true : false;
     }
 
     public void LevelUp(int newLevel)

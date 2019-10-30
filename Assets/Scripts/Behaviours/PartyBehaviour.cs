@@ -108,6 +108,11 @@ public class PartyBehaviour : MonoBehaviour
                 heroParty.RemoveAt(i);
                 Destroy(this.transform.GetChild(i).gameObject);
             }
+
+            if (heroParty[i].CanLevelUp())
+            {
+                heroParty[i].LevelUp(heroParty[i].Level + 1);
+            }
         }
 
         Vector3Int intPos = grid.WorldToCell(this.transform.position);
@@ -210,7 +215,7 @@ public class PartyBehaviour : MonoBehaviour
 
     public IEnumerator MoveParty(Vector3[] path)
     {
-        if(path == null)
+        if (path == null)
         {
             Vector3Int intPos = grid.WorldToCell(this.transform.position);
             currentTile = tilemap.GetTile(intPos);
@@ -257,20 +262,31 @@ public class PartyBehaviour : MonoBehaviour
                     float step = boardMovementSpeed * Time.deltaTime;
 
                     this.transform.position = Vector3.MoveTowards(this.transform.position, path[i], step);
-                    
+
                     yield return new WaitForSeconds(step / 2);
                 }
 
                 yield return new WaitForSeconds(Time.deltaTime);
             }
-            
-            
+
+
             this.transform.position = path[path.Length - 1];
-            
+
 
             Vector3Int intPos = grid.WorldToCell(this.transform.position);
             currentTile = tilemap.GetTile(intPos);
 
+
+            foreach (HeroClass hero in heroParty)
+            {
+                hero.XP += 1;
+                
+                if (hero.CanLevelUp())
+                {
+                    hero.LevelUp(hero.Level + 1);
+                }
+            }
+            
             if (currentTile.GetType() == typeof(VariantTiles))
             {
                 VariantTiles tile = currentTile as VariantTiles;
@@ -288,7 +304,7 @@ public class PartyBehaviour : MonoBehaviour
                         {
                             case VariantTiles.VariantType.Town:
 
-                                foreach(HeroClass hero in heroParty)
+                                foreach (HeroClass hero in heroParty)
                                 {
                                     hero.currentHealth = hero.Health;
                                 }

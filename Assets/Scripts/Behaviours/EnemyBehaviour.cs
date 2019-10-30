@@ -7,32 +7,16 @@ public class EnemyBehaviour : MonoBehaviour
     public PartyBehaviour partyBehaviour;
 
     public Sprite previewSprite;
-
-    public GameObject baseEnemy;
-
+    
     public List<GameObject> enemyParty = new List<GameObject>();
     public List<Enemy> enemyClasses = new List<Enemy>();
 
-    private void Awake()
+    public void GenerateEnemyParty(int partyLevel, int[,] levelGrid)
     {
-        partyBehaviour = FindObjectOfType(typeof(PartyBehaviour)) as PartyBehaviour;
+        GameManager gameManager = FindObjectOfType(typeof(GameManager)) as GameManager;
 
-        if (!baseEnemy.GetComponent<Enemy>().isBoss)
-        {
-            for (int i = 0; i < partyBehaviour.heroParty.Count; i++)
-            {
-                enemyParty.Add(baseEnemy);
-                enemyClasses.Add(baseEnemy.GetComponent<Enemy>());
-            }
-            
-        }
-        else
-        {
-            enemyParty.Add(baseEnemy);
-            enemyClasses.Add(baseEnemy.GetComponent<Enemy>());
-        }
-        this.name = baseEnemy.name + " x" + enemyParty.Count.ToString();
+        int[,] levelingGrid = gameManager.enemyLevelingGrid;
 
-        Instantiate(baseEnemy, this.transform);
+
     }
 }

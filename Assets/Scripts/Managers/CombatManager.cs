@@ -14,6 +14,7 @@ public class CombatManager : MonoBehaviour
     public List<Character> combatOrder;
 
     public int goldReward;
+    public int xpReward;
 
     public TextMeshProUGUI gameLog;
 
@@ -125,7 +126,7 @@ public class CombatManager : MonoBehaviour
                             {
                                 foreach (HeroClass hero in combatHeroCopies)
                                 {
-                                    if(hero.currentHealth <= hero.Health)
+                                    if(hero.currentHealth == hero.Health)
                                     {
                                         isHealing = true;
                                     }
@@ -144,8 +145,15 @@ public class CombatManager : MonoBehaviour
                         switch (isHealing)
                         {
                             case true:
+                                HeroClass heroToHeal = currentHero;
 
-                                currentHero.BasicHeal(combatHeroCopies[Random.Range(0, combatHeroCopies.Count)]);
+                                foreach (HeroClass hero in combatHeroCopies)
+                                {
+                                    if (hero.currentHealth < currentHero.Health)
+                                        heroToHeal = hero;
+                                }
+
+                                currentHero.BasicHeal(heroToHeal);
                                 break;
 
                             case false:
@@ -206,10 +214,11 @@ public class CombatManager : MonoBehaviour
             partyBehaviour.Gold += goldReward;
 
             goldReward = 0;
+            
 
             for (int i = 0; i < combatHeroParty.Count; i++)
             {
-                combatHeroParty[i].XP += 3;
+                combatHeroParty[i].XP += xpReward;
                 heroParty[i].CopyHero(heroParty[i], combatHeroParty[i]);
 
                 partyBehaviour.heroParty[i].CopyHero(partyBehaviour.heroParty[i], heroParty[i]);
@@ -222,6 +231,8 @@ public class CombatManager : MonoBehaviour
 
             gameManager.ProceedToNextGamePhase();
         }
+
+        xpReward = 0;
 
         combatOrder.Clear();
 
@@ -258,7 +269,8 @@ public class CombatManager : MonoBehaviour
         {
             Enemy enemy = character as Enemy;
 
-            partyBehaviour.Gold += enemy.goldToReward;
+            goldReward += enemy.goldToReward;
+            xpReward += enemy.xpReward;
 
             currentEnemyParty.Remove(character as Enemy);
         }

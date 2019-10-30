@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
             return instance;
         }
     }
+    
 
     [Header("Game Phases")]
     public GamePhase currentGamePhase;
@@ -90,7 +91,37 @@ public class GameManager : MonoBehaviour
     public PartyBehaviour partyBehaviour;
     public CombatManager combatManager;
     public ShopManager shopManager;
+
+    //Combat Enemy Leveling Grid
+
+    public readonly int[,] enemyLevelingGrid = new int[10, 4]
+    {
+        // Read As : {partyLevel, Tier 1 Level, Tier 2 Level, Tier 3 Level}
+
+        {1, 1, 0, 0 },
+
+        {2, 1, 0, 0 },
+
+        {3, 2, 1, 0 },
+
+        {4, 2, 1, 0 },
+
+        {5, 3, 2, 1 },
+
+        {6, 3, 2, 1 },
+
+        {7, 4, 3, 2 },
+
+        {8, 4, 3, 2 },
+
+        {9, 5, 4, 3 },
+
+        {10, 5, 4, 3 },
+    };
+
     
+
+
     private void Awake()
     {
         SetScriptReferences();

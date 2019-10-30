@@ -142,6 +142,7 @@ public class PlayerBehaviour : MonoBehaviour
             {
                 if (CanBePlaced(tile, position))
                 {
+
                     gameManager.ProceedToNextGamePhase();
 
                     currentTileMap.SetTile(position, tile);
