@@ -1548,6 +1548,7 @@ MonoBehaviour:
   isRoundProgressing: 0
   currentTurn: 1
   currentSeason: 0
+  enemyPartySizeLimit: 5
   AllBaseTTiles:
   - {fileID: 11400000, guid: 73d04bdfc0d572e4988f21acb6a51e27, type: 2}
   - {fileID: 11400000, guid: 319dc2507bfd46744a09b083f98ec7db, type: 2}
@@ -1777,24 +1778,33 @@ MonoBehaviour:
   - {fileID: 7312243259220509362, guid: fb68f39fd5dcfd24f8a065be7f3fd601, type: 3}
   - {fileID: 7312243259220509362, guid: 4897af0ce944b8142b5acaff010f3f5c, type: 3}
   AllEnemies:
-  - {fileID: 7911084480829657908, guid: cfeee50e6d1a5e34a8d0619b339d304e, type: 3}
-  - {fileID: 4938449152337250639, guid: b2d05d3e9a0f0674c9693ce6df26a236, type: 3}
-  AllTier1EnemyParties:
-  - {fileID: 4061145845863695910, guid: 77aef74e64f89214b88b7e3a0a15876f, type: 3}
-  - {fileID: 4061145845863695910, guid: fd560514a27411943809950dbd5194b7, type: 3}
-  - {fileID: 4061145845863695910, guid: 205eb8f69a9cb634db14b6f71d50f938, type: 3}
-  AllTier2EnemyParties:
-  - {fileID: 1006009143822547652, guid: 41417754c894bac45949c7bbb9711eb6, type: 3}
-  - {fileID: 4208205279281831967, guid: 91621bed5cba1b14a9a6b85b4400cbd6, type: 3}
-  - {fileID: 1068306352933769065, guid: 0be0ae0d5cd5eba49965d04737c9a25b, type: 3}
-  - {fileID: 334136470355794481, guid: 6d184284637df9f4ab73e4123aa40eda, type: 3}
-  AllTier3EnemyParties:
-  - {fileID: 3590576125392420872, guid: ee35bbfd8d48b5849a8818f994c7ff1e, type: 3}
-  - {fileID: 3799346918904664122, guid: 7c6084070680bbb4db12e68505d5e6af, type: 3}
-  - {fileID: 3799346918904664122, guid: ca34420cb17bbad4993dd8d7f6f586d7, type: 3}
-  AllTier4EnemyParties: []
+  - {fileID: 3818859314938764985, guid: 77aef74e64f89214b88b7e3a0a15876f, type: 3}
+  - {fileID: 1573358054318959337, guid: fd560514a27411943809950dbd5194b7, type: 3}
+  - {fileID: 8190572521150174077, guid: 205eb8f69a9cb634db14b6f71d50f938, type: 3}
+  - {fileID: 1945762807399068891, guid: 91daaaf3da317004aaf8701098c2fc95, type: 3}
+  - {fileID: 6548781978419615416, guid: 0484aca0eb9e3514fa8f56654afa0cf3, type: 3}
+  - {fileID: 334468277150798357, guid: 234edac6307e71d4e8bbfd657ad7ef08, type: 3}
+  - {fileID: 1765821307816356013, guid: 6d184284637df9f4ab73e4123aa40eda, type: 3}
+  - {fileID: 1129187106944191466, guid: ee35bbfd8d48b5849a8818f994c7ff1e, type: 3}
+  - {fileID: 5745505110628215923, guid: ca34420cb17bbad4993dd8d7f6f586d7, type: 3}
+  - {fileID: 7640588942190551539, guid: 288ea8316625db440a70c67a568e3c1c, type: 3}
+  AllTier1Enemies:
+  - {fileID: 3818859314938764985, guid: 77aef74e64f89214b88b7e3a0a15876f, type: 3}
+  - {fileID: 1573358054318959337, guid: fd560514a27411943809950dbd5194b7, type: 3}
+  - {fileID: 8190572521150174077, guid: 205eb8f69a9cb634db14b6f71d50f938, type: 3}
+  AllTier2Enemies:
+  - {fileID: 1945762807399068891, guid: 91daaaf3da317004aaf8701098c2fc95, type: 3}
+  - {fileID: 6548781978419615416, guid: 0484aca0eb9e3514fa8f56654afa0cf3, type: 3}
+  - {fileID: 334468277150798357, guid: 234edac6307e71d4e8bbfd657ad7ef08, type: 3}
+  - {fileID: 1765821307816356013, guid: 6d184284637df9f4ab73e4123aa40eda, type: 3}
+  AllTier3Enemies:
+  - {fileID: 1129187106944191466, guid: ee35bbfd8d48b5849a8818f994c7ff1e, type: 3}
+  - {fileID: 5745505110628215923, guid: ca34420cb17bbad4993dd8d7f6f586d7, type: 3}
+  - {fileID: 7640588942190551539, guid: 288ea8316625db440a70c67a568e3c1c, type: 3}
   AllBosses:
   - {fileID: 104894152697888987, guid: 158d22f5bf5f0c144995317e53bf61aa, type: 3}
+  enemyPartyTemplate: {fileID: 198991091692370386, guid: deb3f4d51a0daea4c94a848018d0c6e1,
+    type: 3}
   AllArmor:
   - {fileID: 6094495503476679372, guid: 8fb24af71c46efc489001f09c2a726dc, type: 3}
   AllAccessories:

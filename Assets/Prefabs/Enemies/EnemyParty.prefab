@@ -45,6 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partyBehaviour: {fileID: 0}
   previewSprite: {fileID: 0}
-  baseEnemy: {fileID: 0}
+  difficultyChances: {x: 25, y: 50, z: 25}
   enemyParty: []
   enemyClasses: []

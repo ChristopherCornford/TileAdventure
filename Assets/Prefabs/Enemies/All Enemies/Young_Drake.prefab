@@ -122,6 +122,8 @@ MonoBehaviour:
   Defense: 5
   Speed: 3
   gameLog: {fileID: 0}
+  combatTier: 2
+  combatSize: 2
   xpReward: 5
   goldRewardMin: 5
   goldRewardMax: 8

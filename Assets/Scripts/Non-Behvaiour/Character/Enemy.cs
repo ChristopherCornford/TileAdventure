@@ -9,6 +9,9 @@ public class Enemy : Character
 {
     public TextMeshProUGUI gameLog;
 
+    public int combatTier;
+    public double combatSize;
+
     public int xpReward;
 
     public int goldRewardMin;
@@ -90,9 +93,11 @@ public class Enemy : Character
         Destroy(this.gameObject);
     }
 
-    public void LevelUp(int newLevel)
+    public void LevelUp(int newLevel = 0)
     {
         int timesToLevel = newLevel - this.Level;
+
+        if (timesToLevel <= 0) { return; }
 
         for (int i = 0; i < timesToLevel; i++)
         {
