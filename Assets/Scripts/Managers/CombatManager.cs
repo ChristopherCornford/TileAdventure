@@ -5,12 +5,15 @@ using TMPro;
 
 public class CombatManager : MonoBehaviour
 {
+    public bool automatedCombat = false;
+    public CombatStyle combatStyle = CombatStyle.TurnBasedAction;
+
     public GameManager gameManager;
     public PartyBehaviour partyBehaviour;
 
     public List<HeroClass> heroParty;
     public List<Enemy> enemyParty;
-    
+
     public List<Character> combatOrder;
 
     public int goldReward;
@@ -31,13 +34,14 @@ public class CombatManager : MonoBehaviour
 
         gameLog.transform.parent.gameObject.SetActive(true);
 
-        SetInitativeList();
+        if(combatStyle == CombatStyle.TurnBasedAction)
+        {
+            SetInitativeList();
+        }
     }
 
-    public void SetInitativeList()
+    private List<HeroClass> MakeHeroCopies(List<HeroClass> heroParty)
     {
-        combatOrder.Clear();
-
         List<HeroClass> combatHeroCopies = new List<HeroClass>();
 
         foreach (HeroClass hero in heroParty)
@@ -53,6 +57,11 @@ public class CombatManager : MonoBehaviour
             combatHeroCopies.Add(heroClass);
         }
 
+        return combatHeroCopies;
+    }
+
+    private List<Enemy> MakeEnemyCopies(List<Enemy> enemyParty)
+    {
         List<Enemy> combatEnemyCopies = new List<Enemy>();
 
         foreach (Enemy enemy in enemyParty)
@@ -68,8 +77,28 @@ public class CombatManager : MonoBehaviour
             combatEnemyCopies.Add(newEnemy);
         }
 
-        
+        return combatEnemyCopies;
+    }
+
+    public void SetInitativeList()
+    {
+        combatOrder.Clear();
+
+        List<HeroClass> combatHeroCopies = MakeHeroCopies(heroParty);
+
+        List<Enemy> combatEnemyCopies = MakeEnemyCopies(enemyParty);
+
         List<int> initativeList = new List<int>();
+
+
+        /*
+         
+         
+         TODO: ADD SPEED-BASED MULTI-ATTACK TO INITATIVE LIST
+
+
+        */
+
 
         foreach (HeroClass hero in combatHeroCopies)
             initativeList.Add(hero.Speed);
@@ -80,11 +109,11 @@ public class CombatManager : MonoBehaviour
         initativeList.Sort();
         initativeList.Reverse();
 
-        for(int i = 0; i < initativeList.Count; i++)
+        for (int i = 0; i < initativeList.Count; i++)
         {
             foreach (Enemy enemy in combatEnemyCopies)
                 if (enemy.Speed == initativeList[i])
-                    if(!combatOrder.Contains(enemy))
+                    if (!combatOrder.Contains(enemy))
                         combatOrder.Insert(i, enemy);
 
             foreach (HeroClass heroClass in combatHeroCopies)
@@ -93,13 +122,13 @@ public class CombatManager : MonoBehaviour
                         combatOrder.Insert(i, heroClass);
         }
 
-        
-        StartCoroutine(CharacterActionPhase(combatEnemyCopies, combatHeroCopies));
-
-
+        if (automatedCombat)
+            StartCoroutine(AutomatedCharacterActionPhase(combatEnemyCopies, combatHeroCopies));
+        else
+            StartCoroutine(ManualCharacterActionPhase(combatEnemyCopies, combatHeroCopies));
     }
 
-    public IEnumerator CharacterActionPhase(List<Enemy> combatEnemyCopies, List<HeroClass> combatHeroCopies)
+    public IEnumerator AutomatedCharacterActionPhase(List<Enemy> combatEnemyCopies, List<HeroClass> combatHeroCopies)
     {
         if (gameManager.currentGamePhase == GameManager.GamePhase.Combat)
         {
@@ -120,25 +149,32 @@ public class CombatManager : MonoBehaviour
 
                         bool isHealing = new bool();
 
-                        if(isHealer)
+                        if (isHealer)
                         {
                             if (combatHeroCopies.Count == 1 && combatHeroCopies[0] == currentHero)
                             {
-                                foreach (HeroClass hero in combatHeroCopies)
+                                if (currentHero.currentHealth != currentHero.Health)
                                 {
-                                    if(hero.currentHealth == hero.Health)
-                                    {
-                                        isHealing = true;
-                                    }
-                                    else
-                                    {
-                                        isHealing = false;
-                                    }
+                                    isHealing = true;
+                                }
+                                else
+                                {
+                                    isHealing = false;
                                 }
                             }
                             else
                             {
-                                isHealing = true;
+                                foreach (HeroClass hero in combatHeroCopies)
+                                {
+                                    if (hero.currentHealth == hero.Health)
+                                    {
+                                        isHealing = false;
+                                    }
+                                    else
+                                    {
+                                        isHealing = true;
+                                    }
+                                }
                             }
                         }
 
@@ -149,11 +185,16 @@ public class CombatManager : MonoBehaviour
 
                                 foreach (HeroClass hero in combatHeroCopies)
                                 {
-                                    if (hero.currentHealth < currentHero.Health)
+                                    double heroHealthPerc = (hero.currentHealth / hero.Health) * 100; //Grab % health of 'hero'
+
+                                    double tempHealthPerc = (heroToHeal.currentHealth / heroToHeal.Health) * 100; //Grab % health of heroToHeal
+
+                                    //If hero's Health% is less than the current heroToHeal's, make 'hero' the new heroToHeal
+                                    if (heroHealthPerc < tempHealthPerc) 
                                         heroToHeal = hero;
                                 }
 
-                                currentHero.BasicHeal(heroToHeal);
+                                currentHero.BasicHeal(heroToHeal); //Heals the party member with the lowest percent health
                                 break;
 
                             case false:
@@ -195,11 +236,106 @@ public class CombatManager : MonoBehaviour
         }
         else
         {
-            StopCoroutine("CharacterActionPhase");
+            StopAllCombatImmeadiately();
         }
-    
     }
 
+    public IEnumerator ManualCharacterActionPhase(List<Enemy> combatEnemyCopies, List<HeroClass> combatHeroCopies)
+    {
+        if (gameManager.currentGamePhase == GameManager.GamePhase.Combat)
+        {
+            for (int i = 0; i < combatOrder.Count; i++)
+            {
+                Character currentCharacter = combatOrder[i];
+
+                if(currentCharacter.GetType() == typeof(HeroClass))
+                {
+                    HeroClass currentHero = currentCharacter as HeroClass;
+
+                    bool isHealer = (currentHero.role == HeroRole.Mender) ? true : false;
+                    bool isHealing = new bool();
+
+                    if (isHealer)
+                    {
+                        if (combatHeroCopies.Count == 1 && combatHeroCopies[0] == currentHero)
+                        {
+                            if (currentHero.currentHealth != currentHero.Health)
+                            {
+                                isHealing = true; //Is alone, and not at full health
+                            }
+                            else
+                            {
+                                isHealing = false; //Is alone, but at full health
+                            }
+                        }
+                        else
+                        {
+                            foreach (HeroClass hero in combatHeroCopies)
+                            {
+                                if (hero.currentHealth == hero.Health)
+                                {
+                                    isHealing = false; //This hero doesn't need healing;
+                                }
+                                else
+                                {
+                                    isHealing = true; //This hero does need healing
+                                }
+                            }
+                        }
+                    }
+
+                    //Hero Action, pauses for user input
+                    switch (isHealing)
+                    {
+                        case true:
+                            // Healing Choice
+                            break;
+
+                        case false:
+                            // Attack Choice
+                            break;
+                    }
+                }
+                else if (currentCharacter.GetType() == typeof(Enemy))
+                {
+                    Enemy currentEnemy = currentCharacter as Enemy;
+                }
+            }
+        }
+
+
+        yield return null;
+    }
+
+    public IEnumerator BeginRealTimeCombat(List<Enemy> combatEnemyCopies, List<HeroClass> combatHeroCopies)
+    {
+        StartCoroutine(HeroPartyCombat(combatEnemyCopies));
+        StartCoroutine(EnemyPartyCombat(combatHeroCopies));
+        yield return null;
+    }
+
+    public IEnumerator HeroPartyCombat(List<Enemy> combatEnemyCopies)
+    {
+        List<HeroClass> heroesReadyToAct = MakeHeroCopies(heroParty);
+        List<HeroClass> heroesOnCooldown = new List<HeroClass>();
+
+        //TODO: HERO PARTY COMBAT LOOP
+        yield return null;
+    }
+
+    public IEnumerator EnemyPartyCombat(List<HeroClass> combatHeroCopies)
+    {
+        List<Enemy> enemiesReadyToAct = MakeEnemyCopies(enemyParty);
+        List<Enemy> enemiesOnCooldown = new List<Enemy>();
+
+        //TODO: ENEMY PARTY COMBAT LOOP
+        yield return null;
+    }
+
+    public void StopAllCombatImmeadiately()
+    {
+        this.StopAllCoroutines();
+    }
 
     public void EndCombat(List<HeroClass> combatHeroParty, bool victory = false)
     {
@@ -214,7 +350,7 @@ public class CombatManager : MonoBehaviour
             partyBehaviour.Gold += goldReward;
 
             goldReward = 0;
-            
+
 
             for (int i = 0; i < combatHeroParty.Count; i++)
             {
@@ -223,8 +359,8 @@ public class CombatManager : MonoBehaviour
 
                 partyBehaviour.heroParty[i].CopyHero(partyBehaviour.heroParty[i], heroParty[i]);
             }
-            
-            foreach(HeroClass hero in combatHeroParty)
+
+            foreach (HeroClass hero in combatHeroParty)
             {
                 Destroy(hero.gameObject);
             }
@@ -236,11 +372,11 @@ public class CombatManager : MonoBehaviour
 
         combatOrder.Clear();
 
-        StopCoroutine("CharacterActionPhase");
+        StopAllCombatImmeadiately();
         gameLog.text = "";
         gameLog.transform.parent.gameObject.SetActive(false);
 
-        foreach(Enemy enemy in enemyParty)
+        foreach (Enemy enemy in enemyParty)
         {
             killedBoss = (enemy.isBoss) ? true : false;
 
@@ -275,4 +411,11 @@ public class CombatManager : MonoBehaviour
             currentEnemyParty.Remove(character as Enemy);
         }
     }
+}
+
+
+public enum CombatStyle
+{
+    TurnBasedAction,
+    RealTimeAction,
 }
