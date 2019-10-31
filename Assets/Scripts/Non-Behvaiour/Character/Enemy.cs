@@ -116,6 +116,8 @@ public class Enemy : Character
     public void CopyEnemy(Enemy target, Enemy template)
     {
         target.name = template.name;
+        target.sprite = template.sprite;
+
         target.Health = template.Health;
         target.currentHealth = template.currentHealth;
         target.Attack = template.Attack;

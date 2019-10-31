@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5061836179215631305}
   - component: {fileID: 8429662773355154124}
   m_Layer: 0
-  m_Name: Dark_Knight
+  m_Name: Dark Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueID: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: 5839944751170447041, guid: 4b8820f923769e44ca0192e752274512, type: 3}
   Level: 1
   Health: 39
   currentHealth: 39

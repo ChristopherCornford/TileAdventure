@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 746857767325055906}
   - component: {fileID: 1638830003031896766}
   m_Layer: 0
-  m_Name: Young_Drake
+  m_Name: Young Drake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueID: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: -5577557441251971767, guid: 9888ac698dd44e641a653115dba2627e, type: 3}
   Level: 1
   Health: 16
   currentHealth: 16

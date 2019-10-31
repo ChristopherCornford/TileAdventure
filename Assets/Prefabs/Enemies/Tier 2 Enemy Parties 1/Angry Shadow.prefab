@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uniqueID: 0
-  sprite: {fileID: 0}
+  sprite: {fileID: -8961573188650862486, guid: 0540f71da7df1ae45bf4700ccd25d052, type: 3}
   Level: 1
   Health: 16
   currentHealth: 16

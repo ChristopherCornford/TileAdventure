@@ -9,6 +9,8 @@ TagManager:
   - Game Board
   - Enemy
   - Hero
+  - HeroPartyPanel
+  - EnemyPartyPanel
   layers:
   - Default
   - TransparentFX

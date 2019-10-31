@@ -21,6 +21,9 @@ public class Character : MonoBehaviour
     public int Defense;
     [Space]
     public int Speed;
+
+
+    public float cooldownTimer;
 }
 
 
