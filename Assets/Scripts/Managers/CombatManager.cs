@@ -418,7 +418,7 @@ public class CombatManager : MonoBehaviour
 
     public IEnumerator HeroPartyCombat(List<HeroClass> combatHeroCopies, List<Enemy> combatEnemyCopies)
     {
-        List<HeroClass> heroesReadyToAct = MakeHeroCopies(heroParty);
+        List<HeroClass> heroesReadyToAct = combatHeroCopies;
         List<HeroClass> heroesOnCooldown = new List<HeroClass>();
 
         HeroClass currentlySelectedHero = heroesReadyToAct[0];
@@ -427,7 +427,7 @@ public class CombatManager : MonoBehaviour
 
         do
         {
-            PopulateCombatPanel(combatHeroCopies, null);
+            PopulateCombatPanel(combatHeroCopies, combatEnemyCopies);
 
             foreach (GameObject buttonObj in heroButtons)
             {
@@ -533,14 +533,14 @@ public class CombatManager : MonoBehaviour
 
     public IEnumerator EnemyPartyCombat(List<HeroClass> combatHeroCopies, List<Enemy> combatEnemyCopies)
     {
-        List<Enemy> enemiesReadyToAct = MakeEnemyCopies(enemyParty);
+        List<Enemy> enemiesReadyToAct = combatEnemyCopies;
         List<Enemy> enemiesOnCooldown = new List<Enemy>();
 
         bool combatComplete = new bool();
 
         do
         {
-            PopulateCombatPanel(null, combatEnemyCopies);
+            PopulateCombatPanel(combatHeroCopies, combatEnemyCopies);
 
             for (int i = 0; i < enemiesReadyToAct.Count; i++)
             {
