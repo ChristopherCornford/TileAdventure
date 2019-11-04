@@ -22,6 +22,7 @@ public class Enemy : Character
     public bool isBoss;
 
     public GameObject hitSprite;
+
     
     public void BasicAttack(HeroClass target, CombatManager combatManager, List<HeroClass> characterParty, bool isHealing = false)
     {
@@ -117,6 +118,8 @@ public class Enemy : Character
     {
         target.name = template.name;
         target.sprite = template.sprite;
+
+        target.uniqueID = template.uniqueID;
 
         target.Health = template.Health;
         target.currentHealth = template.currentHealth;

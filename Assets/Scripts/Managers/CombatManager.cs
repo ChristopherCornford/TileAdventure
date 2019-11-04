@@ -59,7 +59,9 @@ public class CombatManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(BeginRealTimeCombat(MakeEnemyCopies(enemyParty), MakeHeroCopies(heroParty)));
+            List<HeroClass> heroClasses = MakeHeroCopies(heroParty);
+            List<Enemy> enemies = MakeEnemyCopies(enemyParty);
+            //StartCoroutine(BeginRealTimeCombat(enemies, heroClasses));
         }
 
     }
@@ -96,8 +98,11 @@ public class CombatManager : MonoBehaviour
             Enemy newEnemy = nextEnemy.GetComponent<Enemy>();
 
             newEnemy.gameLog = gameLog;
-
+            
             enemy.CopyEnemy(newEnemy, enemy);
+
+            newEnemy.SetID();
+
             combatEnemyCopies.Add(newEnemy);
         }
 
@@ -114,25 +119,77 @@ public class CombatManager : MonoBehaviour
 
         List<int> initativeList = new List<int>();
 
-
-        /*
-         
-         
-         TODO: ADD SPEED-BASED MULTI-ATTACK TO INITATIVE LIST
+        List<Character> characters = new List<Character>();
 
 
-        */
+        foreach (Enemy enemy in combatEnemyCopies)
+            characters.Add(enemy);
+        foreach (HeroClass hero in combatHeroCopies)
+            characters.Add(hero);
+        
+
+        int maxAttacks = new int();
+
+
+        foreach (Character character in characters)
+        {
+            int attacks = 1 + (character.Speed / 10);
+
+            if (attacks > maxAttacks)
+            {
+                maxAttacks = attacks;
+            }
+        }
 
 
         foreach (HeroClass hero in combatHeroCopies)
-            initativeList.Add(hero.Speed);
+        {
+            int numOfAttacks = 1 + (hero.Speed / 10);
+
+            for (int i = 0; i < numOfAttacks; i++)
+            {
+                initativeList.Add(hero.Speed - (10 * i));
+            }
+        }
 
         foreach (Enemy enemy in combatEnemyCopies)
-            initativeList.Add(enemy.Speed);
+        {
+            int numOfAttacks = 1 + (enemy.Speed / 10);
+
+            for (int i = 0; i < numOfAttacks; i++)
+            {
+                initativeList.Add(enemy.Speed - (10 * i));
+            }
+        }
 
         initativeList.Sort();
         initativeList.Reverse();
 
+
+        for (int i = 0; i < initativeList.Count; i++)
+        {
+            bool spotTaken = new bool();
+
+            foreach (Character character in characters)
+            {
+                if (spotTaken == false)
+                {
+                    for (int j = 0; j < maxAttacks; j++)
+                    {
+                        int speedMod = 10 * j;
+
+                        if ((character.Speed - speedMod) == initativeList[i])
+                        {
+                            combatOrder.Insert(i, character);
+
+                            spotTaken = true;
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
         for (int i = 0; i < initativeList.Count; i++)
         {
             foreach (Enemy enemy in combatEnemyCopies)
@@ -145,12 +202,14 @@ public class CombatManager : MonoBehaviour
                     if (!combatOrder.Contains(heroClass))
                         combatOrder.Insert(i, heroClass);
         }
+        */
 
         if (automatedCombat)
             StartCoroutine(AutomatedCharacterActionPhase(combatEnemyCopies, combatHeroCopies));
         else
             StartCoroutine(ManualCharacterActionPhase(combatEnemyCopies, combatHeroCopies));
     }
+    
 
     public IEnumerator AutomatedCharacterActionPhase(List<Enemy> combatEnemyCopies, List<HeroClass> combatHeroCopies)
     {
@@ -331,21 +390,23 @@ public class CombatManager : MonoBehaviour
                         case true:
                             HeroClass heroToHeal = null;
                             bool heroChoosen = new bool();
-
-                            for (int j = 0; j < heroButtons.Count; j++)
+                            
+                            for (int x = 0; x < heroButtons.Count; x++)
                             {
-                                Button button = heroButtons[i].GetComponent<Button>();
+                                int index = x;
+
+                                Button button = heroButtons[index].GetComponent<Button>();
 
                                 button.onClick.AddListener(delegate
                                 {
-                                    heroToHeal = combatHeroCopies[i];
+                                    heroToHeal = combatHeroCopies[index];
                                     heroChoosen = true;
                                 });
                             }
 
                             do { yield return null; } while (heroChoosen == false);
 
-                            currentHero.BasicHeal(heroToHeal); //Heals the party member with the lowest percent health
+                            currentHero.BasicHeal(heroToHeal);
                             
                             break;
 
@@ -353,13 +414,15 @@ public class CombatManager : MonoBehaviour
                             Enemy enemyToAttack = null;
                             bool enemyChoosen = new bool();
 
-                            for (int j = 0; j < enemyButtons.Count; j ++)
+                            for (int y = 0; y < enemyButtons.Count; y ++)
                             {
-                                Button button = enemyButtons[i].GetComponent<Button>();
+                                int index = y;
+
+                                Button button = enemyButtons[index].GetComponent<Button>();
 
                                 button.onClick.AddListener(delegate
                                 {
-                                    enemyToAttack = combatEnemyCopies[i];
+                                    enemyToAttack = combatEnemyCopies[index];
                                     enemyChoosen = true;
                                 });
                             }
@@ -409,6 +472,9 @@ public class CombatManager : MonoBehaviour
         }
     }
 
+
+    //RTA Combat Section
+    /*
     public IEnumerator BeginRealTimeCombat(List<Enemy> combatEnemyCopies, List<HeroClass> combatHeroCopies)
     {
         StartCoroutine(HeroPartyCombat(combatHeroCopies, combatEnemyCopies));
@@ -418,14 +484,17 @@ public class CombatManager : MonoBehaviour
 
     public IEnumerator HeroPartyCombat(List<HeroClass> combatHeroCopies, List<Enemy> combatEnemyCopies)
     {
-        List<HeroClass> heroesReadyToAct = combatHeroCopies;
+        List<HeroClass> heroesReadyToAct = new List<HeroClass>();
+        heroesReadyToAct = combatHeroCopies;
+
         List<HeroClass> heroesOnCooldown = new List<HeroClass>();
 
         HeroClass currentlySelectedHero = heroesReadyToAct[0];
 
         bool combatComplete = new bool();
 
-        do
+
+        while (combatComplete == false)
         {
             PopulateCombatPanel(combatHeroCopies, combatEnemyCopies);
 
@@ -436,13 +505,15 @@ public class CombatManager : MonoBehaviour
 
             for (int i = 0; i < heroButtons.Count; i++)
             {
-                if (heroesReadyToAct.Contains(combatHeroCopies[i]))
+                int indexI = i;
+
+                if (heroesReadyToAct.Contains(combatHeroCopies[indexI]))
                 {
-                    Button button = heroButtons[i].GetComponent<Button>();
+                    Button button = heroButtons[indexI].GetComponent<Button>();
 
                     button.onClick.AddListener(delegate
                     {
-                        currentlySelectedHero = combatHeroCopies[i];
+                        currentlySelectedHero = combatHeroCopies[indexI];
 
                         if (currentlySelectedHero.role == HeroRole.Mender)
                         {
@@ -450,9 +521,11 @@ public class CombatManager : MonoBehaviour
 
                             for (int j = 0; j < heroButtons.Count; j++)
                             {
-                                heroButtons[j].GetComponent<Button>().onClick.AddListener(delegate
+                                int indexJ = j;
+
+                                heroButtons[indexJ].GetComponent<Button>().onClick.AddListener(delegate
                                 {
-                                    heroToHeal = combatHeroCopies[i];
+                                    heroToHeal = combatHeroCopies[indexJ];
 
                                     currentlySelectedHero.BasicHeal(heroToHeal);
                                 });
@@ -463,7 +536,7 @@ public class CombatManager : MonoBehaviour
                         {
                             buttonObj.GetComponent<Button>().onClick.RemoveAllListeners();
 
-                            if (buttonObj == heroButtons[i])
+                            if (buttonObj == heroButtons[indexI])
                             {
                                 buttonObj.GetComponent<Image>().sprite = selectionSprite;
                                 buttonObj.GetComponent<Image>().color = selectionColor;
@@ -482,11 +555,13 @@ public class CombatManager : MonoBehaviour
             {
                 for (int i = 0; i < enemyButtons.Count; i++)
                 {
-                    Button button = enemyButtons[i].GetComponent<Button>();
+                    int index = i;
+
+                    Button button = enemyButtons[index].GetComponent<Button>();
 
                     button.onClick.AddListener(delegate
                     {
-                        currentlySelectedHero.BasicAttack(combatEnemyCopies[i], this, combatEnemyCopies);
+                        currentlySelectedHero.BasicAttack(combatEnemyCopies[index], this, combatEnemyCopies);
 
                         heroesReadyToAct.Remove(currentlySelectedHero);
                         heroesOnCooldown.Add(currentlySelectedHero);
@@ -524,7 +599,6 @@ public class CombatManager : MonoBehaviour
                 combatComplete = true;
             }
         }
-        while (combatComplete == false);
 
         gameLog.text += ("\n The Party Has Destroyed The Enemy!");
         yield return new WaitForSeconds(1.0f);
@@ -538,16 +612,19 @@ public class CombatManager : MonoBehaviour
 
         bool combatComplete = new bool();
 
-        do
+
+        while (combatComplete == false)
         {
             PopulateCombatPanel(combatHeroCopies, combatEnemyCopies);
 
             for (int i = 0; i < enemiesReadyToAct.Count; i++)
             {
-                enemiesReadyToAct[i].BasicAttack(combatHeroCopies[Random.Range(0, combatHeroCopies.Count)], this, combatHeroCopies);
-                enemiesReadyToAct[i] = null;
+                int index = i;
 
-                enemiesOnCooldown.Add(enemiesReadyToAct[i]);
+                enemiesReadyToAct[index].BasicAttack(combatHeroCopies[Random.Range(0, combatHeroCopies.Count)], this, combatHeroCopies);
+                enemiesReadyToAct[index] = null;
+
+                enemiesOnCooldown.Add(enemiesReadyToAct[index]);
                 yield return new WaitForSeconds(1.0f);
             }
 
@@ -555,9 +632,11 @@ public class CombatManager : MonoBehaviour
 
             for (int i = 0; i < count; i++)
             {
-                if (enemiesReadyToAct[i] == null)
+                int index = i;
+
+                if (enemiesReadyToAct[index] == null)
                 {
-                    enemiesReadyToAct.RemoveAt(i);
+                    enemiesReadyToAct.RemoveAt(index);
                 }
             }
 
@@ -583,12 +662,12 @@ public class CombatManager : MonoBehaviour
                 combatComplete = true;
             }
         }
-        while (combatComplete == false);
 
         gameLog.text += ("\n The Party Was Defeated...");
         yield return new WaitForSeconds(1.0f);
         EndCombat(combatHeroCopies);
     }
+    */
 
     public void StopAllCombatImmeadiately()
     {
@@ -647,7 +726,17 @@ public class CombatManager : MonoBehaviour
 
     public void RemoveCharacterFromCombat(Character character, List<Enemy> currentEnemyParty = null, List<HeroClass> currentHeroParty = null)
     {
-        combatOrder.Remove(character);
+        List<Character> newCombatOrder = new List<Character>();
+
+        foreach(Character charObj in combatOrder)
+        {
+            if (charObj.uniqueID != character.uniqueID)
+            {
+                newCombatOrder.Add(charObj);
+            }
+        }
+
+        combatOrder = newCombatOrder;
 
         if (character.GetType() == typeof(HeroClass))
         {
@@ -769,6 +858,17 @@ public class CombatManager : MonoBehaviour
 
         for (int i = 0; i < enemies.Count; i++)
             if (enemies[i] == enemy)
+                index = i;
+
+        return index;
+    }
+
+    private int ListIndex(List<Character> characters, Character character)
+    {
+        int index = new int();
+
+        for (int i = 0; i < characters.Count; i++)
+            if (characters[i] == character)
                 index = i;
 
         return index;

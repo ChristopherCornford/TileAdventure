@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    public int uniqueID;
+    public double uniqueID;
 
     [Header("Game Variables")]
     
@@ -24,6 +24,12 @@ public class Character : MonoBehaviour
 
 
     public float cooldownTimer;
+
+
+    public void SetID()
+    {
+        this.uniqueID = Random.value * Time.time;
+    }
 }
 
 

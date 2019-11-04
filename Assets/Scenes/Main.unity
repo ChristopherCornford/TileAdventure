@@ -611,7 +611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   automatedCombat: 0
-  combatStyle: 1
+  combatStyle: 0
   gameManager: {fileID: 0}
   partyBehaviour: {fileID: 0}
   heroParty: []

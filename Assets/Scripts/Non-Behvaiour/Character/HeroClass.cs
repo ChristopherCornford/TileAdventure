@@ -43,11 +43,6 @@ public class HeroClass : Character
     public Accessory accessorySlot;
     bool acSlotFull;
 
-    public void SetID()
-    {
-        this.uniqueID = Mathf.RoundToInt(Time.time);
-    }
-
     public TextMeshProUGUI gameLog;
 
     

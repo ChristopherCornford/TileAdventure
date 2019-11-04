@@ -36,9 +36,14 @@ public class EnemyBehaviour : MonoBehaviour
         foreach (GameObject enemyObj in enemyParty)
         {
             enemyClasses.Add(enemyObj.GetComponent<Enemy>());
+
             Instantiate(enemyObj, this.transform);
         }
-        
+
+        foreach(Enemy enemy in enemyClasses)
+        {
+            enemy.SetID();
+        }
     }
     
     public void GenerateEnemyParty(int partyLevel)

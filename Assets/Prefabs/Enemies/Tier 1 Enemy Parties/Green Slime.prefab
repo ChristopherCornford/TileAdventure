@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5048da1c9338d40a870b064950fd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: 0
+  uniqueID: 3.0494521453621815
   sprite: {fileID: -4325486339483331350, guid: cec7d4d7052f83a4fa22298611072c1f, type: 3}
   Level: 1
   Health: 11
@@ -121,6 +121,7 @@ MonoBehaviour:
   Attack: 7
   Defense: 2
   Speed: 2
+  cooldownTimer: 0
   gameLog: {fileID: 0}
   combatTier: 1
   combatSize: 1
