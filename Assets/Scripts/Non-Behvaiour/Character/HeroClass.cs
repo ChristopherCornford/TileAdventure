@@ -113,6 +113,12 @@ public class HeroClass : Character
                                 break;
                         }
 
+
+                        if (currentElement == Elements.Earth)
+                            currentElement = Elements.Fire;
+                        else
+                            this.currentElement++;
+
                         damage = Attack - target.Defense;
 
                         if (damage <= 0)
@@ -175,9 +181,7 @@ public class HeroClass : Character
                 break;
         }
     }
-
     
-
     public void BasicHeal(HeroClass target)
     {
         target.currentHealth += Attack;
@@ -204,7 +208,6 @@ public class HeroClass : Character
         switch (SpecialAbility)
         {
             case "Critical Strike":
-
                 damage = (Attack * (1 + Skill)) - target.Defense;
                 break;
         }
@@ -212,22 +215,10 @@ public class HeroClass : Character
         if (damage > 0)
             target.currentHealth -= damage;
 
-        if (gameLog != null)
-            gameLog.text = (this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
-
-        if (target.Health <= 0)
-        {
-            if (combatManager != null)
-                target.Die(combatManager, characterParty);
-
-            gameLog.text += ("\n" + target.name + " has died.");
-        }
-        else
-        {
-            gameLog.text += ("\n" + "Their health is now: " + target.Health);
-        }
+        WriteToGameLog(target, damage, true);
 
         currentSP = 0;
+        isSpecialReady = false;
     }
 
     public void ModifyStatsFromItems(Item item = null)
