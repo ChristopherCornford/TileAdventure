@@ -28,6 +28,10 @@ public class HeroClass : Character
     [Space]
     public string PassiveAbility;
     [Space]
+    public Elements currentElement;
+    [Space]
+    public bool isSpecialReady;
+    [Space]
     public string PrimaryStat;
     [Space]
     public int goldCost;
@@ -45,45 +49,134 @@ public class HeroClass : Character
 
     public TextMeshProUGUI gameLog;
 
-    
+    private void WriteToGameLog(Character target, int damage, bool isAttacking)
+    {
+        if (isAttacking)
+        {
+            if (gameLog != null)
+                gameLog.text = (this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
+
+            if (target.currentHealth <= 0)
+            {
+                
+                gameLog.text += ("\n" + target.name + " has died.");
+            }
+            else
+            {
+                gameLog.text += ("\n" + "Their health is now: " + target.currentHealth);
+            }
+        }
+        else
+        {
+            gameLog.text = (this.name + " healed " + target.name + " for " + Attack.ToString() + " health.");
+
+            gameLog.text += ("\n" + "Their health is now: " + target.currentHealth);
+        }
+    }
+
     public void BasicAttack(Enemy target, CombatManager combatManager, List<Enemy> characterParty)
     {
         int damage = 0;
-
-        if (currentSP < maxSP)
-        {
-            damage = Attack - target.Defense;
-        }
-        else
-        {
-            UseSpecialAbility(target, combatManager, characterParty);
-        }
-
-        if (damage <= 0)
-            damage = 1;
-
-        target.currentHealth -= damage;
-
         Transform animationTransform = GameObject.FindGameObjectWithTag("Enemy").transform;
-        SpawnAnimation(animationTransform);
 
-        if (gameLog != null)
-            gameLog.text = (this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
-
-        if (target.currentHealth <= 0)
+        switch (isSpecialReady)
         {
-            if (combatManager != null)
-                target.Die(combatManager, characterParty);
+            case true:
+                UseSpecialAbility(target, combatManager, characterParty);
+                break;
 
-            gameLog.text += ("\n" + target.name + " has died.");
-        }
-        else
-        {
-            gameLog.text += ("\n" + "Their health is now: " + target.currentHealth);
-        }
+            case false:
 
-        currentSP += 1;
+                switch (this.role)
+                {
+                    case HeroRole.Arcanist:
+                        switch (currentElement)
+                        {
+                            case Elements.Fire:
+                                target.statusEffect = Elements.Fire;
+                                target.turnsLeftOfStatus = 3;
+                                break;
+
+                            case Elements.Ice:
+                                target.statusEffect = Elements.Ice;
+                                target.turnsLeftOfStatus = 3;
+                                break;
+
+                            case Elements.Lightning:
+                                target.statusEffect = Elements.Lightning;
+                                target.turnsLeftOfStatus = 3;
+                                break;
+
+                            case Elements.Earth:
+                                target.statusEffect = Elements.Earth;
+                                target.turnsLeftOfStatus = 3;
+                                break;
+                        }
+
+                        damage = Attack - target.Defense;
+
+                        if (damage <= 0)
+                            damage = 1;
+
+                        target.currentHealth -= damage;
+
+
+                        SpawnAnimation(animationTransform);
+
+                        WriteToGameLog(target, damage, true);
+
+                        if (target.currentHealth <= 0)
+                        {
+                            if (combatManager != null)
+                                target.Die(combatManager, characterParty);
+                        }
+
+                        currentSP += 1;
+
+                        if (currentSP >= maxSP)
+                            isSpecialReady = true;
+                        else
+                            isSpecialReady = false;
+
+                        break;
+
+                    case HeroRole.Fencer:
+                    case HeroRole.Guardian:
+                    case HeroRole.Knight:
+                    case HeroRole.Mender:
+
+                        damage = Attack - target.Defense;
+
+                        if (damage <= 0)
+                            damage = 1;
+
+                        target.currentHealth -= damage;
+
+                        
+                        SpawnAnimation(animationTransform);
+
+                        WriteToGameLog(target, damage, true);
+
+                        if (target.currentHealth <= 0)
+                        {
+                            if (combatManager != null)
+                                target.Die(combatManager, characterParty);
+                        }
+
+                        currentSP += 1;
+
+                        if (currentSP >= maxSP)
+                            isSpecialReady = true;
+                        else
+                            isSpecialReady = false;
+
+                        break;
+                }
+                break;
+        }
     }
+
+    
 
     public void BasicHeal(HeroClass target)
     {
@@ -94,11 +187,14 @@ public class HeroClass : Character
         Transform animationTransform = GameObject.FindGameObjectWithTag("Player").transform;
         SpawnAnimation(animationTransform, true);
 
-        gameLog.text = (this.name + " healed " + target.name + " for " + Attack.ToString() + " health.");
-
-        gameLog.text += ("\n" + "Their health is now: " + target.currentHealth);
+        WriteToGameLog(target, Attack, false);
 
         currentSP += 1;
+
+        if (currentSP >= maxSP)
+            isSpecialReady = true;
+        else
+            isSpecialReady = false;
     }
 
     private void UseSpecialAbility(Enemy target, CombatManager combatManager, List<Enemy> characterParty)
@@ -481,6 +577,7 @@ public class HeroClass : Character
         target.SpecialAbility = template.SpecialAbility;
         target.PassiveAbility = template.PassiveAbility;
         target.PrimaryStat = template.PrimaryStat;
+        target.currentElement = template.currentElement;
 
         target.weaponSlot = template.weaponSlot;
         target.armorSlot = template.armorSlot;

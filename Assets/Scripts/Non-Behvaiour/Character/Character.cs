@@ -21,7 +21,10 @@ public class Character : MonoBehaviour
     public int Defense;
     [Space]
     public int Speed;
-
+    [Space]
+    public Elements statusEffect;
+    [Space]
+    public int turnsLeftOfStatus;
 
     public float cooldownTimer;
 
@@ -32,6 +35,14 @@ public class Character : MonoBehaviour
     }
 }
 
+public enum Elements
+{
+    None,
+    Fire,
+    Ice,
+    Lightning,
+    Earth,
+}
 
 public enum HeroRole
 {

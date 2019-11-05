@@ -225,13 +225,16 @@ public class CombatManager : MonoBehaviour
 
                     if (combatOrder[i].GetType() == typeof(HeroClass))
                     {
+
+                        yield return new WaitForSeconds(1.0f);
+
                         HeroClass currentHero = combatOrder[i] as HeroClass;
 
                         heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().sprite = selectionSprite;
                         heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
 
-                        yield return new WaitForSeconds(1.5f);
-                        
+                        yield return new WaitForSeconds(0.5f);
+
                         isHealer = (currentHero.name == "Mender") ? true : false;
 
                         bool isHealing = new bool();
@@ -291,12 +294,14 @@ public class CombatManager : MonoBehaviour
                     }
                     else
                     {
+                        yield return new WaitForSeconds(1.0f);
+
                         Enemy currentEnemy = combatOrder[i] as Enemy;
 
                         enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().sprite = selectionSprite;
                         enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().color = selectionColor;
 
-                        yield return new WaitForSeconds(1.5f);
+                        yield return new WaitForSeconds(0.5f);
 
                         currentEnemy.BasicAttack(combatHeroCopies[Random.Range(0, combatHeroCopies.Count)], this, combatHeroCopies);
                     }
