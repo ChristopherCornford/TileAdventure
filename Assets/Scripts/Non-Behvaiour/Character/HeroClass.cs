@@ -83,7 +83,7 @@ public class HeroClass : Character
         switch (isSpecialReady)
         {
             case true:
-                UseSpecialAbility(target, combatManager, characterParty);
+                UseSpecialAbility(target, combatManager, characterParty, characterParty.ToArray());
                 break;
 
             case false:
@@ -230,10 +230,16 @@ public class HeroClass : Character
                     damage = Attack / multiTargets.Length;
 
                     if (damage > 0)
-                        target.currentHealth -= damage;
+                        enemy.currentHealth -= damage;
 
                     currentSP = 0;
                     isSpecialReady = false;
+
+                    if (enemy.currentHealth <= 0)
+                    {
+                        if (combatManager != null)
+                            enemy.Die(combatManager, characterParty);
+                    }
                 }
                 return;
 
@@ -286,6 +292,12 @@ public class HeroClass : Character
             target.currentHealth -= damage;
 
         WriteToGameLog(target, damage, true);
+
+        if (target.currentHealth <= 0)
+        {
+            if (combatManager != null)
+                target.Die(combatManager, characterParty);
+        }
 
         currentSP = 0;
         isSpecialReady = false;

@@ -183,9 +183,18 @@ public class CombatManager : MonoBehaviour
 
                         if ((character.Speed - speedMod) == initativeList[i])
                         {
-                            combatOrder.Insert(i, character);
+                            if (i != 0 && character.uniqueID != combatOrder[i - 1].uniqueID)
+                            {
+                                combatOrder.Insert(i, character);
+                                
+                                spotTaken = true;
+                            }
+                            else if (i == 0)
+                            {
+                                combatOrder.Insert(i, character);
 
-                            spotTaken = true;
+                                spotTaken = true;
+                            }
                         }
                     }
                 }
@@ -305,8 +314,8 @@ public class CombatManager : MonoBehaviour
 
                             Enemy currentEnemy = combatOrder[i] as Enemy;
 
-                            enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().sprite = selectionSprite;
-                            enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().color = selectionColor;
+                            enemyButtons[EnemyListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().sprite = selectionSprite;
+                            enemyButtons[EnemyListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().color = selectionColor;
 
                             yield return new WaitForSeconds(0.5f);
 
@@ -354,7 +363,9 @@ public class CombatManager : MonoBehaviour
             for (int i = 0; i < combatOrder.Count; i++)
             {
                 PopulateCombatPanel(combatHeroCopies, combatEnemyCopies);
-                
+
+                yield return new WaitForSeconds(1.5f);
+
                 Character currentCharacter = combatOrder[i];
 
                 currentCharacter.ResolveStatusEffect();
@@ -367,9 +378,7 @@ public class CombatManager : MonoBehaviour
 
                         heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().sprite = selectionSprite;
                         heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
-
-                        yield return new WaitForSeconds(1.5f);
-
+                        
                         bool isHealer = (currentHero.role == HeroRole.Mender) ? true : false;
                         bool isHealing = new bool();
 
@@ -411,6 +420,11 @@ public class CombatManager : MonoBehaviour
                             case true:
                                 HeroClass heroToHeal = null;
                                 bool heroChoosen = new bool();
+
+                                if (currentHero.isSpecialReady)
+                                {
+                                    currentHero.UseSpecialAbility(null, this, null, combatHeroCopies.ToArray());
+                                }
 
                                 for (int x = 0; x < heroButtons.Count; x++)
                                 {
@@ -457,8 +471,15 @@ public class CombatManager : MonoBehaviour
 
                                 do { yield return null; } while (enemyChoosen == false);
 
-                                currentHero.BasicAttack(enemyToAttack, this, combatEnemyCopies);
-
+                                if (currentHero.isSpecialReady)
+                                {
+                                    currentHero.UseSpecialAbility(enemyToAttack, this, combatEnemyCopies, combatEnemyCopies.ToArray());
+                                }
+                                else
+                                {
+                                    currentHero.BasicAttack(enemyToAttack, this, combatEnemyCopies);
+                                }
+                                
                                 break;
                         }
                     }
@@ -467,8 +488,8 @@ public class CombatManager : MonoBehaviour
                     {
                         Enemy currentEnemy = currentCharacter as Enemy;
 
-                        enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().sprite = selectionSprite;
-                        enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().color = selectionColor;
+                        enemyButtons[EnemyListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().sprite = selectionSprite;
+                        enemyButtons[EnemyListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().color = selectionColor;
 
                         yield return new WaitForSeconds(1.5f);
 
@@ -891,18 +912,18 @@ public class CombatManager : MonoBehaviour
         int index = new int();
 
         for (int i = 0; i < heroes.Count; i++)
-            if (heroes[i] == hero)
+            if (heroes[i].uniqueID == hero.uniqueID)
                 index = i;
 
         return index;
     }
 
-    private int ListIndex(List<Enemy> enemies, Enemy enemy)
+    private int EnemyListIndex(List<Enemy> enemies, Enemy enemy)
     {
         int index = new int();
 
         for (int i = 0; i < enemies.Count; i++)
-            if (enemies[i] == enemy)
+            if (enemies[i].uniqueID == enemy.uniqueID)
                 index = i;
 
         return index;
@@ -913,7 +934,7 @@ public class CombatManager : MonoBehaviour
         int index = new int();
 
         for (int i = 0; i < characters.Count; i++)
-            if (characters[i] == character)
+            if (characters[i].uniqueID == character.uniqueID)
                 index = i;
 
         return index;
