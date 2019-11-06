@@ -7,8 +7,6 @@ using TMPro;
 [System.Serializable]
 public class Enemy : Character
 {
-    public TextMeshProUGUI gameLog;
-
     public int combatTier;
     public double combatSize;
 
@@ -23,7 +21,6 @@ public class Enemy : Character
 
     public GameObject hitSprite;
 
-    
     public void BasicAttack(HeroClass target, CombatManager combatManager, List<HeroClass> characterParty, bool isHealing = false)
     {
         int damage = 0;
@@ -36,6 +33,17 @@ public class Enemy : Character
                 break;
 
             case false:
+
+                if (forcedTarget != null && forcedTarget != target)
+                {
+                    target = forcedTarget as HeroClass;
+                    forcedTarget = null;
+                }
+                if (forcedTarget != null && forcedTarget == target)
+                {
+                    forcedTarget = null;
+                }
+
                 damage = Attack - target.Defense;
 
                 if (damage <= 0)

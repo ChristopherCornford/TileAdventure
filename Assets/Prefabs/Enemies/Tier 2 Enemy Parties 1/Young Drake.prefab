@@ -116,11 +116,16 @@ MonoBehaviour:
   uniqueID: 0
   sprite: {fileID: -5577557441251971767, guid: 9888ac698dd44e641a653115dba2627e, type: 3}
   Level: 1
-  Health: 16
-  currentHealth: 16
+  Health: 22
+  currentHealth: 22
   Attack: 11
   Defense: 5
   Speed: 3
+  statusEffect: 0
+  turnsLeftOfStatus: 0
+  forcedTarget: {fileID: 0}
+  isStunned: 0
+  cooldownTimer: 0
   gameLog: {fileID: 0}
   combatTier: 2
   combatSize: 2

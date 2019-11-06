@@ -69,6 +69,9 @@ public class PartyBehaviour : MonoBehaviour
 
                     newHero.GetComponent<HeroClass>().SetID();
 
+                    if (newHero.GetComponent<HeroClass>().role == HeroRole.Arcanist)
+                        newHero.GetComponent<HeroClass>().currentElement = Elements.Fire;
+
                     heroParty.Add(newHero.GetComponent<HeroClass>());
                 }
             }
@@ -88,6 +91,9 @@ public class PartyBehaviour : MonoBehaviour
                         newHero.GetComponent<HeroClass>().CopyHero(newHero.GetComponent<HeroClass>(), classTemplates[i].GetComponent<HeroClass>());
 
                         newHero.GetComponent<HeroClass>().SetID();
+
+                        if (newHero.GetComponent<HeroClass>().role == HeroRole.Arcanist)
+                            newHero.GetComponent<HeroClass>().currentElement = Elements.Fire;
 
                         heroParty.Add(newHero.GetComponent<HeroClass>());
                     }

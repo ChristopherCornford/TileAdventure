@@ -96,11 +96,17 @@ MonoBehaviour:
   uniqueID: 0
   sprite: {fileID: 21300000, guid: fa9c72199aa287044a22860c8c1171e6, type: 3}
   Level: 1
-  Health: 12
-  currentHealth: 12
-  Attack: 18
-  Defense: 4
-  Speed: 14
+  Health: 5
+  currentHealth: 5
+  Attack: 8
+  Defense: 2
+  Speed: 7
+  statusEffect: 0
+  turnsLeftOfStatus: 0
+  forcedTarget: {fileID: 0}
+  isStunned: 0
+  cooldownTimer: 0
+  gameLog: {fileID: 0}
   role: 2
   attackAnimations:
   - {fileID: 440891020943384758, guid: a046000cc28909343b57e321b9e0359b, type: 3}
@@ -111,18 +117,19 @@ MonoBehaviour:
   healingAnimation: {fileID: 8712134811382298252, guid: f00dd7aeabec8e7448269faa2f0599a4,
     type: 3}
   XP: 0
-  maxSP: 99
+  maxSP: 7
   currentSP: 0
   Skill: 1
   SpecialAbility: Repose
   PassiveAbility: 
+  currentElement: 0
+  isSpecialReady: 0
   PrimaryStat: Speed
   goldCost: 10
   isDead: 0
   weaponSlot: {fileID: 0}
   armorSlot: {fileID: 0}
   accessorySlot: {fileID: 0}
-  gameLog: {fileID: 0}
 --- !u!95 &-3794868302666531480
 Animator:
   serializedVersion: 3

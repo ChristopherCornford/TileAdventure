@@ -36,6 +36,8 @@ public class HeroClass : Character
     [Space]
     public int goldCost;
 
+    public bool needsHealing;
+
     public bool isDead = false;
     private int xpNeededToLevelUp;
 
@@ -46,8 +48,7 @@ public class HeroClass : Character
     bool arSlotFull;
     public Accessory accessorySlot;
     bool acSlotFull;
-
-    public TextMeshProUGUI gameLog;
+    
 
     private void WriteToGameLog(Character target, int damage, bool isAttacking)
     {
@@ -90,26 +91,52 @@ public class HeroClass : Character
                 switch (this.role)
                 {
                     case HeroRole.Arcanist:
+
+                        damage = Attack - target.Defense;
+
+                        if (damage <= 0)
+                            damage = 1;
+
+                        target.currentHealth -= damage;
+                        
+                        SpawnAnimation(animationTransform);
+
+                        WriteToGameLog(target, damage, true);
+
+                        if (target.currentHealth <= 0)
+                        {
+                            if (combatManager != null)
+                                target.Die(combatManager, characterParty);
+                        }
+
                         switch (currentElement)
                         {
                             case Elements.Fire:
                                 target.statusEffect = Elements.Fire;
                                 target.turnsLeftOfStatus = 3;
+
+                                gameLog.text += "\n" + target.name + " has been Burned.";
                                 break;
 
                             case Elements.Ice:
                                 target.statusEffect = Elements.Ice;
                                 target.turnsLeftOfStatus = 3;
+
+                                gameLog.text += "\n" + target.name + " has been Chilled.";
                                 break;
 
                             case Elements.Lightning:
                                 target.statusEffect = Elements.Lightning;
-                                target.turnsLeftOfStatus = 3;
+                                target.turnsLeftOfStatus = 1;
+
+                                gameLog.text += "\n" + target.name + " has been Stunned.";
                                 break;
 
                             case Elements.Earth:
                                 target.statusEffect = Elements.Earth;
                                 target.turnsLeftOfStatus = 3;
+
+                                gameLog.text += "\n" + target.name + "'s armor has been Sundered.";
                                 break;
                         }
 
@@ -123,19 +150,6 @@ public class HeroClass : Character
 
                         if (damage <= 0)
                             damage = 1;
-
-                        target.currentHealth -= damage;
-
-
-                        SpawnAnimation(animationTransform);
-
-                        WriteToGameLog(target, damage, true);
-
-                        if (target.currentHealth <= 0)
-                        {
-                            if (combatManager != null)
-                                target.Die(combatManager, characterParty);
-                        }
 
                         currentSP += 1;
 
@@ -201,14 +215,70 @@ public class HeroClass : Character
             isSpecialReady = false;
     }
 
-    private void UseSpecialAbility(Enemy target, CombatManager combatManager, List<Enemy> characterParty)
+    public void UseSpecialAbility(Enemy target, CombatManager combatManager, List<Enemy> characterParty, Character[] multiTargets = null)
     {
         int damage = 0;
 
         switch (SpecialAbility)
         {
+            case "Arcane Storm":
+
+                gameLog.text = this.name + " casts" + SpecialAbility;
+
+                foreach (Enemy enemy in multiTargets)
+                {
+                    damage = Attack / multiTargets.Length;
+
+                    if (damage > 0)
+                        target.currentHealth -= damage;
+
+                    currentSP = 0;
+                    isSpecialReady = false;
+                }
+                return;
+
             case "Critical Strike":
+
+                gameLog.text = this.name + " casts" + SpecialAbility;
+
                 damage = (Attack * (1 + Skill)) - target.Defense;
+                break;
+
+            case "Rejuvenate":
+
+                gameLog.text = this.name + " casts" + SpecialAbility;
+
+                foreach (HeroClass hero in multiTargets)
+                {
+                    hero.currentHealth += Mathf.RoundToInt(((float)hero.Health / 100) * (50 + (5 * this.Skill)));
+                }
+
+                return;
+
+            case "Repose":
+
+                gameLog.text = this.name + " casts" + SpecialAbility;
+
+                int enemyDamage = (target.Attack - this.Defense) / 2;
+
+                this.currentHealth -= enemyDamage;
+
+                damage = Mathf.RoundToInt(((float)target.Attack / 100) * (10 * Skill));
+
+                if (damage < 1)
+                    damage = 1;
+
+                break;
+
+            case "Taunt":
+
+                gameLog.text = this.name + " casts" + SpecialAbility;
+
+                foreach (Enemy enemy in characterParty)
+                {
+                    enemy.forcedTarget = this;
+                }
+                this.Defense += 1 + Skill;
                 break;
         }
 

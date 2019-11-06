@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -38,6 +39,8 @@ public class CombatManager : MonoBehaviour
 
     public Sprite selectionSprite;
     public Color selectionColor;
+
+    public Color targetColor;
     
     private void Awake()
     {
@@ -221,110 +224,119 @@ public class CombatManager : MonoBehaviour
 
                 if (gameManager.currentGamePhase == GameManager.GamePhase.Combat)
                 {
-                    bool isHealer = new bool();
+                    combatOrder[i].ResolveStatusEffect();
 
-                    if (combatOrder[i].GetType() == typeof(HeroClass))
+                    if (combatOrder[i].isStunned == false)
                     {
+                        bool isHealer = new bool();
 
-                        yield return new WaitForSeconds(1.0f);
-
-                        HeroClass currentHero = combatOrder[i] as HeroClass;
-
-                        heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().sprite = selectionSprite;
-                        heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
-
-                        yield return new WaitForSeconds(0.5f);
-
-                        isHealer = (currentHero.name == "Mender") ? true : false;
-
-                        bool isHealing = new bool();
-
-                        if (isHealer)
+                        if (combatOrder[i].GetType() == typeof(HeroClass))
                         {
-                            if (combatHeroCopies.Count == 1 && combatHeroCopies[0] == currentHero)
+
+                            yield return new WaitForSeconds(1.0f);
+
+                            HeroClass currentHero = combatOrder[i] as HeroClass;
+
+                            heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().sprite = selectionSprite;
+                            heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
+
+                            yield return new WaitForSeconds(0.5f);
+
+                            isHealer = (currentHero.name == "Mender") ? true : false;
+
+                            bool isHealing = new bool();
+
+                            if (isHealer)
                             {
-                                if (currentHero.currentHealth != currentHero.Health)
+                                if (combatHeroCopies.Count == 1 && combatHeroCopies[0] == currentHero)
                                 {
-                                    isHealing = true;
-                                }
-                                else
-                                {
-                                    isHealing = false;
-                                }
-                            }
-                            else
-                            {
-                                foreach (HeroClass hero in combatHeroCopies)
-                                {
-                                    if (hero.currentHealth == hero.Health)
-                                    {
-                                        isHealing = false;
-                                    }
-                                    else
+                                    if (currentHero.currentHealth != currentHero.Health)
                                     {
                                         isHealing = true;
                                     }
+                                    else
+                                    {
+                                        isHealing = false;
+                                    }
+                                }
+                                else
+                                {
+                                    foreach (HeroClass hero in combatHeroCopies)
+                                    {
+                                        if (hero.currentHealth == hero.Health)
+                                        {
+                                            isHealing = false;
+                                        }
+                                        else
+                                        {
+                                            isHealing = true;
+                                        }
+                                    }
                                 }
                             }
+
+                            switch (isHealing)
+                            {
+                                case true:
+                                    HeroClass heroToHeal = currentHero;
+
+                                    foreach (HeroClass hero in combatHeroCopies)
+                                    {
+                                        double heroHealthPerc = (hero.currentHealth / hero.Health) * 100; //Grab % health of 'hero'
+
+                                        double tempHealthPerc = (heroToHeal.currentHealth / heroToHeal.Health) * 100; //Grab % health of heroToHeal
+
+                                        //If hero's Health% is less than the current heroToHeal's, make 'hero' the new heroToHeal
+                                        if (heroHealthPerc < tempHealthPerc)
+                                            heroToHeal = hero;
+                                    }
+
+                                    currentHero.BasicHeal(heroToHeal); //Heals the party member with the lowest percent health
+                                    break;
+
+                                case false:
+                                    currentHero.BasicAttack(combatEnemyCopies[Random.Range(0, combatEnemyCopies.Count)], this, combatEnemyCopies);
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            yield return new WaitForSeconds(1.0f);
+
+                            Enemy currentEnemy = combatOrder[i] as Enemy;
+
+                            enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().sprite = selectionSprite;
+                            enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().color = selectionColor;
+
+                            yield return new WaitForSeconds(0.5f);
+
+                            currentEnemy.BasicAttack(combatHeroCopies[Random.Range(0, combatHeroCopies.Count)], this, combatHeroCopies);
                         }
 
-                        switch (isHealing)
+                        if ((i == combatOrder.Count || i == combatOrder.Count - 1) && (combatHeroCopies.Count > 0 && combatEnemyCopies.Count > 0))
                         {
-                            case true:
-                                HeroClass heroToHeal = currentHero;
+                            i = -1;
+                        }
+                        else if (combatHeroCopies.Count <= 0 || combatEnemyCopies.Count <= 0)
+                        {
+                            if (combatHeroCopies.Count <= 0)
+                            {
+                                gameLog.text += ("\n The Party Was Defeated...");
+                                yield return new WaitForSeconds(1.0f);
+                                EndCombat(combatHeroCopies);
+                            }
 
-                                foreach (HeroClass hero in combatHeroCopies)
-                                {
-                                    double heroHealthPerc = (hero.currentHealth / hero.Health) * 100; //Grab % health of 'hero'
-
-                                    double tempHealthPerc = (heroToHeal.currentHealth / heroToHeal.Health) * 100; //Grab % health of heroToHeal
-
-                                    //If hero's Health% is less than the current heroToHeal's, make 'hero' the new heroToHeal
-                                    if (heroHealthPerc < tempHealthPerc) 
-                                        heroToHeal = hero;
-                                }
-
-                                currentHero.BasicHeal(heroToHeal); //Heals the party member with the lowest percent health
-                                break;
-
-                            case false:
-                                currentHero.BasicAttack(combatEnemyCopies[Random.Range(0, combatEnemyCopies.Count)], this, combatEnemyCopies);
-                                break;
+                            if (combatEnemyCopies.Count <= 0)
+                            {
+                                gameLog.text += ("\n The Party Has Destroyed The Enemy!");
+                                yield return new WaitForSeconds(1.0f);
+                                EndCombat(combatHeroCopies, true);
+                            }
                         }
                     }
                     else
                     {
-                        yield return new WaitForSeconds(1.0f);
-
-                        Enemy currentEnemy = combatOrder[i] as Enemy;
-
-                        enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().sprite = selectionSprite;
-                        enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().color = selectionColor;
-
-                        yield return new WaitForSeconds(0.5f);
-
-                        currentEnemy.BasicAttack(combatHeroCopies[Random.Range(0, combatHeroCopies.Count)], this, combatHeroCopies);
-                    }
-
-                    if ((i == combatOrder.Count || i == combatOrder.Count - 1) && (combatHeroCopies.Count > 0 && combatEnemyCopies.Count > 0))
-                    {
-                        i = -1;
-                    }
-                    else if (combatHeroCopies.Count <= 0 || combatEnemyCopies.Count <= 0)
-                    {
-                        if (combatHeroCopies.Count <= 0)
-                        {
-                            gameLog.text += ("\n The Party Was Defeated...");
-                            yield return new WaitForSeconds(1.0f);
-                            EndCombat(combatHeroCopies);
-                        }
-
-                        if (combatEnemyCopies.Count <= 0)
-                        {
-                            gameLog.text += ("\n The Party Has Destroyed The Enemy!");
-                            yield return new WaitForSeconds(1.0f);
-                            EndCombat(combatHeroCopies, true);
-                        }
+                        gameLog.text = combatOrder[i].name + " is Stunned and cannot move.";
                     }
                 }
             }
@@ -343,112 +355,138 @@ public class CombatManager : MonoBehaviour
             {
                 PopulateCombatPanel(combatHeroCopies, combatEnemyCopies);
                 
-                yield return new WaitForSeconds(1.5f);
-
                 Character currentCharacter = combatOrder[i];
 
-                if(currentCharacter.GetType() == typeof(HeroClass))
+                currentCharacter.ResolveStatusEffect();
+
+                if (currentCharacter.isStunned == false)
                 {
-                    HeroClass currentHero = currentCharacter as HeroClass;
-                    
-                    heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().sprite = selectionSprite;
-                    heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
-
-                    yield return new WaitForSeconds(1.5f);
-
-                    bool isHealer = (currentHero.role == HeroRole.Mender) ? true : false;
-                    bool isHealing = new bool();
-
-                    if (isHealer)
+                    if (currentCharacter.GetType() == typeof(HeroClass))
                     {
-                        if (combatHeroCopies.Count == 1 && combatHeroCopies[0] == currentHero)
+                        HeroClass currentHero = currentCharacter as HeroClass;
+
+                        heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().sprite = selectionSprite;
+                        heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
+
+                        yield return new WaitForSeconds(1.5f);
+
+                        bool isHealer = (currentHero.role == HeroRole.Mender) ? true : false;
+                        bool isHealing = new bool();
+
+                        if (isHealer)
                         {
-                            if (currentHero.currentHealth != currentHero.Health)
+                            if (combatHeroCopies.Count == 1 && combatHeroCopies[0] == currentHero)
                             {
-                                isHealing = true; //Is alone, and not at full health
-                            }
-                            else
-                            {
-                                isHealing = false; //Is alone, but at full health
-                            }
-                        }
-                        else
-                        {
-                            foreach (HeroClass hero in combatHeroCopies)
-                            {
-                                if (hero.currentHealth == hero.Health)
+                                if (currentHero.currentHealth != currentHero.Health)
                                 {
-                                    isHealing = false; //This hero doesn't need healing;
+                                    isHealing = true; //Is alone, and not at full health
                                 }
                                 else
                                 {
-                                    isHealing = true; //This hero does need healing
+                                    isHealing = false; //Is alone, but at full health
+                                }
+                            }
+                            else
+                            {
+                                foreach (HeroClass hero in combatHeroCopies)
+                                {
+                                    if (hero.currentHealth == hero.Health)
+                                    {
+                                        isHealing = false; //This hero doesn't need healing;
+                                        hero.needsHealing = false;
+                                    }
+                                    else
+                                    {
+                                        isHealing = true; //This hero does need healing
+                                        hero.needsHealing = true;
+                                    }
                                 }
                             }
                         }
+
+
+                        //Hero Action, pauses for user input
+                        switch (isHealing)
+                        {
+                            case true:
+                                HeroClass heroToHeal = null;
+                                bool heroChoosen = new bool();
+
+                                for (int x = 0; x < heroButtons.Count; x++)
+                                {
+                                    int index = x;
+                                    
+                                    if (combatHeroCopies[index].needsHealing)
+                                    {
+                                        Button button = heroButtons[index].GetComponent<Button>();
+
+                                        button.GetComponent<Image>().color = targetColor;
+
+                                        button.onClick.AddListener(delegate
+                                        {
+                                            heroToHeal = combatHeroCopies[index];
+                                            heroChoosen = true;
+                                        });
+                                    }
+                                }
+
+                                do { yield return null; } while (heroChoosen == false);
+
+                                currentHero.BasicHeal(heroToHeal);
+
+                                break;
+
+                            case false:
+                                Enemy enemyToAttack = null;
+                                bool enemyChoosen = new bool();
+
+                                for (int y = 0; y < enemyButtons.Count; y++)
+                                {
+                                    int index = y;
+
+                                    Button button = enemyButtons[index].GetComponent<Button>();
+
+                                    button.GetComponent<Image>().color = targetColor;
+
+                                    button.onClick.AddListener(delegate
+                                    {
+                                        enemyToAttack = combatEnemyCopies[index];
+                                        enemyChoosen = true;
+                                    });
+                                }
+
+                                do { yield return null; } while (enemyChoosen == false);
+
+                                currentHero.BasicAttack(enemyToAttack, this, combatEnemyCopies);
+
+                                break;
+                        }
                     }
 
-                    
-                    //Hero Action, pauses for user input
-                    switch (isHealing)
+                    else if (currentCharacter.GetType() == typeof(Enemy))
                     {
-                        case true:
-                            HeroClass heroToHeal = null;
-                            bool heroChoosen = new bool();
-                            
-                            for (int x = 0; x < heroButtons.Count; x++)
-                            {
-                                int index = x;
+                        Enemy currentEnemy = currentCharacter as Enemy;
 
-                                Button button = heroButtons[index].GetComponent<Button>();
+                        enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().sprite = selectionSprite;
+                        enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().color = selectionColor;
 
-                                button.onClick.AddListener(delegate
-                                {
-                                    heroToHeal = combatHeroCopies[index];
-                                    heroChoosen = true;
-                                });
-                            }
+                        yield return new WaitForSeconds(1.5f);
 
-                            do { yield return null; } while (heroChoosen == false);
+                        HeroClass target = combatHeroCopies[Random.Range(0, combatHeroCopies.Count)];
 
-                            currentHero.BasicHeal(heroToHeal);
-                            
-                            break;
-
-                        case false:
-                            Enemy enemyToAttack = null;
-                            bool enemyChoosen = new bool();
-
-                            for (int y = 0; y < enemyButtons.Count; y ++)
-                            {
-                                int index = y;
-
-                                Button button = enemyButtons[index].GetComponent<Button>();
-
-                                button.onClick.AddListener(delegate
-                                {
-                                    enemyToAttack = combatEnemyCopies[index];
-                                    enemyChoosen = true;
-                                });
-                            }
-
-                            do { yield return null; } while (enemyChoosen == false);
-
-                            currentHero.BasicAttack(enemyToAttack, this, combatEnemyCopies);
-                            
-                            break;
+                        if (target.role == HeroRole.Fencer && target.isSpecialReady)
+                        {
+                            target.UseSpecialAbility(currentEnemy, this, combatEnemyCopies);
+                        }
+                        else
+                        {
+                            currentEnemy.BasicAttack(target, this, combatHeroCopies);
+                        }
                     }
                 }
-                else if (currentCharacter.GetType() == typeof(Enemy))
+                else
                 {
-                    Enemy currentEnemy = currentCharacter as Enemy;
-
-                    enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().sprite = selectionSprite;
-                    enemyButtons[ListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().color = selectionColor;
-
-                    yield return new WaitForSeconds(1.5f);
-
-                    currentEnemy.BasicAttack(combatHeroCopies[Random.Range(0, combatHeroCopies.Count)], this, combatHeroCopies);
+                    gameLog.text = combatOrder[i].name + " is Stunned and cannot move.";
                 }
 
                 if ((i == combatOrder.Count || i == combatOrder.Count - 1) && (combatHeroCopies.Count > 0 && combatEnemyCopies.Count > 0))
@@ -685,6 +723,8 @@ public class CombatManager : MonoBehaviour
 
         if (!victory)
         {
+            SceneManager.LoadScene(0);
+
             gameManager.ProceedToNextGamePhase();
         }
         else if (victory)
