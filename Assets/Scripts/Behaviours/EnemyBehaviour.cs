@@ -101,7 +101,7 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
         enemyParty.Add(startingEnemy);
-        enemyGenerationPoints -= startingEnemy.GetComponent<Enemy>().combatSize;
+        enemyGenerationPoints -= startingEnemy.GetComponent<Enemy>().CombatSize;
 
         //Skip while loop if possible
         if(enemyGenerationPoints > 0 && enemyParty.Count < gameManager.enemyPartySizeLimit)
@@ -118,13 +118,20 @@ public class EnemyBehaviour : MonoBehaviour
                         currentTier = 1;
                         nextEnemy = GetEnemy(1);
 
-                        enemyGenerationPoints -= nextEnemy.GetComponent<Enemy>().combatSize;
+                        if (nextEnemy.GetComponent<Enemy>().CombatSize >= enemyGenerationPoints)
+                        {
+                            enemyGenerationPoints -= nextEnemy.GetComponent<Enemy>().CombatSize;
+                        }
+                        else
+                        {
+                            GetEnemy(1);
+                        }
                         break;
 
                     case 2:
                         nextEnemy = GetEnemy(2);
 
-                        enemyGenerationPoints -= nextEnemy.GetComponent<Enemy>().combatSize;
+                        enemyGenerationPoints -= nextEnemy.GetComponent<Enemy>().CombatSize;
 
                         if(enemyGenerationPoints >= 2)
                         {
@@ -140,7 +147,7 @@ public class EnemyBehaviour : MonoBehaviour
                     case 3:
                         nextEnemy = GetEnemy(3);
 
-                        enemyGenerationPoints -= nextEnemy.GetComponent<Enemy>().combatSize;
+                        enemyGenerationPoints -= nextEnemy.GetComponent<Enemy>().CombatSize;
 
                         if (enemyGenerationPoints >= 3)
                         {

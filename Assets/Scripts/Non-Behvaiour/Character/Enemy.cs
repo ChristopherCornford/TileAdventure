@@ -8,7 +8,9 @@ using TMPro;
 public class Enemy : Character
 {
     public int combatTier;
-    public double combatSize;
+    public int creatureSize;
+
+    public int CombatSize { get { return ((combatTier - 1) + creatureSize); } }
 
     public int xpReward;
 
@@ -43,7 +45,7 @@ public class Enemy : Character
                 {
                     forcedTarget = null;
                 }
-
+                
                 damage = Attack - target.Defense;
 
                 if (damage <= 0)

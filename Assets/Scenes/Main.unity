@@ -636,6 +636,7 @@ MonoBehaviour:
   baseColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
   selectionSprite: {fileID: 21300000, guid: 2c033762a1508e644abe6396bcad0fee, type: 3}
   selectionColor: {r: 0, g: 0.47058824, b: 1, a: 1}
+  specialReadyColor: {r: 0.8679245, g: 0.65689975, b: 0, a: 1}
   targetColor: {r: 0.50803286, g: 0.8018868, b: 0.47659308, a: 1}
 --- !u!4 &107724297
 Transform:

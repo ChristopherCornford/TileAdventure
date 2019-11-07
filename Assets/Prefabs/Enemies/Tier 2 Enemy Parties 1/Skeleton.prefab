@@ -121,9 +121,14 @@ MonoBehaviour:
   Attack: 8
   Defense: 6
   Speed: 5
+  statusEffect: 0
+  turnsLeftOfStatus: 0
+  forcedTarget: {fileID: 0}
+  isStunned: 0
+  cooldownTimer: 0
   gameLog: {fileID: 0}
   combatTier: 2
-  combatSize: 2
+  creatureSize: 1
   xpReward: 4
   goldRewardMin: 3
   goldRewardMax: 5

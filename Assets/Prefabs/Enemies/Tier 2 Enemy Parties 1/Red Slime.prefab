@@ -69,7 +69,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -5404859761649102597, guid: 45a3cfc531e0a1144b568aaf8437e0fd,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5048da1c9338d40a870b064950fd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: 0
+  uniqueID: 154.72295585832944
   sprite: {fileID: -5404859761649102597, guid: 45a3cfc531e0a1144b568aaf8437e0fd, type: 3}
   Level: 1
   Health: 20
@@ -127,8 +127,8 @@ MonoBehaviour:
   isStunned: 0
   cooldownTimer: 0
   gameLog: {fileID: 0}
-  combatTier: 0
-  combatSize: 0
+  combatTier: 2
+  creatureSize: 2
   xpReward: 5
   goldRewardMin: 3
   goldRewardMax: 6

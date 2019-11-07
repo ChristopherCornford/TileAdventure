@@ -39,6 +39,7 @@ public class CombatManager : MonoBehaviour
 
     public Sprite selectionSprite;
     public Color selectionColor;
+    public Color specialReadyColor;
 
     public Color targetColor;
     
@@ -231,6 +232,8 @@ public class CombatManager : MonoBehaviour
             {
                 PopulateCombatPanel(combatHeroCopies, combatEnemyCopies);
 
+                Character currentCharacter = combatOrder[i];
+
                 if (gameManager.currentGamePhase == GameManager.GamePhase.Combat)
                 {
                     combatOrder[i].ResolveStatusEffect();
@@ -322,6 +325,11 @@ public class CombatManager : MonoBehaviour
                             currentEnemy.BasicAttack(combatHeroCopies[Random.Range(0, combatHeroCopies.Count)], this, combatHeroCopies);
                         }
 
+                        if (combatOrder[i] != currentCharacter)
+                        {
+                            i--;
+                        }
+
                         if ((i == combatOrder.Count || i == combatOrder.Count - 1) && (combatHeroCopies.Count > 0 && combatEnemyCopies.Count > 0))
                         {
                             i = -1;
@@ -377,7 +385,15 @@ public class CombatManager : MonoBehaviour
                         HeroClass currentHero = currentCharacter as HeroClass;
 
                         heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().sprite = selectionSprite;
-                        heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
+
+                        if (currentHero.isSpecialReady)
+                        {
+                            heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = specialReadyColor;
+                        }
+                        else
+                        {
+                            heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
+                        }
                         
                         bool isHealer = (currentHero.role == HeroRole.Mender) ? true : false;
                         bool isHealing = new bool();
@@ -483,7 +499,6 @@ public class CombatManager : MonoBehaviour
                                 break;
                         }
                     }
-
                     else if (currentCharacter.GetType() == typeof(Enemy))
                     {
                         Enemy currentEnemy = currentCharacter as Enemy;
@@ -508,6 +523,11 @@ public class CombatManager : MonoBehaviour
                 else
                 {
                     gameLog.text = combatOrder[i].name + " is Stunned and cannot move.";
+                }
+
+                if (i <= (combatOrder.Count - 1) && combatOrder[i].uniqueID != currentCharacter.uniqueID)
+                {
+                    i--;
                 }
 
                 if ((i == combatOrder.Count || i == combatOrder.Count - 1) && (combatHeroCopies.Count > 0 && combatEnemyCopies.Count > 0))

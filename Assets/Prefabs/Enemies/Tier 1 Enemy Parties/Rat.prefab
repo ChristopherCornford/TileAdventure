@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5048da1c9338d40a870b064950fd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: 171.55970938792962
+  uniqueID: 19.212120989759
   sprite: {fileID: -5237074582503671387, guid: a3c276be29542e443a21592252d513eb, type: 3}
   Level: 1
   Health: 5
@@ -128,7 +128,7 @@ MonoBehaviour:
   cooldownTimer: 0
   gameLog: {fileID: 0}
   combatTier: 1
-  combatSize: 1
+  creatureSize: 1
   xpReward: 1
   goldRewardMin: 2
   goldRewardMax: 3

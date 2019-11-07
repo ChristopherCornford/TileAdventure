@@ -128,7 +128,7 @@ MonoBehaviour:
   cooldownTimer: 0
   gameLog: {fileID: 0}
   combatTier: 1
-  combatSize: 1
+  creatureSize: 2
   xpReward: 2
   goldRewardMin: 2
   goldRewardMax: 5

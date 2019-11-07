@@ -100,8 +100,6 @@ public class PartyBehaviour : MonoBehaviour
                 }
             }
         }
-
-
         spriteRenderer.sprite = heroParty[0].sprite;
     }
 
