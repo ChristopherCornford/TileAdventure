@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7079115370096792587}
   - component: {fileID: 8448568001971054152}
   - component: {fileID: 7312243259220509362}
+  - component: {fileID: -1951601134008789191}
   m_Layer: 0
   m_Name: Dog
   m_TagString: Hero
@@ -26,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824613883959029502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.15473215, y: 5.6534195, z: 3.5136719}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -68,7 +69,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: 1
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -100,6 +101,17 @@ MonoBehaviour:
   Attack: 15
   Defense: 2
   Speed: 6
+  statusEffect: 0
+  turnsLeftOfStatus: 0
+  forcedTarget: {fileID: 0}
+  isStunned: 0
+  cooldownTimer: 0
+  combatIndex: 0
+  selectionMarker: {fileID: 0}
+  selectionFillObj: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  button: {fileID: 0}
+  gameLog: {fileID: 0}
   role: 5
   attackAnimations:
   - {fileID: 440891020943384758, guid: a046000cc28909343b57e321b9e0359b, type: 3}
@@ -115,10 +127,38 @@ MonoBehaviour:
   Skill: 0
   SpecialAbility: Good Bork!
   PassiveAbility: 
+  currentElement: 0
+  isSpecialReady: 0
   PrimaryStat: 
   goldCost: 10
+  needsHealing: 0
   isDead: 0
   weaponSlot: {fileID: 0}
   armorSlot: {fileID: 0}
   accessorySlot: {fileID: 0}
-  gameLog: {fileID: 0}
+--- !u!61 &-1951601134008789191
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824613883959029502}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.0001, y: 0.0001}
+  m_EdgeRadius: 0

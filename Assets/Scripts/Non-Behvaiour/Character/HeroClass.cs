@@ -78,7 +78,8 @@ public class HeroClass : Character
     public void BasicAttack(Enemy target, CombatManager combatManager, List<Enemy> characterParty)
     {
         int damage = 0;
-        Transform animationTransform = GameObject.FindGameObjectWithTag("Enemy").transform;
+        
+        Transform animationTransform = GameObject.FindGameObjectWithTag("Enemy").transform.GetChild(target.combatIndex).transform;
 
         switch (isSpecialReady)
         {

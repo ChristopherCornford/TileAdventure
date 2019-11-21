@@ -55,7 +55,7 @@ public class Enemy : Character
 
                 gameLog.text = (this.name + " attacked " + target.name + " for " + damage.ToString() + " damage.");
 
-                Transform animationTransform = GameObject.FindGameObjectWithTag("Player").transform;
+                Transform animationTransform = GameObject.FindGameObjectWithTag("Player").transform.GetChild(target.combatIndex).transform;
                 SpawnAnimation(animationTransform);
 
                 break;
@@ -130,6 +130,8 @@ public class Enemy : Character
         target.sprite = template.sprite;
 
         target.uniqueID = template.uniqueID;
+
+        target.Level = template.Level;
 
         target.Health = template.Health;
         target.currentHealth = template.currentHealth;

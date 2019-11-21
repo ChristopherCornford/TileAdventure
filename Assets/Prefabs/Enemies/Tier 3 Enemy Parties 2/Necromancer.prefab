@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7640588942190551537}
   - component: {fileID: 7640588942190551538}
   - component: {fileID: 3506327457512091895}
+  - component: {fileID: -2006860847831913553}
   m_Layer: 0
   m_Name: Necromancer
   m_TagString: Untagged
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7640588942190551539}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -113,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5048da1c9338d40a870b064950fd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: 0
+  uniqueID: 3.0353456068433786
   sprite: {fileID: -2240007661964635059, guid: 0789286ad95b99a438cb9961500c54e6, type: 3}
   Level: 1
   Health: 29
@@ -126,6 +127,11 @@ MonoBehaviour:
   forcedTarget: {fileID: 0}
   isStunned: 0
   cooldownTimer: 0
+  combatIndex: 0
+  selectionMarker: {fileID: 0}
+  selectionFillObj: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  button: {fileID: 0}
   gameLog: {fileID: 0}
   combatTier: 3
   creatureSize: 2
@@ -136,3 +142,29 @@ MonoBehaviour:
   isBoss: 0
   hitSprite: {fileID: 2758307243314484196, guid: c505ad9650a952b4eb8fc314d8af761c,
     type: 3}
+--- !u!61 &-2006860847831913553
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7640588942190551539}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.1796875}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.1953125, y: 0.359375}
+    newSize: {x: 0.1953125, y: 0.359375}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.1953125, y: 0.359375}
+  m_EdgeRadius: 0

@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Combat Variables")]
     public int enemyPartySizeLimit;
+    public GameObject combatPositions;
 
     [Header("Base Tile References")]
     public List<TileBase> AllBaseTTiles;

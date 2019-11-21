@@ -460,10 +460,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 423890525}
   m_HandleRect: {fileID: 731629593}
   m_Direction: 3
-  m_MinValue: 1.5
-  m_MaxValue: 3
+  m_MinValue: 0.75
+  m_MaxValue: 2
   m_WholeNumbers: 0
-  m_Value: 3
+  m_Value: 2
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -624,6 +624,8 @@ MonoBehaviour:
   combatPanel: {fileID: 1647174915}
   heroButtons: []
   enemyButtons: []
+  heroMarkers: []
+  enemyMarkers: []
   heroButton_TB: {fileID: 7296116093281958094, guid: b01e4fc8d23ec0e48af19d0ce9b73260,
     type: 3}
   heroButton_RT: {fileID: 7499968599702710619, guid: 267ed75d0fa0ea04eae1d0c05f435f2a,
@@ -638,6 +640,10 @@ MonoBehaviour:
   selectionColor: {r: 0, g: 0.47058824, b: 1, a: 1}
   specialReadyColor: {r: 0.8679245, g: 0.65689975, b: 0, a: 1}
   targetColor: {r: 0.50803286, g: 0.8018868, b: 0.47659308, a: 1}
+  selectionMarker: {fileID: 1464137315290977329, guid: 729adfacee2d07b4b978d19d49fd6a60,
+    type: 3}
+  targetNeeded: 0
+  target: {fileID: 0}
 --- !u!4 &107724297
 Transform:
   m_ObjectHideFlags: 0
@@ -1670,6 +1676,8 @@ MonoBehaviour:
   currentTurn: 1
   currentSeason: 0
   enemyPartySizeLimit: 5
+  combatPositions: {fileID: 3006036225128343448, guid: f14a66943c01e5541a24cd311fafc23a,
+    type: 3}
   AllBaseTTiles:
   - {fileID: 11400000, guid: 73d04bdfc0d572e4988f21acb6a51e27, type: 2}
   - {fileID: 11400000, guid: 319dc2507bfd46744a09b083f98ec7db, type: 2}
@@ -2225,14 +2233,14 @@ Tilemap:
       e11: NaN
       e12: 0
       e13: 0
-      e20: -1366.1138
-      e21: 1.9122394e-36
+      e20: -0.0000000049116853
+      e21: 2.6740422e-26
       e22: 0
-      e23: -1231.6797
-      e30: 4.5914e-41
-      e31: 7.68e-43
+      e23: -0.000000004422617
+      e30: 4.5916e-41
+      e31: 5.45e-43
       e32: 0
-      e33: 4.5914e-41
+      e33: 4.5916e-41
   m_TileColorArray:
   - m_RefCount: 0
     m_Data: {r: 0, g: 0, b: 0, a: 0}
@@ -2259,7 +2267,7 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {r: 0.9352131, g: 0.9352131, b: 0.9352131, a: 0.9352131}
   - m_RefCount: 0
-    m_Data: {r: 1.6951389, g: 1.6951389, b: 1.6951389, a: 1.6951389}
+    m_Data: {r: 3.915454e+12, g: 3.915454e+12, b: 3.915454e+12, a: 3.915454e+12}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -3, y: -8, z: 0}
@@ -2874,7 +2882,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 50
-  m_Sprite: {fileID: 21300000, guid: b8e5c45a5643aee479e1672b0d7587d2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 947e702a0026b414598370b91dec3f52, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2893,7 +2901,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 769139572}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.161, y: 5.501, z: 0}
+  m_LocalPosition: {x: 0.016, y: 5.716, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

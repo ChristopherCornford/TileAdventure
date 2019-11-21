@@ -27,6 +27,8 @@ public class PartyBehaviour : MonoBehaviour
 
     public GameObject[] classTemplates;
 
+    bool isInCombat;
+
     private void Awake()
     {
         gameManager = GameObject.FindObjectOfType(typeof(GameManager)) as GameManager;
@@ -47,7 +49,36 @@ public class PartyBehaviour : MonoBehaviour
     void Update()
     {
         if (gameManager.isRoundProgressing)
+        {
             this.spriteRenderer.sprite = heroParty[0].GetComponent<SpriteRenderer>().sprite;
+
+            isInCombat = (gameManager.currentGamePhase == GameManager.GamePhase.Combat) ? true : false;
+
+            if (isInCombat)
+            {
+                this.spriteRenderer.enabled = false;
+
+                if (this.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled == false)
+                {
+                    for (int i = 0; i < this.transform.childCount; i++)
+                    {
+                        this.transform.GetChild(i).GetComponent<SpriteRenderer>().enabled = true;
+                    }
+                }
+            }
+            else
+            {
+                this.spriteRenderer.enabled = true;
+
+                if (this.transform.GetChild(0).GetComponent<SpriteRenderer>().enabled == true)
+                {
+                    for (int i = 0; i < this.transform.childCount; i++)
+                    {
+                        this.transform.GetChild(i).GetComponent<SpriteRenderer>().enabled = false;
+                    }
+                }
+            }
+        }
     }
 
     public void StartRound()

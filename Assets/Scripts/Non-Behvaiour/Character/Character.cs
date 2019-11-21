@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Character : MonoBehaviour
 {
@@ -32,6 +33,16 @@ public class Character : MonoBehaviour
     public bool isStunned;
 
     public float cooldownTimer;
+
+    public int combatIndex;
+
+    public GameObject selectionMarker;
+
+    public GameObject selectionFillObj;
+
+    public SpriteRenderer spriteRenderer;
+
+    public Button button;
 
     public TextMeshProUGUI gameLog;
 

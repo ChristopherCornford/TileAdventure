@@ -172,12 +172,15 @@ public class PlayerBehaviour : MonoBehaviour
                             nextPos.y -= 0.25f;
 
                             Instantiate(gameManager.enemyPartyTemplate, nextPos, Quaternion.identity);
+
+                            Instantiate(gameManager.combatPositions, nextPos, Quaternion.identity);
                         }
                         else if (vTile.variantType == VariantTiles.VariantType.Boss)
                         {
                             nextPos.y -= 0.25f;
 
                             Instantiate(gameManager.enemyPartyTemplate, nextPos, Quaternion.identity);
+                            Instantiate(gameManager.combatPositions, nextPos, Quaternion.identity);
                         }
                     }
                 }

@@ -26,8 +26,11 @@ public class CombatManager : MonoBehaviour
     public TextMeshProUGUI gameLog;
     public GameObject combatPanel;
 
-    public List<GameObject> heroButtons = new List<GameObject>();
-    public List<GameObject> enemyButtons = new List<GameObject>();
+    public List<Button> heroButtons = new List<Button>();
+    public List<Button> enemyButtons = new List<Button>();
+
+    public List<SpriteRenderer> heroMarkers = new List<SpriteRenderer>();
+    public List<SpriteRenderer> enemyMarkers = new List<SpriteRenderer>();
 
     public GameObject heroButton_TB;
     public GameObject heroButton_RT;
@@ -42,6 +45,11 @@ public class CombatManager : MonoBehaviour
     public Color specialReadyColor;
 
     public Color targetColor;
+
+    public GameObject selectionMarker;
+    
+    public bool targetNeeded;
+    public Character target;
     
     private void Awake()
     {
@@ -57,6 +65,9 @@ public class CombatManager : MonoBehaviour
         gameLog.transform.parent.gameObject.SetActive(true);
         combatPanel.gameObject.SetActive(true);
 
+        heroMarkers.Clear();
+        enemyMarkers.Clear();
+
         if(combatStyle == CombatStyle.TurnBasedAction)
         {
             SetInitativeList();
@@ -70,9 +81,71 @@ public class CombatManager : MonoBehaviour
 
     }
 
+    private void SetCharacterPositions()
+    {
+        GameObject heroParty = GameObject.FindGameObjectWithTag("Player");
+        GameObject enemyParty = GameObject.FindGameObjectWithTag("Enemy");
+
+        List<GameObject> heroes = new List<GameObject>();
+        List<GameObject> enemies = new List<GameObject>();
+
+        GameObject sideOne = GameObject.FindGameObjectWithTag("SideOne");
+        GameObject sideTwo = GameObject.FindGameObjectWithTag("SideTwo");
+
+        Vector3 posMod = new Vector3(0.0f, .25f, 0.0f);
+
+        for (int i = 0; i < heroParty.transform.childCount; i++)
+        {
+            if (heroParty.transform.GetChild(i) != null)
+            {
+                heroes.Add(heroParty.transform.GetChild(i).gameObject);
+            }
+
+            if (heroes[i] != null)
+            {
+                heroes[i].transform.position = sideOne.transform.GetChild(i).transform.position;
+            }
+
+            GameObject marker = null;
+
+            if (heroes[i].transform.childCount == 0)
+            {
+                marker = Instantiate(selectionMarker, heroes[i].transform);
+            }
+
+            marker.transform.position += posMod;
+
+            heroes[i].GetComponent<HeroClass>().selectionMarker = marker;
+
+            heroMarkers.Add(marker.transform.GetChild(1).GetComponent<SpriteRenderer>());
+        }
+
+        for (int i = 0; i < enemyParty.transform.childCount; i++)
+        {
+            if (enemyParty.transform.GetChild(i) != null)
+            {
+                enemies.Add(enemyParty.transform.GetChild(i).gameObject);
+            }
+
+            if (enemies[i] != null)
+            {
+                enemies[i].transform.position = sideTwo.transform.GetChild(i).transform.position;
+            }
+
+            GameObject marker = Instantiate(selectionMarker, enemies[i].transform);
+
+            marker.transform.position += posMod;
+            
+            enemies[i].GetComponent<Enemy>().selectionMarker = marker;
+
+            enemyMarkers.Add(marker.transform.GetChild(1).GetComponent<SpriteRenderer>());
+        }
+    }
+
     private List<HeroClass> MakeHeroCopies(List<HeroClass> heroParty)
     {
         List<HeroClass> combatHeroCopies = new List<HeroClass>();
+        int index = 0;
 
         foreach (HeroClass hero in heroParty)
         {
@@ -85,16 +158,22 @@ public class CombatManager : MonoBehaviour
 
             hero.CopyHero(heroClass, hero);
             combatHeroCopies.Add(heroClass);
+
+            heroClass.combatIndex = index;
+
+            index++;
         }
 
         return combatHeroCopies;
     }
 
-    private List<Enemy> MakeEnemyCopies(List<Enemy> enemyParty)
+    private List<Enemy> MakeEnemyCopies(List<Enemy> EnemyParty)
     {
         List<Enemy> combatEnemyCopies = new List<Enemy>();
 
-        foreach (Enemy enemy in enemyParty)
+        int index = 0;
+
+        foreach (Enemy enemy in EnemyParty)
         {
             GameObject nextEnemy = new GameObject(enemy.name, typeof(Enemy));
             nextEnemy.transform.SetParent(this.transform);
@@ -107,7 +186,13 @@ public class CombatManager : MonoBehaviour
 
             newEnemy.SetID();
 
+            GameObject.FindGameObjectWithTag("Enemy").transform.GetChild(index).GetComponent<Enemy>().uniqueID = newEnemy.uniqueID;
+
             combatEnemyCopies.Add(newEnemy);
+
+            newEnemy.combatIndex = index;
+
+            index++;
         }
 
         return combatEnemyCopies;
@@ -217,12 +302,60 @@ public class CombatManager : MonoBehaviour
         }
         */
 
+        SetCharacterPositions();
+
         if (automatedCombat)
             StartCoroutine(AutomatedCharacterActionPhase(combatEnemyCopies, combatHeroCopies));
         else
             StartCoroutine(ManualCharacterActionPhase(combatEnemyCopies, combatHeroCopies));
     }
-    
+
+
+    private void Update()
+    {
+        if (targetNeeded)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Vector2 rayPos = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+
+                RaycastHit2D hit = Physics2D.Raycast(rayPos, Vector2.zero, 5f);
+
+                if (hit.collider != null)
+                {
+                    Debug.Log(hit.collider.name);
+
+                    if (hit.transform.gameObject.GetComponent<HeroClass>())
+                    {
+                        HeroClass hero = hit.transform.GetComponent<HeroClass>();
+
+                        if (heroMarkers[ListIndex(heroParty, hero)].color == targetColor)
+                        {
+                            target = hero;
+                        }
+                    }
+                    if (hit.transform.gameObject.GetComponent<Enemy>())
+                    {
+                        Enemy enemy = hit.transform.GetComponent<Enemy>();
+
+                        if (enemyMarkers[EnemyListIndex(enemyParty, enemy)].color == targetColor)
+                        {
+                            target = enemy;
+                        }
+                    }
+                }
+            }
+
+            if(target != null)
+            {
+                targetNeeded = false;
+            }
+            else
+            {
+                targetNeeded = true;
+            }
+        }
+    }
 
     public IEnumerator AutomatedCharacterActionPhase(List<Enemy> combatEnemyCopies, List<HeroClass> combatHeroCopies)
     {
@@ -249,8 +382,10 @@ public class CombatManager : MonoBehaviour
 
                             HeroClass currentHero = combatOrder[i] as HeroClass;
 
-                            heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().sprite = selectionSprite;
-                            heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
+                            //heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().sprite = selectionSprite;
+                            //heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
+
+                            currentHero.selectionMarker.transform.GetChild(1).GetComponent<SpriteRenderer>().color = selectionColor;
 
                             yield return new WaitForSeconds(0.5f);
 
@@ -384,15 +519,17 @@ public class CombatManager : MonoBehaviour
                     {
                         HeroClass currentHero = currentCharacter as HeroClass;
 
-                        heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().sprite = selectionSprite;
+                        //heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().sprite = selectionSprite;
 
                         if (currentHero.isSpecialReady)
                         {
-                            heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = specialReadyColor;
+                            //heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = specialReadyColor;
+                            heroMarkers[ListIndex(combatHeroCopies, currentHero)].color = specialReadyColor;
                         }
                         else
                         {
-                            heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
+                           //heroButtons[ListIndex(combatHeroCopies, currentHero)].GetComponent<Image>().color = selectionColor;
+                            heroMarkers[ListIndex(combatHeroCopies, currentHero)].color = selectionColor;
                         }
                         
                         bool isHealer = (currentHero.role == HeroRole.Mender) ? true : false;
@@ -435,57 +572,46 @@ public class CombatManager : MonoBehaviour
                         {
                             case true:
                                 HeroClass heroToHeal = null;
-                                bool heroChoosen = new bool();
 
                                 if (currentHero.isSpecialReady)
                                 {
                                     currentHero.UseSpecialAbility(null, this, null, combatHeroCopies.ToArray());
                                 }
 
-                                for (int x = 0; x < heroButtons.Count; x++)
+                                foreach(HeroClass hero in combatHeroCopies)
                                 {
-                                    int index = x;
-                                    
-                                    if (combatHeroCopies[index].needsHealing)
+                                    if(hero.currentHealth < hero.Health)
                                     {
-                                        Button button = heroButtons[index].GetComponent<Button>();
-
-                                        button.GetComponent<Image>().color = targetColor;
-
-                                        button.onClick.AddListener(delegate
-                                        {
-                                            heroToHeal = combatHeroCopies[index];
-                                            heroChoosen = true;
-                                        });
+                                        heroMarkers[ListIndex(combatHeroCopies, hero)].color = targetColor;
                                     }
                                 }
 
-                                do { yield return null; } while (heroChoosen == false);
+                                targetNeeded = true;
+
+                                do { yield return null; } while (targetNeeded == true);
+
+                                heroToHeal = combatHeroCopies[ListIndex(combatHeroCopies, target as HeroClass)];
 
                                 currentHero.BasicHeal(heroToHeal);
+
+                                targetNeeded = false;
+                                target = null;
 
                                 break;
 
                             case false:
                                 Enemy enemyToAttack = null;
-                                bool enemyChoosen = new bool();
 
-                                for (int y = 0; y < enemyButtons.Count; y++)
+                                targetNeeded = true;
+
+                                foreach(Enemy enemy in combatEnemyCopies)
                                 {
-                                    int index = y;
-
-                                    Button button = enemyButtons[index].GetComponent<Button>();
-
-                                    button.GetComponent<Image>().color = targetColor;
-
-                                    button.onClick.AddListener(delegate
-                                    {
-                                        enemyToAttack = combatEnemyCopies[index];
-                                        enemyChoosen = true;
-                                    });
+                                    enemyMarkers[EnemyListIndex(combatEnemyCopies, enemy)].color = targetColor;
                                 }
 
-                                do { yield return null; } while (enemyChoosen == false);
+                                do { yield return null; } while (targetNeeded == true);
+
+                                enemyToAttack = combatEnemyCopies[EnemyListIndex(combatEnemyCopies, target as Enemy)];
 
                                 if (currentHero.isSpecialReady)
                                 {
@@ -495,6 +621,9 @@ public class CombatManager : MonoBehaviour
                                 {
                                     currentHero.BasicAttack(enemyToAttack, this, combatEnemyCopies);
                                 }
+
+                                targetNeeded = false;
+                                target = null;
                                 
                                 break;
                         }
@@ -503,8 +632,7 @@ public class CombatManager : MonoBehaviour
                     {
                         Enemy currentEnemy = currentCharacter as Enemy;
 
-                        enemyButtons[EnemyListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().sprite = selectionSprite;
-                        enemyButtons[EnemyListIndex(combatEnemyCopies, currentEnemy)].GetComponent<Image>().color = selectionColor;
+                        enemyMarkers[EnemyListIndex(combatEnemyCopies, currentEnemy)].color = selectionColor;
 
                         yield return new WaitForSeconds(1.5f);
 
@@ -780,6 +908,8 @@ public class CombatManager : MonoBehaviour
                 combatHeroParty[i].XP += xpReward;
                 heroParty[i].CopyHero(heroParty[i], combatHeroParty[i]);
 
+                Destroy(heroParty[i].transform.GetChild(0).gameObject);
+
                 partyBehaviour.heroParty[i].CopyHero(partyBehaviour.heroParty[i], heroParty[i]);
             }
 
@@ -799,6 +929,8 @@ public class CombatManager : MonoBehaviour
         gameLog.text = "";
         gameLog.transform.parent.gameObject.SetActive(false);
         combatPanel.gameObject.SetActive(false);
+
+        Destroy(GameObject.FindGameObjectWithTag("BattleFormation"));
 
         foreach (Enemy enemy in enemyParty)
         {
@@ -831,8 +963,14 @@ public class CombatManager : MonoBehaviour
                 if (heroParty[i].uniqueID == character.uniqueID)
                 {
                     heroParty[i].isDead = true;
+                    heroParty[i].GetComponent<SpriteRenderer>().enabled = false;
                 }
             }
+
+            heroMarkers[ListIndex(currentHeroParty, character as HeroClass)].transform.parent.gameObject.SetActive(false);
+            heroMarkers.RemoveAt(ListIndex(currentHeroParty, character as HeroClass));
+
+            GameObject.FindGameObjectWithTag("Player").transform.GetChild(ListIndex(currentHeroParty, character as HeroClass)).gameObject.SetActive(false);
             currentHeroParty.Remove(character as HeroClass);
         }
         else if (character.GetType() == typeof(Enemy))
@@ -842,6 +980,10 @@ public class CombatManager : MonoBehaviour
             goldReward += enemy.goldToReward;
             xpReward += enemy.xpReward;
 
+            enemyMarkers[EnemyListIndex(currentEnemyParty, enemy)].transform.parent.gameObject.SetActive(false);
+            enemyMarkers.RemoveAt(EnemyListIndex(currentEnemyParty, enemy));
+
+            GameObject.FindGameObjectWithTag("Enemy").transform.GetChild(EnemyListIndex(currentEnemyParty, enemy)).gameObject.SetActive(false);
             currentEnemyParty.Remove(character as Enemy);
         }
     }
@@ -852,17 +994,25 @@ public class CombatManager : MonoBehaviour
         {
             GameObject heroPartyPanel = GameObject.FindGameObjectWithTag("HeroPartyPanel");
 
-            for (int i = 0; i < heroButtons.Count; i++)
+            for (int i = 0; i < heroMarkers.Count; i++)
             {
-                Destroy(heroButtons[i].gameObject);
+                heroMarkers[i].color = Color.white;
+
+                //DestroyImmediate(heroParty[i].gameObject.GetComponent<Button>());
             }
             heroButtons.Clear();
 
             for (int i = 0; i < heroes.Count; i++)
             {
                 HeroClass currentHero = heroes[i];
-                GameObject newHeroButton = null;
+                Button newHeroButton = null;
 
+                heroParty[i].gameObject.AddComponent<Button>();
+                heroParty[i].button = heroParty[i].GetComponent<Button>();
+
+                newHeroButton = heroParty[i].button;
+
+                /*
                 switch (combatStyle)
                 {
                     case CombatStyle.TurnBasedAction:
@@ -881,6 +1031,7 @@ public class CombatManager : MonoBehaviour
                         newHeroButton.transform.GetChild(1).GetComponent<Image>().sprite = currentHero.sprite;
                         break;
                 }
+                */
 
                 heroButtons.Add(newHeroButton);
             }
@@ -890,9 +1041,11 @@ public class CombatManager : MonoBehaviour
         {
             GameObject enemyPartyPanel = GameObject.FindGameObjectWithTag("EnemyPartyPanel");
             
-            for (int i = 0; i < enemyButtons.Count; i++)
+            for (int i = 0; i < enemyMarkers.Count; i++)
             {
-                Destroy(enemyButtons[i].gameObject);
+                enemyMarkers[i].color = Color.white;
+
+                //DestroyImmediate(enemyParty[i].gameObject.GetComponent<Button>());
             }
             enemyButtons.Clear();
 
@@ -900,8 +1053,14 @@ public class CombatManager : MonoBehaviour
             for (int i = 0; i < enemies.Count; i++)
             {
                 Enemy currentEnemy = enemies[i];
-                GameObject newEnemyButton = null;
+                Button newEnemyButton = null;
 
+                enemyParty[i].gameObject.AddComponent<Button>();
+                enemyParty[i].button = enemyParty[i].GetComponent<Button>();
+
+                newEnemyButton = enemyParty[i].button;
+
+                /*
                 switch (combatStyle)
                 {
                     case CombatStyle.TurnBasedAction:
@@ -921,6 +1080,7 @@ public class CombatManager : MonoBehaviour
                         newEnemyButton.transform.GetChild(1).GetComponent<Image>().sprite = currentEnemy.sprite;
                         break;
                 }
+                */
 
                 enemyButtons.Add(newEnemyButton);
             }
