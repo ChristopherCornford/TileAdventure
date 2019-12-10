@@ -123,8 +123,6 @@ public class GameManager : MonoBehaviour
     };
 
     
-
-
     private void Awake()
     {
         SetScriptReferences();
@@ -167,8 +165,7 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine("ProceedToNextRound");
         }
-
-    */
+        */
     }
     
     public void ProceedToNextGamePhase(bool isGoingToCombat = false)
