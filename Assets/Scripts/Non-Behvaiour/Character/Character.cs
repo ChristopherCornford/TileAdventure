@@ -44,6 +44,10 @@ public class Character : MonoBehaviour
 
     public Button button;
 
+    public GameObject comsumableEffect;
+
+    public Consumable 
+
     public TextMeshProUGUI gameLog;
 
 

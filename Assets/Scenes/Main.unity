@@ -6662,7 +6662,7 @@ PrefabInstance:
     - target: {fileID: 1773658942533818864, guid: de1fe3c132ce0d345ba42a96a9e2de13,
         type: 3}
       propertyPath: m_Name
-      value: 
+      value: Minor Fleet Foot
       objectReference: {fileID: 0}
     - target: {fileID: 1773658942533818866, guid: de1fe3c132ce0d345ba42a96a9e2de13,
         type: 3}
@@ -6724,6 +6724,26 @@ PrefabInstance:
       propertyPath: battleLog
       value: 
       objectReference: {fileID: 953920036}
+    - target: {fileID: 1773658942533818865, guid: de1fe3c132ce0d345ba42a96a9e2de13,
+        type: 3}
+      propertyPath: statToModify
+      value: Speed
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773658942533818865, guid: de1fe3c132ce0d345ba42a96a9e2de13,
+        type: 3}
+      propertyPath: amountToModify
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773658942533818865, guid: de1fe3c132ce0d345ba42a96a9e2de13,
+        type: 3}
+      propertyPath: itemTier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1773658942533818865, guid: de1fe3c132ce0d345ba42a96a9e2de13,
+        type: 3}
+      propertyPath: buffDuration
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de1fe3c132ce0d345ba42a96a9e2de13, type: 3}
 --- !u!224 &2199273401854716710 stripped

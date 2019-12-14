@@ -11,6 +11,8 @@ public class Consumable : MonoBehaviour
 
     public string statToModify;
     public int amountToModify;
+    public int buffDuration { get { return 1 + itemTier; } }
+
 
     public int itemTier;
 
@@ -26,53 +28,56 @@ public class Consumable : MonoBehaviour
 
     public void Use()
     {
-        switch (statToModify)
+        if (target != null)
         {
-            case "Health":
-                if (target.GetComponent<HeroClass>())
-                {
-                    target.GetComponent<HeroClass>().currentHealth += amountToModify;
-                }
-                else if (target.GetComponent<Enemy>())
-                {
-                    target.GetComponent<Enemy>().currentHealth += amountToModify;
-                }
-                break;
+            switch (statToModify)
+            {
+                case "Health":
+                    if (target.GetComponent<HeroClass>())
+                    {
+                        target.GetComponent<HeroClass>().currentHealth += amountToModify;
+                    }
+                    else if (target.GetComponent<Enemy>())
+                    {
+                        target.GetComponent<Enemy>().currentHealth += amountToModify;
+                    }
+                    break;
 
-            case "Attack":
-                if (target.GetComponent<HeroClass>())
-                {
-                    target.GetComponent<HeroClass>().Attack += amountToModify;
-                }
-                else if (target.GetComponent<Enemy>())
-                {
-                    target.GetComponent<Enemy>().Attack += amountToModify;
-                }
-                break;
+                case "Attack":
+                    if (target.GetComponent<HeroClass>())
+                    {
+                        target.GetComponent<HeroClass>().Attack += amountToModify;
+                    }
+                    else if (target.GetComponent<Enemy>())
+                    {
+                        target.GetComponent<Enemy>().Attack += amountToModify;
+                    }
+                    break;
 
-            case "Defense":
-                if (target.GetComponent<HeroClass>())
-                {
-                    target.GetComponent<HeroClass>().Defense += amountToModify;
-                }
-                else if (target.GetComponent<Enemy>())
-                {
-                    target.GetComponent<Enemy>().Defense += amountToModify;
-                }
-                break;
+                case "Defense":
+                    if (target.GetComponent<HeroClass>())
+                    {
+                        target.GetComponent<HeroClass>().Defense += amountToModify;
+                    }
+                    else if (target.GetComponent<Enemy>())
+                    {
+                        target.GetComponent<Enemy>().Defense += amountToModify;
+                    }
+                    break;
 
-            case "Speed":
-                if (target.GetComponent<HeroClass>())
-                {
-                    target.GetComponent<HeroClass>().Speed += amountToModify;
-                }
-                else if (target.GetComponent<Enemy>())
-                {
-                    target.GetComponent<Enemy>().Speed += amountToModify;
-                }
-                break;
+                case "Speed":
+                    if (target.GetComponent<HeroClass>())
+                    {
+                        target.GetComponent<HeroClass>().Speed += amountToModify;
+                    }
+                    else if (target.GetComponent<Enemy>())
+                    {
+                        target.GetComponent<Enemy>().Speed += amountToModify;
+                    }
+                    break;
+            }
+
+            Destroy(this.gameObject);
         }
-
-        Destroy(this.gameObject);
     }
 }
