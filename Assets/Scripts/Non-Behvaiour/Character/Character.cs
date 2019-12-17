@@ -46,9 +46,10 @@ public class Character : MonoBehaviour
 
     public GameObject comsumableEffect;
 
-    public Consumable 
+    public Consumable currentConsumable { get { return comsumableEffect.GetComponent<Consumable>(); } }
 
     public TextMeshProUGUI gameLog;
+ 
 
 
     public void SetID()

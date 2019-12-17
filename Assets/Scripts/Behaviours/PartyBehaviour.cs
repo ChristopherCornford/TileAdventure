@@ -242,6 +242,9 @@ public class PartyBehaviour : MonoBehaviour
         tilemap.SetTile(intPos, newTile);
 
 
+        Camera.main.orthographicSize = 2;
+        gameManager.playerBehaviour.zoomSlider.value = 2;
+        
         if (endRound)
         {
             gameManager.StartCoroutine("ProceedToNextRound");

@@ -11,6 +11,10 @@ TagManager:
   - Hero
   - HeroPartyPanel
   - EnemyPartyPanel
+  - GameLog
+  - BattleFormation
+  - SideOne
+  - SideTwo
   layers:
   - Default
   - TransparentFX
