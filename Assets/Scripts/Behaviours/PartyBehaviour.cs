@@ -292,6 +292,8 @@ public class PartyBehaviour : MonoBehaviour
         }
         else
         {
+            heroParty[0].GetComponent<Animator>().SetBool("isWalking", true);
+
             for (int i = 0; i < path.Length; i++)
             {
                 while (this.transform.position != path[i])
@@ -307,6 +309,7 @@ public class PartyBehaviour : MonoBehaviour
                 yield return new WaitForSeconds(Time.deltaTime);
             }
 
+            heroParty[0].GetComponent<Animator>().SetBool("isWalking", false);
 
             this.transform.position = path[path.Length - 1];
 

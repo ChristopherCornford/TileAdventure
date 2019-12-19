@@ -87,6 +87,9 @@ public class Enemy : Character
     void SpawnAnimation(Transform target)
     {
         GameObject newAttack = Instantiate(hitSprite, target);
+
+        target.GetComponent<Animator>().SetTrigger("Hurt");
+
         Destroy(newAttack, 1.5f);
     }
 

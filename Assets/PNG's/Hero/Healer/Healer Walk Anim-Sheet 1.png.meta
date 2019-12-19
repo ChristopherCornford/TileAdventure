@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: 7658529f42823cd47823bb76ba870760
+guid: 56780e94b4f57af42aa1de32659d45b9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5710490655753807704
-    second: Healer Walk Anim-Sheet_0
+      213: -8299149317066926080
+    second: Healer Walk Anim-Sheet 1_0
   - first:
-      213: 8115824171506481244
-    second: Healer Walk Anim-Sheet_1
+      213: -9098325910012083196
+    second: Healer Walk Anim-Sheet 1_1
   - first:
-      213: -4198405568230207391
-    second: Healer Walk Anim-Sheet_2
+      213: 5275469139353155415
+    second: Healer Walk Anim-Sheet 1_2
   - first:
-      213: -5987287526289055152
-    second: Healer Walk Anim-Sheet_3
+      213: 945144188516070008
+    second: Healer Walk Anim-Sheet 1_3
   - first:
-      213: 3505303897648076060
-    second: Healer Walk Anim-Sheet_4
+      213: -1276224193498706451
+    second: Healer Walk Anim-Sheet 1_4
   - first:
-      213: 2167656064376842486
-    second: Healer Walk Anim-Sheet_5
+      213: -482924380774466376
+    second: Healer Walk Anim-Sheet 1_5
   - first:
-      213: 9063021204939209859
-    second: Healer Walk Anim-Sheet_6
+      213: 5411892577350107825
+    second: Healer Walk Anim-Sheet 1_6
   - first:
-      213: -3980036425897508569
-    second: Healer Walk Anim-Sheet_7
+      213: -568563992967238938
+    second: Healer Walk Anim-Sheet 1_7
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -105,7 +105,29 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
   - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -119,13 +141,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Healer Walk Anim-Sheet_0
+      name: Healer Walk Anim-Sheet 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 44
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -133,20 +155,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0040f3c97bec43479a5768b49f805ae
-      internalID: 5710490655753807704
+      spriteID: a317afce418305046aba32d7dc54e83c
+      internalID: -8299149317066926080
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Healer Walk Anim-Sheet_1
+      name: Healer Walk Anim-Sheet 1_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 44
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cca890e6f478c5d44a24359bbc502eed
+      internalID: -9098325910012083196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Healer Walk Anim-Sheet 1_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 44
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -154,20 +197,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ece74399f5c3c4943af4c4ea8b0f971f
-      internalID: 8115824171506481244
+      spriteID: 47fb189b4fb6a644dbecf278b142c43a
+      internalID: 5275469139353155415
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Healer Walk Anim-Sheet_2
+      name: Healer Walk Anim-Sheet 1_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 44
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6218bde866d5aca4c867dcbf24b97f27
+      internalID: 945144188516070008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Healer Walk Anim-Sheet 1_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 44
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -175,20 +239,41 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a55703db6c81624a81e09b537180070
-      internalID: -4198405568230207391
+      spriteID: f316f5455465d2e4c8a70bd9f752cd22
+      internalID: -1276224193498706451
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Healer Walk Anim-Sheet_3
+      name: Healer Walk Anim-Sheet 1_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 44
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 685b15e2ff7a6104c8f07c1a17db0e92
+      internalID: -482924380774466376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Healer Walk Anim-Sheet 1_6
       rect:
         serializedVersion: 2
         x: 192
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 44
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -196,20 +281,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70f9503f447413e4a9de05b2dbaa2034
-      internalID: -5987287526289055152
+      spriteID: 1014a7e541b8f094396e0aafd4436290
+      internalID: 5411892577350107825
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Healer Walk Anim-Sheet_4
+      name: Healer Walk Anim-Sheet 1_7
       rect:
         serializedVersion: 2
-        x: 256
+        x: 224
         y: 0
-        width: 64
-        height: 64
+        width: 32
+        height: 44
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -217,71 +302,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1e55184f3f06f1459a942f95e5e30a6
-      internalID: 3505303897648076060
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Healer Walk Anim-Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 320
-        y: 0
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 107408b469114b34d8c525e2556e222c
-      internalID: 2167656064376842486
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Healer Walk Anim-Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 384
-        y: 0
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 29d2c914293522e4087324f7495f1071
-      internalID: 9063021204939209859
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Healer Walk Anim-Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 448
-        y: 0
-        width: 64
-        height: 64
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 01a04e141ea365d4792b4bfd30ac6dee
-      internalID: -3980036425897508569
+      spriteID: fae2e8f5a29432a4fa5a09d5f133a2e3
+      internalID: -568563992967238938
       vertices: []
       indices: 
       edges: []
@@ -289,7 +311,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: a1c5bd8630f7da644861c298b25bbac4
+    spriteID: ec4a38c059549b540942a7b200b4fda4
     internalID: 0
     vertices: []
     indices: 
