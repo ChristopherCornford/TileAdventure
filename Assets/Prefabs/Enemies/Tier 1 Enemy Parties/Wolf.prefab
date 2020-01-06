@@ -115,14 +115,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5048da1c9338d40a870b064950fd86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueID: 33.42239265415401
+  uniqueID: 7.051703963898888
   sprite: {fileID: 7444046612802208997, guid: 36d93848822135d458f7d90c16d23cb2, type: 3}
   Level: 1
   Health: 6
   currentHealth: 6
-  Attack: 4
-  Defense: 4
-  Speed: 6
+  Attack: 3
+  Defense: 2
+  Speed: 4
   statusEffect: 0
   turnsLeftOfStatus: 0
   forcedTarget: {fileID: 0}
@@ -133,6 +133,7 @@ MonoBehaviour:
   selectionFillObj: {fileID: 0}
   spriteRenderer: {fileID: 0}
   button: {fileID: 4974775221202973091}
+  comsumableEffect: {fileID: 0}
   gameLog: {fileID: 0}
   combatTier: 1
   creatureSize: 2
