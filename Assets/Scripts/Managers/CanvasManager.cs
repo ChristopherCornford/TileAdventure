@@ -5,10 +5,11 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CanvasManager : MonoBehaviour
 {
-    
+
     GraphicRaycaster graphicRaycaster;
     PointerEventData eventData;
     EventSystem eventSystem;
@@ -28,11 +29,14 @@ public class CanvasManager : MonoBehaviour
 
     [Header("Title Screen")]
     public Image startingHero;
-    public GameObject heroOptions;
+    public GameObject[] heroOptions;
     public HeroClass startingHeroClass;
+    public TextMeshProUGUI startingClassName;
+
 
     public Button startButton;
 
+    public GameObject TitleScreen;
 
 
     private void Start()
@@ -43,7 +47,11 @@ public class CanvasManager : MonoBehaviour
 
         eventSystem = GetComponent<EventSystem>();
 
-        startButton.onClick.AddListener(delegate { gameManager.BeginGame(startingHeroClass); });
+        startButton.onClick.AddListener(delegate { gameManager.BeginGame(startingHeroClass);  TitleScreen.SetActive(false); });
+
+        startingHero.sprite = startingHeroClass.sprite;
+
+        startingClassName.text = startingHeroClass.name;
     }
 
     private void LateUpdate()
@@ -84,10 +92,10 @@ public class CanvasManager : MonoBehaviour
         }
     }
 
-    public IEnumerator Transition (bool toWhite = true)
+    public IEnumerator Transition(bool toWhite = true)
     {
         transitionComplete = false;
-        
+
         if (toWhite)
         {
             canvasGroup.alpha = 0;
@@ -118,7 +126,7 @@ public class CanvasManager : MonoBehaviour
                 Color newColor = new Color(perc, perc, perc);
 
                 transitionPanel.color = newColor;
-                
+
                 canvasGroup.alpha -= Time.fixedDeltaTime / transitionTime;
 
                 yield return null;
@@ -129,19 +137,39 @@ public class CanvasManager : MonoBehaviour
 
         transitionComplete = true;
     }
-    
-    public void SelectStartingHero(HeroClass hero)
-    {
-        startingHero.sprite = hero.sprite;
-        startingHeroClass = hero;
-
-        startButton.onClick.RemoveAllListeners();
-        startButton.onClick.AddListener(delegate { gameManager.BeginGame(hero); });
-    }
-
 
     public void LoadLevel(int index)
     {
         SceneManager.LoadScene(index);
+    }
+
+    public void MoveSelection(int direction)
+    {
+        int currentIndex = GetIndexOfHero(startingHeroClass);
+
+        int newIndex = currentIndex + direction;
+
+        if (newIndex < 0)
+            newIndex = heroOptions.Length - 1;
+
+        if (newIndex >= heroOptions.Length)
+            newIndex = 0;
+
+        startingHeroClass = heroOptions[newIndex].GetComponent<HeroClass>();
+
+        startingHero.sprite = startingHeroClass.sprite;
+
+        startingClassName.text = startingHeroClass.name;
+    }
+
+    int GetIndexOfHero(HeroClass heroClass)
+    {
+        for (int i = 0; i < heroOptions.Length; i++)
+        {
+            if (heroClass == heroOptions[i].GetComponent<HeroClass>())
+                return i;
+        }
+
+        return -1;
     }
 }
