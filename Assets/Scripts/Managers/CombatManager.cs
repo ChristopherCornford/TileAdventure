@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
+/// <summary>
+/// Old Combat System Total Line Count: 1045
+/// 
+/// New Combat System Total Line Count: 
+/// </summary>
+
 public class CombatManager : MonoBehaviour
 {
     public bool automatedCombat = false;
@@ -12,6 +18,13 @@ public class CombatManager : MonoBehaviour
 
     public GameManager gameManager;
     public PartyBehaviour partyBehaviour;
+
+
+    public List<Character> CharactersInCombat;
+    public List<CombatTolken> CombatTolkenList = new List<CombatTolken>();
+    public int InitativeCount = 0;
+
+
 
     public List<HeroClass> heroParty;
     public List<Enemy> enemyParty;
@@ -62,13 +75,13 @@ public class CombatManager : MonoBehaviour
         {
             SetInitativeList();
         }
-        else
+        /*else
         {
             List<HeroClass> heroClasses = MakeHeroCopies(heroParty);
             List<Enemy> enemies = MakeEnemyCopies(enemyParty);
             //StartCoroutine(BeginRealTimeCombat(enemies, heroClasses));
         }
-
+        */
     }
 
     private void SetCharacterPositions()
@@ -135,7 +148,7 @@ public class CombatManager : MonoBehaviour
         Camera.main.transform.position = sideOne.transform.parent.transform.position;
         Camera.main.GetComponent<PlayerBehaviour>().zoomSlider.value = 0.75f;
     }
-
+    /*
     private List<HeroClass> MakeHeroCopies(List<HeroClass> heroParty)
     {
         List<HeroClass> combatHeroCopies = new List<HeroClass>();
@@ -191,25 +204,25 @@ public class CombatManager : MonoBehaviour
 
         return combatEnemyCopies;
     }
-
+    */
     public void SetInitativeList()
     {
         combatOrder.Clear();
 
-        List<HeroClass> combatHeroCopies = MakeHeroCopies(heroParty);
+       // List<HeroClass> combatHeroCopies = MakeHeroCopies(heroParty);
 
-        List<Enemy> combatEnemyCopies = MakeEnemyCopies(enemyParty);
+       // List<Enemy> combatEnemyCopies = MakeEnemyCopies(enemyParty);
 
         List<int> initativeList = new List<int>();
 
         List<Character> characters = new List<Character>();
 
-
-        foreach (Enemy enemy in combatEnemyCopies)
-            characters.Add(enemy);
-        foreach (HeroClass hero in combatHeroCopies)
+        foreach (HeroClass hero in heroParty)
             characters.Add(hero);
-        
+        foreach (Enemy enemy in enemyParty)
+            characters.Add(enemy);
+
+        CharactersInCombat = characters;
 
         int maxAttacks = new int();
 
@@ -225,7 +238,7 @@ public class CombatManager : MonoBehaviour
         }
 
 
-        foreach (HeroClass hero in combatHeroCopies)
+        foreach (HeroClass hero in heroParty)
         {
             int numOfAttacks = 1 + (hero.Speed / 10);
 
@@ -235,7 +248,7 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        foreach (Enemy enemy in combatEnemyCopies)
+        foreach (Enemy enemy in enemyParty)
         {
             int numOfAttacks = 1 + (enemy.Speed / 10);
 
@@ -247,6 +260,9 @@ public class CombatManager : MonoBehaviour
 
         initativeList.Sort();
         initativeList.Reverse();
+
+        InitativeCount = initativeList.Count;
+        CreateCombatTolkens(characters, initativeList);
 
 
         for (int i = 0; i < initativeList.Count; i++)
@@ -298,16 +314,17 @@ public class CombatManager : MonoBehaviour
 
         SetCharacterPositions();
 
+       /*
         if (automatedCombat)
             StartCoroutine(AutomatedCharacterActionPhase(combatEnemyCopies, combatHeroCopies));
         else
             StartCoroutine(ManualCharacterActionPhase(combatEnemyCopies, combatHeroCopies));
+       */
     }
-
-
-    private void Update()
+    
+    IEnumerator WaitForPlayerInput()
     {
-        if (targetNeeded)
+        while (targetNeeded)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -340,7 +357,7 @@ public class CombatManager : MonoBehaviour
                 }
             }
 
-            if(target != null)
+            if (target != null)
             {
                 targetNeeded = false;
             }
@@ -348,6 +365,7 @@ public class CombatManager : MonoBehaviour
             {
                 targetNeeded = true;
             }
+            yield return null;
         }
     }
 
@@ -1024,6 +1042,89 @@ public class CombatManager : MonoBehaviour
                 index = i;
 
         return index;
+    }
+
+    void CreateCombatTolkens(List<Character> characters, List<int> initative)
+    {
+        int numOfAttacks = new int();
+
+        for (int i = 0; i < characters.Count; i++)
+        {
+            numOfAttacks = ((1 + (characters[i].Speed / 10)) < 3) ? 1 + (characters[i].Speed / 10) : 3;
+            
+            List<int> AttackPositions = new List<int>(numOfAttacks);
+            
+            CombatTolken tolken = new CombatTolken(characters[i].uniqueID, i, AttackPositions);
+
+            CombatTolkenList.Add(tolken);
+        }
+        
+        for (int i = 0; i < initative.Count; i++)
+        {
+            foreach (CombatTolken ct in CombatTolkenList)
+            {
+                double lastID = 0;
+
+                for (int j = 0; j < numOfAttacks; j++)
+                {
+                    int speedMod = 10 * j;
+                   
+                    if ((characters[i].Speed - speedMod) == initative[i])
+                    {
+                        if(ct.CharacterID != lastID)
+                        {
+                            if (j == 0)
+                                ct.CombatPositions.Add(i);
+                            else if (j != ct.CombatPositions.Count - 1 && j == 1)
+                                ct.CombatPositions.Add(i);
+                            else if (j != ct.CombatPositions.Count - 1 && j == 2)
+                                ct.CombatPositions.Add(i);
+                        }
+                        lastID = ct.CharacterID;
+                    }
+                }
+            }
+        }
+
+        StartCoroutine(CombatSequence());
+    }
+
+    IEnumerator CombatSequence()
+    {
+        // int Round = 1;
+
+        bool combatIsOver = false;
+
+        while (!combatIsOver)
+        {
+            for (int i = 0; i < InitativeCount; i++)
+                foreach (CombatTolken ct in CombatTolkenList)
+                    if (ct.CombatPositions.Contains(i))
+                        Debug.Log(CharactersInCombat[ct.Index].name);
+
+            combatIsOver = true;
+        }
+
+        yield return new WaitForFixedUpdate();
+    }
+}
+
+
+public class CombatTolken
+{
+    public double CharacterID;
+
+    public int Index;
+
+    public List<int> CombatPositions;
+
+    public CombatTolken(double charID, int indexOfCharacterList, List<int> comPos)
+    {
+        CharacterID = charID;
+
+        Index = indexOfCharacterList;
+
+        CombatPositions = comPos;
     }
 }
 
