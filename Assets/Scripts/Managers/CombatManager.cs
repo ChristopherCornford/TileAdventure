@@ -264,7 +264,7 @@ public class CombatManager : MonoBehaviour
         InitativeCount = initativeList.Count;
         CreateCombatTolkens(characters, initativeList);
 
-
+        /*
         for (int i = 0; i < initativeList.Count; i++)
         {
             bool spotTaken = new bool();
@@ -297,7 +297,7 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        /*
+        
         for (int i = 0; i < initativeList.Count; i++)
         {
             foreach (Enemy enemy in combatEnemyCopies)
@@ -1048,6 +1048,11 @@ public class CombatManager : MonoBehaviour
     {
         int numOfAttacks = new int();
 
+        List<int> initativeCopy = new List<int>();
+
+        for (int i = 0; i < initative.Count; i++)
+            initativeCopy.Add(initative[i]);
+
         for (int i = 0; i < characters.Count; i++)
         {
             numOfAttacks = ((1 + (characters[i].Speed / 10)) < 3) ? 1 + (characters[i].Speed / 10) : 3;
@@ -1058,38 +1063,47 @@ public class CombatManager : MonoBehaviour
 
             CombatTolkenList.Add(tolken);
         }
-        
-        for (int i = 0; i < initative.Count; i++)
-        {
-            foreach (CombatTolken ct in CombatTolkenList)
-            {
-                double lastID = 0;
 
-                for (int j = 0; j < numOfAttacks; j++)
+        foreach (CombatTolken ct in CombatTolkenList)
+        {
+            double lastID = 0;
+
+            if (ct.CombatPositions.Count < numOfAttacks)
+            {
+                for (int i = 0; i < initative.Count; i++)
                 {
-                    int speedMod = 10 * j;
-                   
-                    if ((characters[i].Speed - speedMod) == initative[i])
+                    if (initative[i] != -1)
                     {
-                        if(ct.CharacterID != lastID)
+                        for (int j = 0; j < numOfAttacks; j++)
                         {
-                            if (j == 0)
-                                ct.CombatPositions.Add(i);
-                            else if (j != ct.CombatPositions.Count - 1 && j == 1)
-                                ct.CombatPositions.Add(i);
-                            else if (j != ct.CombatPositions.Count - 1 && j == 2)
-                                ct.CombatPositions.Add(i);
+                            int speedMod = 10 * j;
+
+                            if ((characters[ct.Index].Speed - speedMod) == initative[i])
+                            {
+                                if (ct.CharacterID != lastID)
+                                {
+                                    if (j == 0)
+                                        ct.CombatPositions.Add(i);
+                                    else if (j != ct.CombatPositions.Count - 1 && j == 1)
+                                        ct.CombatPositions.Add(i);
+                                    else if (j != ct.CombatPositions.Count - 1 && j == 2)
+                                        ct.CombatPositions.Add(i);
+
+                                    initative[i] = -1;
+                                }
+
+                                lastID = ct.CharacterID;
+                            }
                         }
-                        lastID = ct.CharacterID;
                     }
                 }
             }
         }
 
-        StartCoroutine(CombatSequence());
+        StartCoroutine(CombatSequence(initativeCopy));
     }
 
-    IEnumerator CombatSequence()
+    IEnumerator CombatSequence(List<int> initative)
     {
         // int Round = 1;
 
