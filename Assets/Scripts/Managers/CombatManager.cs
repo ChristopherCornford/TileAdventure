@@ -1123,7 +1123,7 @@ public class CombatManager : MonoBehaviour
     }
 }
 
-
+[System.Serializable]
 public class CombatTolken
 {
     public double CharacterID;
@@ -1132,6 +1132,8 @@ public class CombatTolken
 
     public List<int> CombatPositions;
 
+    public bool isDead;
+
     public CombatTolken(double charID, int indexOfCharacterList, List<int> comPos)
     {
         CharacterID = charID;
@@ -1139,6 +1141,8 @@ public class CombatTolken
         Index = indexOfCharacterList;
 
         CombatPositions = comPos;
+
+        isDead = false;
     }
 }
 

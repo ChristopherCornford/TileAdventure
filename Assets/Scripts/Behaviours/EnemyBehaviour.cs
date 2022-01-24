@@ -230,7 +230,7 @@ public class EnemyBehaviour : MonoBehaviour
                 return gameManager.AllTier3Enemies[Random.Range(0, gameManager.AllTier3Enemies.Count)];
         }
     }
-
+    /*
     private int GenerateDifficulty()
     {
         int randInt = Random.Range(0, 100);
@@ -270,4 +270,5 @@ public class EnemyBehaviour : MonoBehaviour
             return 0;
         }
     }
+    */
 }
